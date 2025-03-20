@@ -1,5 +1,5 @@
-# O que é?
-Repositório dedicado para a aplicação front end da disciplina PI-2
+# Introdução?
+Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solução para monitorar as reservas de laboratórios da Escola Superior Dom Helder Câmara.
 
 # Dicas
  - Clean code
@@ -8,3 +8,5 @@ Repositório dedicado para a aplicação front end da disciplina PI-2
    * (https://demenezes.dev/posts/dicas-de-commit/)
  - Documentação angular
    * (https://angular.dev/overview)
+# Como instalar o angular?
+ - https://angular.dev/installation
