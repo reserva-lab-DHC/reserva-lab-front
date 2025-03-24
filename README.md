@@ -10,5 +10,3 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
    * (https://angular.dev/overview)
 # Como instalar o angular?
  - https://angular.dev/installation
- - ## Como buildar?
-   - https://medium.com/@david_94373/build-and-deployment-with-angular-cli-part-1-configuring-and-executing-the-build-89704397807f
