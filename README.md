@@ -10,3 +10,6 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
    * (https://angular.dev/overview)
 # Como instalar o angular?
  - https://angular.dev/installation
+
+# OBS 
+ - Usaremos o angular 19 
