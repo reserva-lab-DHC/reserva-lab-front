@@ -11,5 +11,8 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
 # Como instalar o angular?
  - https://angular.dev/installation
 
+# Protótipo
+ - https://www.figma.com/design/hB2Zxfezft1fiT26Z02Ztc/DHC---Reserva-de-Salas
+
 # OBS 
  - Usaremos o angular 19 
