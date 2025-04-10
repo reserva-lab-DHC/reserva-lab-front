@@ -10,6 +10,8 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
    * (https://angular.dev/overview)
 # Como instalar o angular?
  - https://angular.dev/installation
+# Como instalar o node?
+ - ![image](https://github.com/user-attachments/assets/4b4aa0ac-9316-4a2c-a9ed-5d766f33ca66)
 
 # Protótipo
  - https://www.figma.com/design/hB2Zxfezft1fiT26Z02Ztc/DHC---Reserva-de-Salas
