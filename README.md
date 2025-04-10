@@ -22,7 +22,7 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
  ‎ ‎ ‎ ‎‎└──app <br>
  ‎ ‎ ‎  ‎ ‎ ‎ ‎‎├──core (guards, models, services, interceptors, interfaces) <br>
   ‎ ‎ ‎ ‎‎ ‎ ‎ ‎├──features (equivalent to pages like home, about, login, register) <br>
-  ‎ ‎ ‎ ‎‎ ‎ ‎ ‎├──shared (everything that is common in more than one feature -> pipes, components like topbar, footer, pop-ups, snackbar)
+  ‎ ‎ ‎ ‎‎ ‎ ‎ ‎├──shared (everything that is common in more than one feature -> pipes, components like topbar, footer, pop-ups, snackbar) <br>
  ‎ ‎ ‎ ‎└──assets (i18n, images, fonts)   
  
 # OBS 
