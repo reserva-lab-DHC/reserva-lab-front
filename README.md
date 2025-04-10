@@ -11,18 +11,19 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
 # Como instalar o angular?
  - https://angular.dev/installation
 # Como instalar o node?
- - ![image](https://github.com/user-attachments/assets/4b4aa0ac-9316-4a2c-a9ed-5d766f33ca66)
+ ![image](https://github.com/user-attachments/assets/4b4aa0ac-9316-4a2c-a9ed-5d766f33ca66)
 
 # Protótipo
  - https://www.figma.com/design/hB2Zxfezft1fiT26Z02Ztc/DHC---Reserva-de-Salas
 
 
 # Como está organizado o projeto
- src
- └──app
-     ├──core (guards, models, services, interceptors, interfaces) 
-     ├──features (equivalent to pages like home, about, login, register) 
- └──assets (i18n, images, fonts)   
+ src <br>
+ ‎ ‎ ‎ ‎‎└──app <br>
+ ‎ ‎ ‎  ‎ ‎ ‎ ‎‎├──core (guards, models, services, interceptors, interfaces) <br>
+  ‎ ‎ ‎ ‎‎ ‎ ‎ ‎├──features (equivalent to pages like home, about, login, register) <br>
+  ‎ ‎ ‎ ‎‎ ‎ ‎ ‎├──shared (everything that is common in more than one feature -> pipes, components like topbar, footer, pop-ups, snackbar)
+ ‎ ‎ ‎ ‎└──assets (i18n, images, fonts)   
  
 # OBS 
  - Usaremos o angular 19 
