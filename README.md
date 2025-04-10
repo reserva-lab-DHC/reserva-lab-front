@@ -8,6 +8,8 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
    * (https://demenezes.dev/posts/dicas-de-commit/)
  - Documentação angular
    * (https://angular.dev/overview)
+ - Organização de projetos
+   * (https://dev.to/slika/angular-the-importance-of-a-well-structured-project-54ee)
 # Como instalar o angular?
  - https://angular.dev/installation
 # Como instalar o node?
