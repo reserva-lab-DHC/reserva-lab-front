@@ -18,12 +18,11 @@ Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solu�
 
 
 # Como está organizado o projeto
-  src
+ src
  └──app
-     ├──core (guards, models, services, interceptors, interfaces)
-     ├──features (equivalent to pages like home, about, login, register)
-     ├──shared (everything that is common in more than one feature -> pipes, components like topbar, footer, pop-ups, snackbar)
- └──assets (i18n, images, fonts)
-
+     ├──core (guards, models, services, interceptors, interfaces) 
+     ├──features (equivalent to pages like home, about, login, register) 
+ └──assets (i18n, images, fonts)   
+ 
 # OBS 
  - Usaremos o angular 19 
