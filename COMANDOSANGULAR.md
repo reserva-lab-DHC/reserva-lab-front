@@ -14,9 +14,7 @@ Once the server is running, open your browser and navigate to `http://localhost:
 
 ## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-Example, to generate a header component in the feature folder, run:
+Angular CLI includes powerful code scaffolding tools. To generate a header component in the feature folder, run:
 
 ```bash
 ng generate component features/header/header
