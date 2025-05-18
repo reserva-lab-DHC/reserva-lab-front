@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    height: 3.125rem; 
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(/src/assets/img/background.png);
+    align-items: center;
+}
+.logo__dom{
+    width: 7.60rem;
+    height: 1.25rem;
+
+}
+.menu{
+    height: 0.90rem;
+    width: 1.25rem;
+    
+}
+.img-mobile{
+    margin-left: 1.25rem;
+    width: 1.25rem;
+}
+.menu__desk{
+    display: none;
+}
+.close-menu{
+    height: 0.90rem;
+    
+}
+#Menu__button{
+    background: transparent;
+    border: none;
+}
+.hidden{
+    display: none;
+}
+.icone__usuario{
+    height: 1.87rem;
+    width: 1.87rem;
+    border-radius: 1rem;
+    margin-right: 1.25rem;
+}
+.navegacao__item{
+    margin-left: 1px;
+    border: 1px solid #868686;
+    text-decoration: none;
+    padding: 12px 0px 12px 12px;
+    display: block;
+    
+    font-size:0.75rem;
+    font-family: Montserrat, sans-serif;
+    font-weight: 600;
+    color: #000000;
+    box-sizing: border-box;
+    height: 3rem;
+    width: 7.62rem;
+    
+}
+.navegacao__titulo{
+    font-weight: 700;
+}
+li :hover{
+    background-color: #dadada;
+}
+@media(min-width:1200px){
+    .header{
+        height: 100px;
+    }
+    .logo__dom{
+        height: 2.50rem;
+        width: 15.2rem;
+    }
+    .menu{
+    display: none;
+    }
+    .close-menu{
+        display: none;
+    }
+    .menu__desk{
+        display: block;
+    }
+    .hidden{
+        display: none;
+    }
+    .icone__usuario{
+        height: 3.74rem;
+        width: 3.74rem;
+        border-radius: 2rem;
+        margin-right: 2.50rem;
+    }
+    .navegacao__item{
+        font-weight: 400;
+        font-size: 1.50rem;
+        width: 15.24rem;
+        height: 5rem;
+    }
+    .navegacao__titulo{
+        font-weight: 500;
+    }
+    .img-mobile{
+        display: none;
+    }
+    .img-desk{
+        margin-left: 2.50rem;
+        width: 2.06125rem;/*adaptado a 32.98px do figma*/
+    }
+}
