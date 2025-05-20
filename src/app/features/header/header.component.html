@@ -1,26 +1,41 @@
+<header class="header"> <!-- ao inves de section, usar div -->
 
-    <section class="header">
-        
-        <button id="Menu__button">
-            <div class="img-mobile">
-            <img src="/src/assets/img/Menu.png" alt="Menu" class="menu" id="icone-menu">
-            <img src="/src/assets/img/Vector.png" alt="X" class="close-menu hidden" id="icone-fechar">
-            </div>
-            <div class="img-desk">
-            <img src="/src/assets/img/menu-desk.png" alt="Menu" class="menu__desk" id="icone-menu-desk">
-            <img src="/src/assets/img/vector-desk.png" alt="X" class="close-menu__desk hidden" id="icone-fechar-desk">
-            </div>
-            
-        </button>
-        <img src="/src/assets/img/logo-domhelder.png" alt="Logo da dom helder" class="logo__dom">
-        <img src="/src/assets/img/icone-usuario.png" alt="Icone usuário" class="icone__usuario">
-    </section>
-    <nav id="navegacao" class="hidden">
-         <ul>
-              <li ><a href="#"class="navegacao__item navegacao__titulo">Página inicial</a></li>
-              <li ><a href="#"class="navegacao__item">Quadro de <br>Reservas</a></li>
-              <li ><a href="#"class="navegacao__item">Cadastrar <br>Laboratorios</a></li>
-              <li ><a href="#"class="navegacao__item">Solicitação de <br>Reservas</a></li>
-        </ul>
-     </nav>
-   
+    <!-- TODO: 
+     Isso aqui tem que ser um componente a parte também
+     pode ser um botão com ícone 
+     icon-button
+     e depois ser chamado aqui
+     aí a lógica do botão fica no componente e não no header
+     -->
+    <button id="Menu__button">
+        <div class="img-mobile">
+            <!-- Ao inves de ter uma imagem para cada tela, configura-se o tamanho da imagem com css... -->
+            <img src="assets/img/Menu.png" alt="Menu" class="menu" id="icone-menu">
+            <img src="assets/img/Vector.png" alt="X" class="close-menu hidden" id="icone-fechar">
+        </div>
+        <div class="img-desk">
+            <img src="assets/img/menu-desk.png" alt="Menu" class="menu__desk" id="icone-menu-desk">
+            <img src="assets/img/vector-desk.png" alt="X" class="close-menu__desk hidden" id="icone-fechar-desk">
+        </div>
+
+    </button>
+    <img src="assets/img/logo-domhelder.png" alt="Logo da dom helder" class="logo__dom">
+    <img src="assets/img/icone-usuario.png" alt="Icone usuário" class="icone__usuario">
+</header>
+
+<!-- TODO: esse select tem que virar um componente a parte
+        porém ele é será um componente filho do header
+        (vou avisar a Fabíola que o select dela não é um componente global)
+        então adicione o novo componente numa pasta ui do header
+        header/ui/header-select
+     e depois ser chamado aqui
+     deve usar o routerLink para navegar entre as páginas
+      -->
+<nav id="navegacao" class="hidden">
+    <ul>
+        <li><a href="#" class="navegacao__item navegacao__titulo">Página inicial</a></li>
+        <li><a href="#" class="navegacao__item">Quadro de <br>Reservas</a></li>
+        <li><a href="#" class="navegacao__item">Cadastrar <br>Laboratorios</a></li>
+        <li><a href="#" class="navegacao__item">Solicitação de <br>Reservas</a></li>
+    </ul>
+</nav>

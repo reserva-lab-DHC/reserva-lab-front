@@ -6,10 +6,10 @@
 
 .header{
     height: 3.125rem; 
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    background-image: url(/src/assets/img/background.png);
+    background-image: url('/assets/img/background.png');
     align-items: center;
 }
 .logo__dom{
