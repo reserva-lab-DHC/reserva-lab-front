@@ -1,8 +1,12 @@
-<nav class="navegacao">
+<dhc-icon-button (clicked)="openMenu()" iconUrl="/assets/img/menu-desk.png"></dhc-icon-button>
+<!-- o botão controla a exibição do dropdown pela 
+alteração do signal isMenuOpen -->
+
+<div class="navegacao" *ngIf="isOpen()">
   <ul>
     <li><a routerLink="/home" class="navegacao__item navegacao__titulo">Página inicial</a></li>
     <li><a routerLink="/quadro-de-reservas" class="navegacao__item">Quadro de <br>Reservas</a></li>
     <li><a routerLink="/cadastrar-laboratorios" class="navegacao__item">Cadastrar <br>Laboratórios</a></li>
     <li><a routerLink="/solicitacao-reservas" class="navegacao__item">Solicitação de <br>Reservas</a></li>
   </ul>
-</nav>
+</div>

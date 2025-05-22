@@ -1,8 +1,8 @@
 <header class="header">
-  <dhc-icon-button [isMenuOpen]="isMenuOpen" (toggleMenu)="toggleMenu()"></dhc-icon-button>
+  <dhc-header-select></dhc-header-select> <!-- ele não pode empurrar os outros elementos para baixo quando aberto...-->
   <img src="assets/img/logo-domhelder.png" alt="Logo da dom helder" class="logo__dom">
   <img src="assets/img/icone-usuario.png" alt="Icone usuário" class="icone__usuario">
 </header>
 
-<dhc-header-select *ngIf="isMenuOpen"></dhc-header-select>
+
 

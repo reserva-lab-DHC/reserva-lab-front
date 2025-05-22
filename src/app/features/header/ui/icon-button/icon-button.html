@@ -1,15 +1,30 @@
-<button id="Menu__button" (click)="onClick()">
-  <div class="img-mobile">
-    <img *ngIf="!isMenuOpen" src="assets/img/Menu.png" alt="Menu" class="menu"/>
-    <img *ngIf="isMenuOpen" src="assets/img/Vector.png" alt="Fechar" class="close-menu" />
+<div class="container">
+  <button (click)="onClick()">
+    <div class="img-desk">
+      <img [src]="iconUrl()" alt="icon">
+    </div>
+    <!-- nessa linha de raciocínio 
+  esse componente pode vir a ser utilizado em outros lugares, 
+  como por exemplo no header, onde o botão de menu é um ícone que vc passou a url -->
+
+    <!-- <div class="img-mobile">
+    <img *ngIf="!isMenuOpen()" src="assets/img/Menu.png" alt="Menu" class="menu" />
+    <img *ngIf="isMenuOpen()" src="assets/img/Vector.png" alt="Fechar" class="close-menu" />
   </div>
-<div class="img-desk">
-  <img *ngIf="!isMenuOpen" src="assets/img/menu-desk.png" alt="Menu Desktop" class="menu__desk" />
-  <img *ngIf="isMenuOpen" src="assets/img/vector-desk.png" alt="Fechar Desktop" class="close-menu__desk" />
+  <div class="img-desk">
+    <img *ngIf="!isMenuOpen()" src="assets/img/menu-desk.png" alt="Menu Desktop" class="menu__desk" />
+    <img *ngIf="isMenuOpen()" src="assets/img/vector-desk.png" alt="Fechar Desktop" class="close-menu__desk" />
+  </div> -->
+  </button>
 </div>
-</button>
+
 
 
 
 <!--Coloquei duas imagens para cada pensando na qualidade, usei a de mobile no desk e ficou bem ruim a qualidade-->
 <!-- Mesmo assim seria melhor deixar apenas uma imagem? -->
+
+<!-- A ideia de criar um icon button era para que onde quer que precisemos de um botão com um ícone a gente tenha esse componente para usar,
+ por isso movi ele para o shared..
+ em relação as imagens, o tamanho delas deveria ser controlado pelo css ela tem o tamanho 100% e ocupa o espaço do container pai para nao perder a proporção
+  -->

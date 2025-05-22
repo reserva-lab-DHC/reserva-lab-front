@@ -1,4 +1,4 @@
-#Menu__button {
+.container {
   background: transparent;
   border: none;
 }
@@ -7,9 +7,11 @@
   height: 0.90rem;
   width: 1.25rem;
 }
+
 .hidden {
   display: none;
 }
+
 .img-mobile {
   margin-left: 1.25rem;
   width: 1.25rem;
@@ -48,8 +50,8 @@
     margin-left: 2.5rem;
     width: 2.06125rem;
   }
-  .close-menu__desk{
+
+  .close-menu__desk {
     display: block;
   }
 }
-

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,10 +9,17 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./icon-button.scss']
 })
 export class IconButtonComponent {
-  @Input() isMenuOpen = false;
-  @Output() toggleMenu = new EventEmitter<void>();
+
+  iconUrl = input('');
+  /* 
+  iconWidth = signal('');
+  iconHeight = signal(''); 
+  o caminho é por aí
+  */
+  clicked = output();
 
   onClick() {
-    this.toggleMenu.emit();
+    this.clicked.emit();
   }
+
 }
