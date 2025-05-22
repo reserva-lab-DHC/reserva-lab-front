@@ -1,0 +1,55 @@
+#Menu__button {
+  background: transparent;
+  border: none;
+}
+
+.menu {
+  height: 0.90rem;
+  width: 1.25rem;
+}
+.hidden {
+  display: none;
+}
+.img-mobile {
+  margin-left: 1.25rem;
+  width: 1.25rem;
+}
+
+.menu__desk {
+  display: none;
+}
+
+.close-menu {
+  height: 0.90rem;
+}
+
+.close-menu__desk {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .menu {
+    display: none;
+  }
+
+  .close-menu {
+    display: none;
+  }
+
+  .menu__desk {
+    display: block;
+  }
+
+  .img-mobile {
+    display: none;
+  }
+
+  .img-desk {
+    margin-left: 2.5rem;
+    width: 2.06125rem;
+  }
+  .close-menu__desk{
+    display: block;
+  }
+}
+
