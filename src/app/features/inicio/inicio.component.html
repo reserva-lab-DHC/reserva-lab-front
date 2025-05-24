@@ -1,0 +1,9 @@
+<!-- inicio.component.html -->
+<div *ngIf="authService.isLoggedIn()">
+    <p>Welcome! You're logged in</p>
+    <button (click)="authService.logout()">Logout</button>
+</div>
+
+<div *ngIf="!authService.isLoggedIn()">
+    <p>Please <a routerLink="/login">login</a> to access the system</p>
+</div>
