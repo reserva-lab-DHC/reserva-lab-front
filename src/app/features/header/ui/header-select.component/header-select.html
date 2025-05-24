@@ -1,5 +1,7 @@
-<dhc-icon-button (clicked)="openMenu()" iconUrl="/assets/img/menu-desk.png"></dhc-icon-button>
-<!-- o botão controla a exibição do dropdown pela 
+<dhc-icon-button 
+  (clicked)="openMenu()" 
+  [iconUrl]="isOpen() ? '/assets/img/vector-desk.png' : '/assets/img/menu-desk.png'">
+</dhc-icon-button><!-- o botão controla a exibição do dropdown pela 
 alteração do signal isMenuOpen -->
 
 <div class="navegacao" *ngIf="isOpen()">
