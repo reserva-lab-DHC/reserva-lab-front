@@ -6,7 +6,7 @@ export class AuthService {
   constructor(private router: Router) { }
 
   // Save user to localStorage
-  login(user: any): void {
+  login(user: object): void {
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   // Get current user
-  getCurrentUser(): any {
+  getCurrentUser(): object | null {
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
   }
