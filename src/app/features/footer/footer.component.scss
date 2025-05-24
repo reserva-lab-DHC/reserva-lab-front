@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+
+*{
+    margin:0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100vh;
+}
+
+.footer {
+    background-color: #C4213E;
+    color: #FFFFFF;
+    font-family: 'Montserrat';
+    font-size: 14px;
+    font-weight: 400;
+    width: 360;
+    height: 780;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
