@@ -1,3 +1,4 @@
+Java é melhor
 # Introdução?
 Repositório dedicado para a aplicação front end da disciplina PI-2. Uma solução para monitorar as reservas de laboratórios da Escola Superior Dom Helder Câmara.
 
