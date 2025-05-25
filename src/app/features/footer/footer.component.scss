@@ -1,28 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
-
-*{
-    margin:0;
-    padding: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    height: 100vh;
-}
-
 .footer {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
     background-color: #C4213E;
     color: #FFFFFF;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    width: 360;
-    height: 780;
-    padding: 5%;
+    width: 100%;
+    height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
+}
+
+@media screen and (min-width: 768px) {
+    .footer {
+        height: 140px;
+    }
 }
