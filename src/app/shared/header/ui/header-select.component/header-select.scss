@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.navegacao {
+  position: absolute;
+  top: 50px;
+}
+
+.navegacao__item {
+  margin-left: 1px;
+  border: 1px solid #868686;
+  text-decoration: none;
+  padding: 12px 0px 12px 12px;
+  display: block;
+  font-size: 0.75rem;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  color: #000000;
+  box-sizing: border-box;
+  height: 3rem;
+  width: 7.62rem;
+}
+
+.navegacao__titulo {
+  font-weight: 700;
+}
+
+li:hover {
+  background-color: #dadada;
+}
+
+@media (min-width: 1200px) {
+  .navegacao{
+    top:100px;
+  }
+  .navegacao__item {
+    font-weight: 400;
+    font-size: 1.5rem;
+    width: 15.24rem;
+    height: 5rem;
+  }
+
+  .navegacao__titulo {
+    font-weight: 500;
+  }
+}
