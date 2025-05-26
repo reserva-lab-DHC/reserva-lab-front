@@ -11,13 +11,7 @@ import { CommonModule } from '@angular/common';
 export class IconButtonComponent {
 
   iconUrl = input('');
-  /* 
-  iconWidth = signal('');
-  iconHeight = signal(''); 
-  o caminho é por aí
-  */
-  clicked = output();
-
+  clicked = output(); 
   onClick() {
     this.clicked.emit();
   }
