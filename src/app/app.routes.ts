@@ -1,6 +1,31 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-    {path: 'home', component: AppComponent}
+    {
+        path: 'login',
+        loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent)
+    },
+    {
+        path: 'inicio',
+        loadComponent: () => import('./features/inicio/inicio.component').then(m => m.InicioComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'quadro-de-reservas',
+        loadComponent: () => import('./features/quadro-de-reservas/quadro-de-reservas.component').then(m => m.QuadroDeReservasComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'cadastrar-laboratorio',
+        loadComponent: () => import('./features/cadastrar-laboratorio/cadastrar-laboratorio.component').then(m => m.CadastrarLaboratorioComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'solicitacao-de-reservas',
+        loadComponent: () => import('./features/solicitacao-de-reservas/solicitacao-de-reservas.component').then(m => m.SolicitacaoDeReservasComponent),
+        canActivate: [authGuard]
+    },
+    { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+    { path: '**', redirectTo: 'inicio' }
 ];
