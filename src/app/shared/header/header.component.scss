@@ -1,0 +1,39 @@
+.header {
+  height: 3.125rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url('/assets/img/background.png');
+  position: relative;
+}
+
+.logo__dom {
+  width: 7.6rem;
+  height: 1.25rem;
+}
+
+.icone__usuario {
+  height: 1.87rem;
+  width: 1.87rem;
+  border-radius: 1rem;
+  margin-right: 1.25rem;
+}
+
+@media (min-width: 1200px) {
+  .header {
+    height: 100px;
+  }
+
+  .logo__dom {
+    height: 2.5rem;
+    width: 15.2rem;
+  }
+
+  .icone__usuario {
+    height: 3.74rem;
+    width: 3.74rem;
+    border-radius: 2rem;
+    margin-right: 2.5rem;
+  }
+}
