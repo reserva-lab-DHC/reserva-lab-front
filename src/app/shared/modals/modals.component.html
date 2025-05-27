@@ -1,0 +1,6 @@
+<ng-container [ngSwitch]="tipo">
+  <dhc-modal-confirmacao *ngSwitchCase="'confirmacao'"></dhc-modal-confirmacao>
+  <dhc-modal-erro *ngSwitchCase="'erro'"></dhc-modal-erro>
+  <dhc-modal-exclusao *ngSwitchCase="'cancelamento'"></dhc-modal-exclusao>
+</ng-container>
+

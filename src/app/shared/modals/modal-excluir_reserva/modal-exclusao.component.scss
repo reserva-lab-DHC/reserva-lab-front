@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin:0;
+}
+.modal-exclusao{
+    width: 300px;
+    height: 287px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.25);
+    position: relative;
+    margin: 10px;/*Apenas para facilitar a visualização na hora de programar*/
+}
+.botao-fechar{
+    position: absolute;
+    top: 13px;
+    right:13px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.icone-fechar{
+    width: 16px;
+    height: 16px;
+}
+.box-texto{
+    width: 236px;
+    height: 51px;
+    position: absolute;
+    top: 41px;
+    left: 21px;
+}
+.texto{
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    color: #170707;
+}
+.box-escolhas{
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    width:198px;
+    height: 61px;
+    top: 101px;
+    left: 40px;
+    position: absolute;
+}
+.opcao input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+.opcao{
+    display: flex;
+    gap: 27px;
+    cursor: pointer;
+}
+.texto-opcao{
+    font-size: 14px;
+    font-family: Montserrat;
+    
+}
+.botao{
+    position: absolute;
+    top: 199px;
+    left: 90px;
+}
+.botao-confirmar{
+    width:120px;
+    height: 50px;
+    border-radius: 10px;
+    border:none;
+    cursor: pointer;
+    background-color:#DE2445;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+.texto-botao-confirmar{
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Montserrat;
+}
+.botao-fechar:hover .icone-fechar{
+    width:18px;
+    height:18px;
+}
+.botao-confirmar:hover{
+    background-color:#f9607c;
+}
+.botao-confirmar:hover .texto-botao-confirmar{
+    color: #000000;
+}
+@media(min-width:1200px){
+    .modal-exclusao{
+        width: 600px;
+        height: 574px;
+        box-shadow: 0px 0px 8px 8px rgba(0,0,0,0.25);
+        border-radius: 40px;
+    }
+    .botao-fechar{
+    right: 26px;
+    top: 26px;
+    }  
+    .icone-fechar{
+    width:36px;
+    height:36px;
+    }
+
+    .botao-fechar:hover .icone-fechar{
+    width:40px;
+    height:40px;
+    }
+    .box-texto{
+        width: 471px;
+        height: 102px;
+        top: 82px;
+        left: 42px;
+    }
+    .texto{
+        font-size: 28px;
+    }
+    .box-escolhas{
+        width: 373px;
+        height: 118px;
+        top: 202px;
+        left: 80px;
+        gap: 54px;
+    }
+    .opcao input[type="checkbox"]{
+        width: 32px;
+        height: 32px;
+    }
+    .opcao{
+        gap: 54px;
+    }
+    .texto-opcao{
+        font-size: 26px;
+    }
+    .botao{
+        top: 423px;
+        left: 179px;
+    }
+    .botao-confirmar{
+        width: 240px;
+        height: 100px;
+        border-radius: 20px;
+        box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.25);
+    }
+    .texto-botao-confirmar{
+        font-size: 28px;
+    }
+}
