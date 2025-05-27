@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/header/header.component";
 import { FooterComponent } from "./shared/footer/footer.component";
-import { CardComponent } from "./shared/card/card.component";
 
 @Component({
   selector: 'dhc-app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CardComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })
