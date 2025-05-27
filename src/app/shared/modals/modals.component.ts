@@ -1,21 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
-import { ErroComponent } from './modal-erro/modal-erro.component';
-import { ExclusaoComponent } from './modal-excluir_reserva/modal-exclusao.component';
+import { ConfirmacaoComponent } from "./ui/modal-confirmacao/modal-confirmacao.component";
+import { ErroComponent } from "./ui/modal-erro/modal-erro.component";
+import { ExclusaoComponent } from "./ui/modal-excluir_reserva/modal-exclusao.component";
 
+export type modalType = 'confirmacao' | 'erro' | 'cancelamento';
 @Component({
   selector: 'dhc-modals',
-  standalone: true, 
+  standalone: true,
   imports: [
     CommonModule,
     ConfirmacaoComponent,
     ErroComponent,
-    ExclusaoComponent
+    ExclusaoComponent,
   ],
   templateUrl: './modals.component.html',
   styleUrls: ['./modals.component.scss']
 })
 export class ModalsComponent {
-  @Input() tipo: 'confirmacao' | 'erro' | 'cancelamento' = 'confirmacao';
+  type = input<modalType>("confirmacao")
 }
