@@ -3,16 +3,16 @@ import { NgClass } from '@angular/common';
 import { output } from '@angular/core';
 
 @Component({
-  selector: 'dynamic-button',
+  selector: 'dhc-dynamic-button',
   standalone: true,
   imports: [NgClass],
   templateUrl: './dynamic-button.component.html',
   styleUrls: ['./dynamic-button.component.scss']
 })
 export class DynamicButtonComponent {
-  @Input() label: string = 'Botão';
+  @Input() label = 'Botão';
   @Input() type: 'primary' | 'secondary' = 'primary';
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
   @Input() color: 'red' | 'white-red' | 'blue' = 'red';
   clicked = output();
 
