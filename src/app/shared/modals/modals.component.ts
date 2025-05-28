@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input,Output,EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmacaoComponent } from "./ui/modal-confirmacao/modal-confirmacao.component";
 import { ErroComponent } from "./ui/modal-erro/modal-erro.component";
@@ -18,5 +18,10 @@ export type modalType = 'confirmacao' | 'erro' | 'cancelamento';
   styleUrls: ['./modals.component.scss']
 })
 export class ModalsComponent {
-  type = input<modalType>("confirmacao")
+  @Input() type: modalType | null = 'confirmacao';
+  @Output() fechar = new EventEmitter<void>();
+  
+  fecharModal(){
+    this.type=null;
+  }
 }
