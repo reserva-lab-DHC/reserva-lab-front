@@ -1,0 +1,44 @@
+.navegacao {
+  position: absolute;
+  top: 50px;
+
+  &__item {
+
+    display: flex;
+    align-items: center;
+    margin-left: 1px;
+    border: 1px solid #868686;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: Montserrat, sans-serif;
+    background-color: #fff;
+    color: #000000;
+    box-sizing: border-box;
+    max-width: 110px;
+    min-height: 40px;
+    padding: 12px 10px;
+    width: 100%;
+    height: auto;
+
+    &:hover {
+      background-color: #dadada;
+    }
+  }
+}
+
+.principal{
+  font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+  .navegacao {
+    top: 100px;
+  }
+
+  .navegacao__item {
+    max-width: 150px;
+    min-height: 50px;
+    padding: 15px 10px;
+    font-size: 0.875rem;
+  }
+}
