@@ -1,12 +1,13 @@
-<dhc-icon-button (clicked)="openMenu()"
-  [iconUrl]="isOpen() ? '/assets/img/vector-desk.png' : '/assets/img/menu-desk.png'">
+<dhc-icon-button
+  (clicked)="openMenu()"
+  (keyup.enter)="showMenu()"
+  [iconUrl]="isOpen() ? '/assets/img/vector-desk.png' : '/assets/img/menu-desk.png'"
+>
 </dhc-icon-button>
 
-<div class="navegacao" *ngIf="isOpen()">
-
+<div #menuContainer class="navegacao" *ngIf="isOpen()">
   <div class="navegacao__item principal"><a routerLink="/home">Página inicial</a></div>
   <div class="navegacao__item"><a routerLink="/quadro-de-reservas">Quadro de Reservas</a></div>
-  <div class="navegacao__item"><a routerLink="/cadastrar-laboratorios">Cadastrar aboratórios</a></div>
+  <div class="navegacao__item"><a routerLink="/cadastrar-laboratorios">Cadastrar laboratórios</a></div>
   <div class="navegacao__item"><a routerLink="/solicitacao-reservas">Solicitação de Reservas</a></div>
-
 </div>
