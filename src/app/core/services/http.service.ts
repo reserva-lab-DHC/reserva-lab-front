@@ -53,27 +53,6 @@
 //     //     return this.http.get<T>(url, { headers: this.API_HEADERS, params }).pipe(this.handleAuthError());
 //     // }
 
-//     // /**
-//     //  * Autentica um usuário utilizando um token.
-//     //  *
-//     //  * @param {string} [token] - O token de autenticação em formato Base64 (formato - login:código).
-//     //  * @returns {Observable<object>} Um Observable com a resposta da requisição de autenticação.
-//     //  * @throws {string} Se o usuário já estiver logado.
-//     //  */
-//     // authenticate<T = object>(token?: string): Observable<T> | undefined {
-//     //     const alreadyLoggedIn = this.getUserToken() !== undefined;
-//     //     if (alreadyLoggedIn) return;
-
-//     //     this.API_HEADERS = this.API_HEADERS.set('Authorization', 'Basic ' + token)
-//     //         .set('x-explorer-authentication-class', 'crm.person')
-//     //         .set('x-explorer-account-token', this.accountToken);
-
-//     //     const url = this.getUrl('apideautenticacao');
-//     //     const params = this.objectToHttpParams();
-
-//     //     return this.http.get<T>(url, { headers: this.API_HEADERS, params });
-//     // }
-
 //     /**
 //      * Converte um objeto de chave-valor em HttpParams.
 //      *
@@ -122,34 +101,6 @@
 // //     private getUrl(target: string): string {
 // //         return `${this.API_URL}${target}`;
 // //     }
-
-//     /**
-//      * Define os cabeçalhos da requisição de acordo com o estado de autenticação.
-//      *
-//      * @param loggedArea - Define se a requisição é para uma área logada.
-//      * @param body - Corpo da requisição (para credenciais alternativas).
-//      * @param loginToken - Token opcional passado diretamente.
-//      */
-//     private setHeaders(loggedArea: boolean = false, body?: Record<string, unknown>, loginToken?: string): void {
-//         if (!loggedArea) {
-//             this.API_HEADERS = this.API_HEADERS.set('Authorization', 'Bearer')
-//                 .set('x-explorer-account-token',)
-//                 .delete('x-explorer-authentication-class');
-//             return;
-//         }
-
-//         const token = loginToken ?? this.getUserToken();
-
-//         if (token === '' || token === undefined || token === null) {
-//             this.API_HEADERS = this.API_HEADERS.set('Authorization', 'Basic ' + body?.['authorization'])
-//                 .set('x-explorer-authentication-class', 'crm.person')
-//                 .set('x-explorer-account-token', this.accountToken);
-//         } else {
-//             this.API_HEADERS = this.API_HEADERS.set('Authorization', 'Bearer ' + token)
-//                 .set('x-explorer-account-token', this.accountToken)
-//                 .delete('x-explorer-authentication-class');
-//         }
-//     }
 
 //     /**
 //      * Detecta um erro de autenticação (HttpErrorResponse com 401), desloga o usuário
