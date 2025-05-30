@@ -19,6 +19,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
+        path: 'confirmar-reserva',
+        loadComponent: () => import('./features/confirmar-solicitacoes/confirmar-solicitacoes.component').then(m => m.ConfirmarSolicitacoesComponent),
+        canActivate: [authGuard]
+    },
+    {
         path: 'cadastrar-laboratorio',
         loadComponent: () => import('./features/cadastrar-laboratorio/cadastrar-laboratorio.component').then(m => m.CadastrarLaboratorioComponent),
         canActivate: [authGuard]
@@ -30,6 +35,7 @@ export const routes: Routes = [
     },
     { path: '**', redirectTo: 'inicio' }
 ];
+
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
