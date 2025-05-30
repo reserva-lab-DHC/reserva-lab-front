@@ -63,7 +63,7 @@ div.v {
   width: 32px;
   height: 32px;
   transition: all 0.2s ease-in-out;
-  
+  cursor: pointer;
 }
 div.v:hover {
   background: url("/assets/img/checkmark--filled.svg");
