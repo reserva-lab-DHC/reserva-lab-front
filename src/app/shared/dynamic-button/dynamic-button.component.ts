@@ -1,10 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { output } from '@angular/core';
 
 
-export type ButtonType = 'primary' | 'secondary';
-export type ButtonColor = 'red' | 'white-red' | 'blue';
+export type ButtonType = "primary" | "secondary";
+export type ButtonColor = "red" | "white-red" | "blue";
 @Component({
   selector: 'dhc-dynamic-button',
   standalone: true,
@@ -14,13 +14,13 @@ export type ButtonColor = 'red' | 'white-red' | 'blue';
 })
 export class DynamicButtonComponent {
   label = input('');
-  type = input<ButtonType>('primary');
+  type = input<ButtonType>("primary");
   disabled = input(false);
-  isPressed = input(false);
-  color = input<ButtonColor>('red');
+  isPressed = signal(false);
+  color = input<ButtonColor>("red");
   clicked = output();
 
-  
+
 
   get colorClass() {
     if (this.label().toLowerCase() === 'reservar' && this.type() === 'primary') {
@@ -35,10 +35,11 @@ export class DynamicButtonComponent {
   getClasses() {
     return {
       [this.type()]: true,
-      [this.colorClass]: true,
+      [this.color()]: true,
       pressed: this.isPressed()
     };
   }
+  
   onClick() {
     this.clicked.emit();
   }
