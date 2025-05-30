@@ -1,123 +1,81 @@
+import { Injectable } from '@angular/core';
+import {
+    HttpClient,
+    HttpErrorResponse,
+    HttpHeaders,
+    HttpParams
+} from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
-// import { Injectable, Injector, inject } from '@angular/core';
-// import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-// import { catchError, Observable, OperatorFunction, throwError } from 'rxjs';
-// import { AuthService } from './auth.service';
+@Injectable({
+    providedIn: 'root'
+})
+export class HttpService {
+    private readonly baseUrl = 'http://naotemainda';
 
+    constructor(private http: HttpClient) { }
 
-// @Injectable({ providedIn: 'root' })
-// export class HttpService {
+    /**
+     * Generic GET request
+     * @param endpoint API endpoint (e.g., '/users')
+     * @param params Query parameters (optional)
+     * @param headers Custom headers (optional)
+     */
+    get<T>(endpoint: string, params?: Record<string, string | number | null | boolean | undefined>, headers?: HttpHeaders): Observable<T> {
+        const url = `${this.baseUrl}${endpoint}`;
+        const options = {
+            headers: headers || this.getDefaultHeaders(),
+            params: this.createParams(params || {})
+        };
 
-//     //TODO: Definir a URL da API
-//     // private API_URL: string = '' 
+        return this.http.get<T>(url, options).pipe(
+            catchError(this.handleError)
+        );
+    }
 
-//     private http = inject(HttpClient);
-//     private injector = inject(Injector);
+    /**
+     * Generic POST request
+     * @param endpoint API endpoint (e.g., '/users')
+     * @param body Request payload (JSON)
+     * @param headers Custom headers (optional)
+     */
+    post<T, B extends Record<string, unknown>>(endpoint: string, body: B, headers?: HttpHeaders): Observable<T> {
+        const url = `${this.baseUrl}${endpoint}`;
+        const options = { headers: headers || this.getDefaultHeaders() };
 
-//      private accountToken: string = 'account-token'; // Substitua pelo token real da conta
+        return this.http.post<T>(url, body, options).pipe(
+            catchError(this.handleError)
+        );
+    }
 
-//     // Cabeçalhos padrão das requisições HTTP (HttpHeaders são imutáveis, então é necessário redefini-los ao atualizar)
-//     private API_HEADERS: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    private getDefaultHeaders(): HttpHeaders {
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        });
+    }
 
-//     /**
-//      * Executa uma requisição HTTP POST para um endpoint específico.
-//      *
-//      * @param target - Endpoint da API a ser acessado.
-//      * @param body - Corpo da requisição.
-//      * @param loggedArea - Indica se deve utilizar configurações de usuário logado.
-//      * @returns Um Observable com a resposta da requisição.
-//      */
-//     post<T = object>(target: string, body?: Record<string, unknown>, loggedArea?: boolean): Observable<T> {
-//         this.setHeaders(loggedArea ?? false, body);
-//         const url = this.getUrl(target);
+    private createParams(params: Record<string, string | number | boolean | undefined | null>): HttpParams {
+        let httpParams = new HttpParams();
+        if (params) {
+            Object.keys(params).forEach(key => {
+                if (params[key] !== undefined && params[key] !== null) {
+                    httpParams = httpParams.append(key, params[key]!.toString());
+                }
+            });
+        }
+        return httpParams;
+    }
 
-//         return this.http.post<T>(url, body, { headers: this.API_HEADERS }).pipe(this.handleAuthError());
-//     }
+    private handleError(error: HttpErrorResponse): Observable<never> {
+        const errorResponse = {
+            status: error.status,
+            message: error.error?.message || 'An unknown error occurred',
+            errors: error.error?.errors || []
+        };
 
-//     // /**
-//     //  * Executa uma requisição HTTP GET para um endpoint específico.
-//     //  * Caso seja passado um objeto no corpo da requisição, ele será convertido em parâmetros de URL.
-//     //  *
-//     //  * @param target - Endpoint da API a ser acessado.
-//     //  * @param body - Objeto contendo parâmetros a serem convertidos para a URL.
-//     //  * @param loggedArea - Indica se deve utilizar configurações de usuário logado.
-//     //  * @returns Um Observable com a resposta da requisição.
-//     //  */
-//     // get<T = object>(target: string, body?: Record<string, unknown>, loggedArea?: boolean): Observable<T> {
-//     //     const authorization = (body?.['authorization'] as string) ?? undefined;
+        console.error('HTTP Error:', errorResponse);
 
-//     //     this.setHeaders(loggedArea ?? false, body, authorization);
-//     //     const url = this.getUrl(target);
-//     //     const params = this.objectToHttpParams({ ...(body ?? {}), _: Date.now() });
-
-//     //     return this.http.get<T>(url, { headers: this.API_HEADERS, params }).pipe(this.handleAuthError());
-//     // }
-
-//     /**
-//      * Converte um objeto de chave-valor em HttpParams.
-//      *
-//      * @param query - Objeto contendo os parâmetros a serem convertidos.
-//      * @returns HttpParams construído a partir do objeto.
-//      */
-//     private objectToHttpParams(query?: Record<string, unknown>): HttpParams {
-//         let params = new HttpParams();
-//         if (query === undefined) return params;
-
-//         Object.keys(query).forEach((key) => {
-//             const value = query[key];
-//             // Adiciona o parâmetro apenas se o valor não for nulo ou indefinido.
-//             if (value !== null && value !== undefined) {
-//                 params = params.append(key, value.toString());
-//             }
-//         });
-
-//         return params;
-//     }
-
-//     /**
-//      * Obtém o token do usuário armazenado no localStorage.
-//      *
-//      * @returns O token de acesso do usuário ou null caso não esteja disponível.
-//      */
-//     private getUserToken(): string | undefined {
-//         let token: string | undefined;
-
-//         try {
-//             const explorerUser = JSON.parse(sessionStorage.getItem('currentUser') ?? '{}');
-//             token = explorerUser?.accessToken?.token;
-//         } catch (e) {
-//             console.error('Erro ao processar currentUser do localStorage', e);
-//         }
-
-//         return token;
-//     }
-
-// //     /**
-// //    * Retorna a URL apropriada da API com base no estado de autenticação.
-// //    *
-// //    * @param target - Endpoint da API a ser acessado.
-// //    * @returns A URL completa da API correspondente ao endpoint e ao estado de autenticação.
-// //    */
-// //     private getUrl(target: string): string {
-// //         return `${this.API_URL}${target}`;
-// //     }
-
-//     /**
-//      * Detecta um erro de autenticação (HttpErrorResponse com 401), desloga o usuário
-//      *
-//      * Este método deve ser usado com o pipe do rxjs
-//      */
-//     private handleAuthError<T>(): OperatorFunction<T, T> {
-//         return catchError((e: unknown): Observable<T> => {
-
-//             if (e instanceof HttpErrorResponse && (e.status === 401 || e.status === 403)) {
-//                 const authService = this.injector.get(AuthService);
-
-//                 authService.logout();
-//                 return throwError(() => new Error('Usuário não autenticado ou sessão expirada.'));
-//             }
-
-//             return throwError(() => e);
-//         });
-//     }
-// }
+        return throwError(() => errorResponse);
+    }
+}
