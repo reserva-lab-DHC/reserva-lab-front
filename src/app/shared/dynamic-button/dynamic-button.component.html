@@ -1,0 +1,12 @@
+<button
+  [ngClass]="getClasses()"
+  [disabled]="disabled()"
+  (mousedown)="isPressed.set(true)"
+  (mouseup)="isPressed.set(false)"
+  (mouseleave)="isPressed.set(false)"
+  (touchstart)="isPressed.set(true)"
+  (touchend)="isPressed.set(false)"
+  (click)="onClick()"
+>
+  {{ label() }}
+</button>

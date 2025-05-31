@@ -1,7 +1,7 @@
 <!-- inicio.component.html -->
 <div *ngIf="authService.isLoggedIn()">
     <p>Welcome! You're logged in</p>
-    <button (click)="authService.logout()">Logout</button>
+    <dhc-dynamic-button (clicked)="authService.logout()" label="Logout" type="primary" color="red"></dhc-dynamic-button>
 </div>
 
 <div *ngIf="!authService.isLoggedIn()">

@@ -1,0 +1,99 @@
+div.solicit {
+  background-color: #f0f1f5;
+  font-size: 16px;
+  font-family: 'montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+
+}
+p.prof {
+  font-style: italic;
+  letter-spacing: 1.6px;
+}
+p.discip {
+  font-style: italic;
+  letter-spacing: 1.6px;
+}
+div > img {
+  width: 32px;
+  height: 32px;
+}
+div.options {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+div.content {
+display: flex;
+flex-direction: column;
+}
+div.content > p {
+  margin: 6.4px;
+}
+p.lab {
+font-weight: 600;
+}
+
+div.x {
+
+  background: url("/assets/img/close--outline.svg");
+  background-size: 32px;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  filter: drop-shadow(7px 7px 7px 7px rgba(243, 65, 65, 0.5));
+  transition: all 0.2s ease-in-out;
+
+}
+
+div.x:hover {
+
+  background: url("/assets/img/close--filled.svg");
+  background-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+div.v {
+
+  background: url("/assets/img/checkmark--outline.svg");
+  background-size: 32px;
+  width: 32px;
+  height: 32px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+div.v:hover {
+  background: url("/assets/img/checkmark--filled.svg");
+  background-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+
+@media (max-width: 768px) {
+div.solicit {
+  font-size: 12px;
+  border-radius: 11.25px;
+  padding: 3.75px 7.5px 3.75px 7.5px;
+}
+p.prof {
+  letter-spacing: 1.2px;
+}
+p.discip {
+  letter-spacing: 1.2px;
+}
+div > img {
+  width: 24px;
+  height: 24px;
+}
+div.options {
+  gap: 18px;
+}
+div.content > p {
+  margin: 4.8px;
+}
+
+}
