@@ -8,6 +8,6 @@ import { SelecaoComponent } from "../../shared/componente-selecao/selecao.compon
   styleUrl: './cadastrar-laboratorio.component.scss'
 })
 export class CadastrarLaboratorioComponent {
-  predioSelecionado: number = 0;
-  andarSelecionado: number = 0;
+  predioSelecionado = 0;
+  andarSelecionado = 0;
 }

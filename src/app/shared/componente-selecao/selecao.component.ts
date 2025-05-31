@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, input, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
