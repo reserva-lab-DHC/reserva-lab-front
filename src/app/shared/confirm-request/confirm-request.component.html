@@ -5,9 +5,10 @@
       <p class="discip">{{disciplina()}}</p>
     </div>
     <div class="options">
-      <div class="v">
+      <div id="v" (click)="destroyMyself()" (keydown)="destroyMyself()" tabindex="0">
       </div>
-        <div class="x">
+        <div id="x" (click)="destroyMyself()" (keydown)="destroyMyself()" tabindex="0">
       </div>
     </div>
   </div>
+

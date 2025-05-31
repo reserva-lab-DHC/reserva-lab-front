@@ -37,8 +37,8 @@ p.lab {
 font-weight: 600;
 }
 
-div.x {
-
+div#x {
+  cursor: pointer;
   background: url("/assets/img/close--outline.svg");
   background-size: 32px;
   width: 32px;
@@ -49,15 +49,15 @@ div.x {
 
 }
 
-div.x:hover {
+div#x:hover {
 
   background: url("/assets/img/close--filled.svg");
   background-size: 32px;
   width: 32px;
   height: 32px;
 }
-div.v {
-
+div#v {
+  cursor: pointer;
   background: url("/assets/img/checkmark--outline.svg");
   background-size: 32px;
   width: 32px;
@@ -65,7 +65,7 @@ div.v {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-div.v:hover {
+div#v:hover {
   background: url("/assets/img/checkmark--filled.svg");
   background-size: 32px;
   width: 32px;

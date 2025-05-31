@@ -1,12 +1,12 @@
 <h1>Confirmar Solicitações</h1>
 <!-- todo exibir o horário da solicitação (back ja tem) -->
 <div class="requests">
-  <dhc-confirm-request lab="Metodologias Ativas II" horario="08:00h" professor="Renata" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas II" horario="10:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas I" horario="08:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
-  <dhc-confirm-request lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
-
+  <dhc-confirm-request *ngIf="visibility[0]" (requestDestroy)="visibility[0] = false" lab="Metodologias Ativas II" horario="08:00h" professor="Renata" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[1]" (requestDestroy)="visibility[1] = false" lab="Metodologias Ativas II" horario="10:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[2]" (requestDestroy)="visibility[2] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[3]" (requestDestroy)="visibility[3] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[4]" (requestDestroy)="visibility[4] = false" lab="Metodologias Ativas II" horario="08:00h" professor="Renata" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[5]" (requestDestroy)="visibility[5] = false" lab="Metodologias Ativas II" horario="10:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[6]" (requestDestroy)="visibility[6] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I"></dhc-confirm-request>
+  <dhc-confirm-request *ngIf="visibility[7]" (requestDestroy)="visibility[7] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End"></dhc-confirm-request>
 </div>
