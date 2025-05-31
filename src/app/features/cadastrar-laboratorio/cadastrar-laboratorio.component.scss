@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+}
+.titulo{
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 20px;
+    color: #000000;
+    margin:26px 0 0 28px ;
+}
+.inserir-nome{
+    margin:43px 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.nome{  
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+}
+#nomelab{
+    width: 293px;
+    height: 32px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    
+}
+#nomelab::placeholder{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 12px;
+}
+.selecionar-local{
+    display: flex;
+    margin:26px 0 0 28px ;
+    gap:26px;
+}
+.predio{
+    width: 108px;
+    height: 90px;
+}
+.andar{
+    width:159px;
+    height: 128px;
+}
+.texto-foto{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+    margin: 63px 0 0 27px;
+}
+.foto{
+    width: 155px;
+    height: 155px;
+    cursor: pointer;
+    display: block;
+    margin: 36px 0 0 101px;
+    cursor: pointer;
+}
+.botao-registro{
+    margin: 88px 0 10px 120px;
+    border: none;
+    width: 120px;
+    height: 50px;
+    background-color:#DE2445;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.botao-texto{
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 600;
+}
+.botao-registro:hover{
+    background-color: #f9607c;
+}
+.botao-registro:hover .botao-texto{
+    color: #000000;
+}
