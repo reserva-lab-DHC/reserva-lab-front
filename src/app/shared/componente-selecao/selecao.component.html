@@ -1,9 +1,9 @@
-<div class="selecao" [ngClass]="layout">
-  <span class="titulo">{{ titulo }}</span>
-  <div class="opcoes" [ngClass]="layout">
+<div class="selecao" [ngClass]="layout()">
+  <span class="titulo">{{ titulo() }}</span>
+  <div class="opcoes" [ngClass]="layout()">
     <button
-      *ngFor="let valor of opcoes"
-      [class.selecionado]="valor === selecionado"
+      *ngFor="let valor of opcoes()"
+      [class.selecionado]="valor === selecionado()"
       [disabled]="estaDesabilitado(valor)"
       (click)="selecionar(valor)">
       {{ valor }}

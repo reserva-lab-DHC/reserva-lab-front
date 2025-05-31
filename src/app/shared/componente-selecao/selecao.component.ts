@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,22 +9,22 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./selecao.component.scss']
 })
 export class SelecaoComponent {
-  @Input() titulo = '';
-  @Input() opcoes: number[] = [];
-  @Input() selecionado: number | null = null;
-  @Input() desabilitar: number[] = [];
-  @Input() layout = 'horizontal';
 
-  @Output() selecionadoChange = new EventEmitter<number>();
+  titulo = input<string>('');
+  opcoes = input<number[]>([]);
+  selecionado = signal<number | null>(null);
+  desabilitar = input<number[]>([]);
+  layout = input<'horizontal' | 'vertical'>('horizontal');
+  selecionadoChange = output<number>();
 
   selecionar(valor: number): void {
-    if (this.selecionado !== valor && !this.desabilitar.includes(valor)) {
-      this.selecionado = valor;
+    if (this.selecionado() !== valor && !this.desabilitar().includes(valor)) {
+      this.selecionado.set(valor);
       this.selecionadoChange.emit(valor);
     }
   }
 
   estaDesabilitado(valor: number): boolean {
-    return this.desabilitar.includes(valor);
+    return this.desabilitar().includes(valor);
   }
 }

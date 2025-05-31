@@ -5,16 +5,6 @@
     min-height: 100vh
 }
 
-.container-seletores {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-
 @media (min-width: 1200px) {
     .content {
         padding-top: 100px;

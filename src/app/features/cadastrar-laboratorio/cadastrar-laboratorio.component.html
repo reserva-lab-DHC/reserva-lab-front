@@ -1,1 +1,16 @@
-<p>cadastrar-laboratorio works!</p>
+
+<div class="container-seletores">
+  <dhc-selecao
+    titulo="Prédio"
+    [opcoes]="[1, 2]"
+    selecionado="predioSelecionado"
+    layout="vertical">
+</dhc-selecao>
+
+  <dhc-selecao
+    titulo="Andar"
+    [opcoes]="[1,2,3,4,5,6,7,8,9,10,11]"
+    selecionado="andarSelecionado"
+    layout="horizontal">
+  </dhc-selecao>
+</div>
