@@ -1,0 +1,189 @@
+/* Estilos Gerais (ex: reset básico) */
+:host {
+    display: block; // Garante que o componente ocupe sua própria linha/bloco se não houver display flex/grid no pai
+}
+
+/* Estilo do Cabeçalho de Navegação de Data */
+.date-navigation-header {
+    background-color: #bb0000;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    min-height: 60px;
+}
+
+.date-navigation-header .nav-arrow {
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: black; // Cor das setas para preto
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.date-navigation-header .nav-arrow:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.date-navigation-header .current-date-display {
+    font-size: 1.1em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Estilos do Calendário */
+.calendar-button-container {
+    position: relative;
+}
+
+.calendar-toggle-button {
+    background-color: white;
+    border: none; // Removendo a borda preta
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Sombra inicial
+    transition: background-color 0.3s ease, box-shadow 0.1s ease; // Adiciona transição para a sombra
+    position: relative;
+}
+
+.calendar-toggle-button:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-toggle-button:active {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(0, 0, 0, 0.1); // Sombra dupla sutil ao clicar
+    transform: translateY(1px); // Pequeno efeito de "pressionar"
+}
+
+.calendar-toggle-button svg {
+    fill: black;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.calendar-toggle-button .add-icon {
+    fill: black;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 2;
+}
+
+/* Calendário Pop-up */
+.calendar-popup {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    width: 280px;
+    z-index: 1000;
+    /* display: none; e display: block; são controlados por *ngIf no HTML */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.calendar-header .nav-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.calendar-header .nav-button:hover {
+    background-color: #eee;
+}
+
+.calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+    font-size: 0.85em;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+    font-size: 0.95em;
+}
+
+.calendar-grid span {
+    padding: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: #333;
+}
+
+.calendar-grid span.empty {
+    visibility: hidden;
+    cursor: default;
+}
+
+.calendar-grid span:not(.empty):hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-grid span.selected {
+    background-color: #ffcccc;
+    color: #b30000;
+    font-weight: 600;
+}
+
+.calendar-grid span.current-day {
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+}
+
+@media (max-width: 768px) {
+    .calendar-popup {
+        width: 250px;
+        padding: 12px;
+    }
+    .calendar-grid span {
+        padding: 6px 0;
+    }
+}
