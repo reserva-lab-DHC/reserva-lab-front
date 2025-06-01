@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, Pipe, PipeTransform } from '@angular/core';
-import { formatDate } from '@angular/common'; // Importa formatDate para uso de locale
-
+import { Router } from '@angular/router'; // Importar o Router
+import { formatDate, registerLocaleData } from '@angular/common'; // Importa formatDate para uso de locale
+import localePt from '@angular/common/locales/pt'; // Importar dados de localização para português
 // --- Pipe Personalizado para Capitalizar a Primeira Letra ---
 // Será necessário declarar este pipe em um módulo (ex: AppModule)
 @Pipe({
@@ -42,6 +43,8 @@ export class DateNavigationHeaderComponent implements OnInit, OnDestroy {
   selectedMainDate: Date = new Date();   // Data principal exibida no cabeçalho
 
   weekDays: string[] = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU']; // Dias da semana para o cabeçalho do calendário
+  calendarDays: { dayNumber: number | string; date: Date | null }[] = []; // Array para os dias do calendário
+
 
   constructor() { }
 
