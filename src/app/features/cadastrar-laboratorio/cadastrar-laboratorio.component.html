@@ -4,12 +4,28 @@
     <label for="nomelab"><span class="nome">Nome</span></label>
     <input type="text" id="nomelab" placeholder="Nome do laboratório">
 </div>
-<div class="selecionar-local">
-    <div class="predio">issue 9</div>
-    <div class="andar">issue 9</div>
+<div class="container-seletores">
+  <dhc-selecao
+    titulo="Prédio"
+    [opcoes]="[1, 2]"
+    selecionado="predioSelecionado"
+    layout="vertical">
+</dhc-selecao>
+
+  <dhc-selecao
+    titulo="Andar"
+    [opcoes]="[1,2,3,4,5,6,7,8,9,10,11]"
+    selecionado="andarSelecionado"
+    layout="horizontal">
+  </dhc-selecao>
 </div>
 
 <p class="texto-foto">Selecione a foto do laboratório</p>
-<img src="/assets/img/foto-lab.png" alt="Colocar foto laboratório" class="foto">
+<img src="/assets/img/foto-lab.png" alt="Colocar foto laboratório" class="foto" id="imagemLab">
+<input type="file" id="upload" accept="image/*" style="display: none;">
+
 
 <button class="botao-registro"><span class="botao-texto">Registrar</span></button>
+
+
+

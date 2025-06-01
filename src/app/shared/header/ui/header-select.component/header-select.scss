@@ -17,7 +17,6 @@
     box-sizing: border-box;
     max-width: 110px;
     min-height: 40px;
-    padding: 12px 10px;
     width: 100%;
     height: auto;
     cursor: pointer;
@@ -27,16 +26,18 @@
     }
 
     & a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
+      padding: 12px 10px;
       color: #000000;
-      width: 100%;
-      height: 100%;
     }
 
   }
 }
 
-.principal{
+.principal {
   font-weight: 700;
 }
 
