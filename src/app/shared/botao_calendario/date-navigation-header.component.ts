@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, Pipe, PipeTransform } from '@angular/core';
-import { Router } from '@angular/router'; // Importar o Router
-import { formatDate, registerLocaleData } from '@angular/common'; // Importa formatDate para uso de locale
-import localePt from '@angular/common/locales/pt'; // Importar dados de localização para português
+import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, Pipe, PipeTransform } from '@angular/core';
+
 // --- Pipe Personalizado para Capitalizar a Primeira Letra ---
 // Será necessário declarar este pipe em um módulo (ex: AppModule)
 @Pipe({
@@ -31,22 +30,20 @@ export class TitleCaseMonthPipe implements PipeTransform {
 }
 
 @Component({
-  selector: 'app-date-navigation-header', // O seletor que você usará no HTML do componente pai
+  selector: 'dhc-date-navigation-header', // O seletor que você usará no HTML do componente pai
+  imports: [NgFor, NgIf, TitleCaseMonthPipe, TitleCasePipe, DatePipe],
   templateUrl: './date-navigation-header.component.html',
   styleUrls: ['./date-navigation-header.component.scss']
 })
-export class DateNavigationHeaderComponent implements OnInit, OnDestroy {
+export class DateNavigationHeaderComponent implements OnInit {
   @ViewChild('calendarContainer', { static: true }) calendarContainer!: ElementRef;
 
-  showCalendar: boolean = false;
+  showCalendar = false;
   currentCalendarDate: Date = new Date(); // Data atualmente exibida no pop-up do calendário
   selectedMainDate: Date = new Date();   // Data principal exibida no cabeçalho
 
   weekDays: string[] = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU']; // Dias da semana para o cabeçalho do calendário
   calendarDays: { dayNumber: number | string; date: Date | null }[] = []; // Array para os dias do calendário
-
-
-  constructor() { }
 
   ngOnInit(): void {
     // Inicializa o calendário com a data principal ao carregar o componente
@@ -60,10 +57,6 @@ export class DateNavigationHeaderComponent implements OnInit, OnDestroy {
     if (this.showCalendar && !this.calendarContainer.nativeElement.contains(event.target)) {
       this.showCalendar = false;
     }
-  }
-
-  ngOnDestroy(): void {
-    // No Angular, @HostListener cuida da remoção dos listeners
   }
 
   /**

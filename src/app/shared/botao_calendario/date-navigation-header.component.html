@@ -13,7 +13,7 @@
             </svg>
         </button>
 
-        <div *ngIf="showCalendar" class="calendar-popup" (click)="$event.stopPropagation()">
+        <div *ngIf="showCalendar" class="calendar-popup" (click)="$event.stopPropagation()" onkeydown="$event.stopPropagation()" tabindex="0" aria-hidden="true">
             <div class="calendar-header">
                 <button class="nav-button" (click)="prevMonth()">&lt;</button>
                 <span class="month-year">{{ currentCalendarDate | date:'MMMM yyyy':'pt' | titlecaseMonth }}</span>
@@ -28,7 +28,7 @@
                     [class.empty]="!day.date"
                     [class.selected]="isSelected(day.date)"
                     [class.current-day]="isCurrentDay(day.date)"
-                    (click)="selectDate(day.date)"
+                    (click)="selectDate(day.date)" onkeydown="selectDate(day.date)" tabindex="0" aria-hidden="true"
                 >
                     {{ day.dayNumber }}
                 </span>
