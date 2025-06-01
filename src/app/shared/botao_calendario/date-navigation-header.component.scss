@@ -1,9 +1,8 @@
-/* Estilos Gerais (ex: reset básico) */
+
 :host {
-    display: block; // Garante que o componente ocupe sua própria linha/bloco se não houver display flex/grid no pai
+    display: block; 
 }
 
-/* Estilo do Cabeçalho de Navegação de Data */
 .date-navigation-header {
     background-color: #bb0000;
     color: white;
@@ -45,14 +44,13 @@
     white-space: nowrap;
 }
 
-/* Estilos do Calendário */
 .calendar-button-container {
     position: relative;
 }
 
 .calendar-toggle-button {
     background-color: white;
-    border: none; // Removendo a borda preta
+    border: none; 
     border-radius: 4px;
     width: 40px;
     height: 40px;
@@ -61,8 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Sombra inicial
-    transition: background-color 0.3s ease, box-shadow 0.1s ease; // Adiciona transição para a sombra
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s ease, box-shadow 0.1s ease; 
     position: relative;
 }
 
@@ -71,8 +69,8 @@
 }
 
 .calendar-toggle-button:active {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(0, 0, 0, 0.1); // Sombra dupla sutil ao clicar
-    transform: translateY(1px); // Pequeno efeito de "pressionar"
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px); 
 }
 
 .calendar-toggle-button svg {
@@ -94,7 +92,7 @@
     z-index: 2;
 }
 
-/* Calendário Pop-up */
+
 .calendar-popup {
     position: absolute;
     top: calc(100% + 10px);
@@ -105,7 +103,7 @@
     padding: 16px;
     width: 280px;
     z-index: 1000;
-    /* display: none; e display: block; são controlados por *ngIf no HTML */
+    
 }
 
 .calendar-header {
