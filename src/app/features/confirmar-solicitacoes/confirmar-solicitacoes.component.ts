@@ -10,6 +10,6 @@ import { NgIf } from '@angular/common';
 })
 
 export class ConfirmarSolicitacoesComponent {
-  visibility = [true, true, true, true];
+  visible = [true, true, true, true];
   
 }

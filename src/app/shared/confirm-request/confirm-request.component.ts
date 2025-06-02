@@ -13,6 +13,7 @@ export class ConfirmRequestComponent {
   @Input() horario = ""
   @Input() professor = ""
   @Input() disciplina = ""
+  @Input() horario_solicitacao = ""
 
   destroyMyself() {
     this.requestDestroy.emit();
