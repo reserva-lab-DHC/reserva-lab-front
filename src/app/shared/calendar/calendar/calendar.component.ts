@@ -13,5 +13,6 @@ export type Mode = 'range' | 'multiple' | 'single';
 
 export class CalendarComponent {
   dates: Date[] = [];
+  /* selectionMode -> 'range' | 'multiple' | 'single' */
   selectionMode = input<Mode>('single');
 }
