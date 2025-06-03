@@ -1,16 +1,22 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { SelecaoComponent } from "../../shared/componente-selecao/selecao.component";
-
+import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
+import {FormsModule} from '@angular/forms'
+import { LaboratorioService } from './laboratorio.service';
+import { LaboratorioDTO } from './laboratorio.dto';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent],
+  imports: [SelecaoComponent, FormsModule],
   templateUrl: './cadastrar-laboratorio.component.html',
-  styleUrl: './cadastrar-laboratorio.component.scss',
+  styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone:true,
+  
 })
 export class CadastrarLaboratorioComponent implements AfterViewInit{
-  predioSelecionado = 0;
-  andarSelecionado = 0;
+  nomeLab = '';
+  predioSelecionado =0;
+  andarSelecionado =0;
+
+  constructor(private laboratorioService: LaboratorioService) {}
 
   ngAfterViewInit(): void {
     const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
@@ -34,5 +40,25 @@ export class CadastrarLaboratorioComponent implements AfterViewInit{
     //     reader.readAsDataURL(file);
     //   }
     // });
+  }
+  registrar() {
+    
+    const novoLab: LaboratorioDTO = {
+      nomeSala: this.nomeLab,
+      predio: this.predioSelecionado,
+      andar: this.andarSelecionado,
+    };
+
+    
+    this.laboratorioService.cadastrarLaboratorio(novoLab).subscribe({
+      next: (res) => {
+        console.log('Laboratório cadastrado:', res);
+        alert('Cadastro realizado com sucesso!');
+      },
+      error: (err) => {
+        console.error('Erro ao cadastrar laboratório:', err);
+        alert('Erro ao cadastrar laboratório');
+      }
+    });
   }
 }
