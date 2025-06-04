@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'dhc-card-quadro',
@@ -8,6 +8,6 @@ import { Component, Input, input } from '@angular/core';
 })
 
 export class CardQuadroComponent {
-  @Input() textColor: string = '#f0f1f5';
+  textcolor = input<string>('#f0f1f5');
 }
 
