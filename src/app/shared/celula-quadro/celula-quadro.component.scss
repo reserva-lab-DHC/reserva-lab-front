@@ -1,5 +1,6 @@
 * {
     font-family: 'Montserrat', sans-serif;
+
 }
 
 div.disciplina {
@@ -11,10 +12,9 @@ div.professor {
     font-weight: 600;
 }
 div.card {
+    height: 100%;
     font-size: 15px;
     padding: 12px;
-    width: 150px;
-    height: 180px;
     gap: 15px;
     display: flex;
     flex-direction: column;

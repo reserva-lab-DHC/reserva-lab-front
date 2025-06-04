@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'dhc-card-quadro',
@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './celula-quadro.component.scss'
 })
 
-export class CardQuadroComponent {
-  @Input() cellColor = '#f0f1f5';
+export class CelulaQuadroComponent {
 }
 
