@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LaboratorioDTO } from './laboratorio.dto'; 
+import { lastValueFrom } from 'rxjs';
+import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
+import { HttpService } from '../../core/services/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LaboratorioService {
+  constructor(private http: HttpService) { }
 
-  private baseUrl = 'http://localhost:8080'; // Posteriormente vai ter alteração
-
-  constructor(private http: HttpClient) {}
-
-  cadastrarLaboratorio(lab: LaboratorioDTO): Observable<unknown> {
-    return this.http.post(`${this.baseUrl}/sala`, lab);
+  async cadastrarLaboratorio(lab: LaboratorioDTO): Promise<LaboratorioDTO | undefined> {
+    return lastValueFrom(this.http.post<LaboratorioDTO, LaboratorioDTO>('/laboratorio', lab));
   }
 }

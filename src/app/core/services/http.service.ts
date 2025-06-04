@@ -39,7 +39,7 @@ export class HttpService {
      * @param body Request payload (JSON)
      * @param headers Custom headers (optional)
      */
-    post<T, B extends Record<string, unknown>>(endpoint: string, body: B, headers?: HttpHeaders): Observable<T> {
+    post<T, B>(endpoint: string, body: B, headers?: HttpHeaders): Observable<T> {
         const url = `${this.baseUrl}${endpoint}`;
         const options = { headers: headers || this.getDefaultHeaders() };
 

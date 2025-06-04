@@ -1,22 +1,22 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
-import {FormsModule} from '@angular/forms'
+import { FormsModule } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
-import { LaboratorioDTO } from './laboratorio.dto';
+import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
   imports: [SelecaoComponent, FormsModule],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
-  standalone:true,
-  
-})
-export class CadastrarLaboratorioComponent implements AfterViewInit{
-  nomeLab = '';
-  predioSelecionado =0;
-  andarSelecionado =0;
+  standalone: true,
 
-  constructor(private laboratorioService: LaboratorioService) {}
+})
+export class CadastrarLaboratorioComponent implements AfterViewInit {
+  nomeLab = '';
+  predioSelecionado = 0;
+  andarSelecionado = 0;
+
+  constructor(private laboratorioService: LaboratorioService) { }
 
   ngAfterViewInit(): void {
     const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
@@ -42,23 +42,22 @@ export class CadastrarLaboratorioComponent implements AfterViewInit{
     // });
   }
   registrar() {
-    
+
     const novoLab: LaboratorioDTO = {
       nomeSala: this.nomeLab,
       predio: this.predioSelecionado,
       andar: this.andarSelecionado,
     };
 
-    
-    this.laboratorioService.cadastrarLaboratorio(novoLab).subscribe({
-      next: (res) => {
+
+    this.laboratorioService.cadastrarLaboratorio(novoLab)
+      .then((res: LaboratorioDTO | undefined) => {
         console.log('Laboratório cadastrado:', res);
-        alert('Cadastro realizado com sucesso!');
-      },
-      error: (err) => {
+        alert('Cadastro realizado com sucesso!');//aqui caberia aparecer um modal 
+      })
+      .catch((err: Error) => {
         console.error('Erro ao cadastrar laboratório:', err);
-        alert('Erro ao cadastrar laboratório');
-      }
-    });
+        alert('Erro ao cadastrar laboratório');//aqui caberia aparecer um modal 
+      });
   }
 }
