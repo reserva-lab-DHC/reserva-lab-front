@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,14 +12,13 @@ export class SelecaoComponent {
 
   titulo = input<string>('');
   opcoes = input<number[]>([]);
-  selecionado = signal<number | null>(null);
+  selecionado = input<number | null>(null);
   desabilitar = input<number[]>([]);
   layout = input<'horizontal' | 'vertical'>('horizontal');
   selecionadoChange = output<number>();
 
   selecionar(valor: number): void {
     if (this.selecionado() !== valor && !this.desabilitar().includes(valor)) {
-      this.selecionado.set(valor);
       this.selecionadoChange.emit(valor);
     }
   }
