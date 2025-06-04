@@ -30,7 +30,7 @@ export const routes: Routes = [
     },
     {
         path: 'solicitacao-de-reservas',
-        loadComponent: () => import('./features/solicitacao-de-reservas/solicitacao-de-reservas.component').then(m => m.SolicitacaoDeReservasComponent),
+        loadComponent: () => import('./features/solicitacao-de-reservas/solicitacao-de-reservas').then(m => m.SolicitacaoDeReservasComponent),
         canActivate: [authGuard]
     },
     { path: '**', redirectTo: 'inicio' }
