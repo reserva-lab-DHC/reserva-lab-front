@@ -1,0 +1,80 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  background: #FFFFFF;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.campo label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.campo input {
+  border: none;
+  border-bottom: 1px solid #333;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+    border-color: #d71940;
+  }
+}
+
+.erro {
+  color: #d71940;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d71940;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background-color: #c31539;
+  }
+}
+
+a.esqueceu-senha {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  color: #333;
+  text-decoration: underline;
+  font-size: 0.95rem;
+  cursor: pointer;
+}

@@ -1,0 +1,24 @@
+<div class="login-card">
+  <h2 class="titulo">Login</h2>
+
+  <form [formGroup]="loginForm">
+    <div class="campo">
+      <label>
+        Usuário
+        <input formControlName="username" />
+      </label>
+    </div>
+
+    <div class="campo">
+      <label>
+        Senha
+        <input type="password" formControlName="password" />
+      </label>
+      <span class="erro">Exceção aqui</span>
+    </div>
+
+    <button type="submit">Acessar</button>
+
+    <a class="esqueceu-senha">Esqueceu sua senha?</a>
+  </form>
+</div>

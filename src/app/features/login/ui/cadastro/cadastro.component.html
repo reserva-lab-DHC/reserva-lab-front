@@ -1,0 +1,29 @@
+<div class="cadastro-card">
+  <h2 class="titulo">Cadastro do Usuário</h2>
+
+  <div class="campo">
+    <label for="nomeUsuario">Nome do Usuário</label>
+    <input type="text" id="nomeUsuario" placeholder="" />
+  </div>
+
+  <div class="campo">
+    <label for="email">E-Mail</label>
+    <input type="email" id="email" placeholder="" />
+  </div>
+
+  <div class="campo">
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" placeholder="" />
+  </div>
+
+  <div class="campo">
+    <label for="repetirSenha">Repetir senha</label>
+    <input type="password" id="repetirSenha" placeholder="" />
+  </div>
+
+  <span class="erro">Exceção aqui</span>
+
+  <dhc-dynamic-button (buttonClick)="onReservar()">
+    Reservar
+  </dhc-dynamic-button>
+</div>
