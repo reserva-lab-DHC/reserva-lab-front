@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'dhc-confirm-request',
@@ -7,8 +7,15 @@ import { Component, input } from '@angular/core';
   styleUrl: './confirm-request.component.scss'
 })
 export class ConfirmRequestComponent {
-  lab = input.required<string>()
-  horario = input.required<string>()
-  professor = input.required<string>()
-  disciplina = input.required<string>()
+  @Output() requestDestroy = new EventEmitter<void>();
+
+  @Input() lab = ""
+  @Input() horario = ""
+  @Input() professor = ""
+  @Input() disciplina = ""
+  @Input() horario_solicitacao = ""
+
+  destroyMyself() {
+    this.requestDestroy.emit();
+  }
 }
