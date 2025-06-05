@@ -12,10 +12,16 @@ import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-butt
     InputTextComponent, InputSelectComponent, CommonModule,
     DynamicButtonComponent
 ],
-  templateUrl: './solicitacao-de-reservas.html',
-  styleUrls: ['./solicitacao-de-reservas.scss']
+  templateUrl: './solicitacao-de-reservas.component.html',
+  styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
 export class SolicitacaoDeReservasComponent  {
+  //todo : implementar lógica de solicitação de reservas
+  // basicamente falta:
+  // - criar o serviço de solicitação de reservas
+  // - formgroup para o formulário de solicitação
+  // - implementar a lógica de envio do formulário
+  // - implementar um sinal que basicamente controlar se um input aparece ou não (o que valida o tipo de usuário, se é aluno ou professor)
 
 }
 
