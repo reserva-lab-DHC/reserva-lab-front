@@ -17,9 +17,11 @@ export class InfoComponent {
   @Input() inicio_reserva = "";
 
 
-  @Output() fechar = new EventEmitter<void>();
+  @Output() closePopup = new EventEmitter<void>();
 
-  onFechar() {
-    this.fechar.emit();
+
+  onClose() {
+    this.closePopup.emit();
   }
+
 }

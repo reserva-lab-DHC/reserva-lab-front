@@ -1,0 +1,20 @@
+import { Component } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
+import { CelulaQuadroComponent } from '../celula-quadro/celula-quadro.component';
+import { InfoComponent } from "../modals/ui/modal-info-reserva/modal-info.component";
+
+@Component({
+  selector:'dhc-schedule-table', 
+  standalone: true, 
+  imports: [CommonModule, CelulaQuadroComponent, InfoComponent, NgIf], 
+  templateUrl: './schedule-table.component.html', 
+  styleUrls: ['./schedule-table.component.scss'] 
+})
+export class ScheduleTableComponent {
+
+  showPopup = false;
+
+  closePopup() {
+    this.showPopup = false;
+  }
+}

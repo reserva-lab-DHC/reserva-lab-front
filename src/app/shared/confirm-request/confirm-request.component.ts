@@ -8,7 +8,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 export class ConfirmRequestComponent {
   @Output() requestDestroy = new EventEmitter<void>();
-
+  
   @Input() lab = ""
   @Input() horario = ""
   @Input() professor = ""

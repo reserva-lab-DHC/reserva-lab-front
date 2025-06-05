@@ -2,7 +2,9 @@
     <div class="options">
         <img src="assets/img/edit-reserva.svg" alt="icon">
         <img src="assets/img/apagar-reserva.svg" alt="icon">
-        <img src="assets/img/close-popup.svg" alt="icon">
+        <button (click)="onClose()" onkeydown="onClose()">
+            <img src="assets/img/close-popup.svg" alt="icon">
+        </button>
     </div>
     <p class="prof">{{professor}}</p>
     <div class="infoReserva">
