@@ -2,6 +2,7 @@ import { Component, input } from '@angular/core';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 
+
 export type Mode = 'range' | 'multiple' | 'single';
 
 @Component({
