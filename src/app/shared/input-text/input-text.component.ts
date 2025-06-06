@@ -16,7 +16,7 @@ export class InputTextComponent implements OnInit {
   label =input('');  
   type = input("text");
   placeholder = input('');
-  valueChange = output();
+  valueChange = output<string>();
   control: FormControl = new FormControl('');
   inputId = signal('');
 
@@ -24,9 +24,11 @@ export class InputTextComponent implements OnInit {
     this.inputId.set('input-' + Math.random().toString(36).substring(2, 10));
   }
   
-  onInput(event: Event) {
-  this.value.set((event?.target as HTMLInputElement).value);
-  this.valueChange.emit();
-  }
+onInput(event: Event) {
+  const valor = (event?.target as HTMLInputElement).value;
+  this.value.set(valor);
+  this.valueChange.emit(valor); //emitir string corretamente
+}
+
 
   }

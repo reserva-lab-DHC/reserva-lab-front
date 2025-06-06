@@ -3,9 +3,11 @@ import { SelecaoComponent } from '../../shared/componente-selecao/selecao.compon
 import { FormsModule } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
+import { InputTextComponent } from "../../shared/input-text/input-text.component";
+import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent, FormsModule],
+  imports: [SelecaoComponent, FormsModule, InputTextComponent, DynamicButtonComponent],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone: true,
@@ -41,6 +43,10 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
     //   }
     // });
   }
+  atualizarNomeLab(valor: string) {
+  this.nomeLab = valor;
+  }
+
   registrar() {
 
     const novoLab: LaboratorioDTO = {
