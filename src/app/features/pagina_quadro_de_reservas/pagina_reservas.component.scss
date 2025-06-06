@@ -10,19 +10,19 @@
     //flex-direction: column;
 }
 
-
 h1 {
     padding: 30px;
 }
 
+
 @media (max-width: 768px) {
     .container-for-schedule-page {
         border-radius: 4px;
-        padding: 10px; 
     }
     .page-title {
         font-size: 1.2em;
         padding: 0 0 5px 0;
         margin-bottom: 5px;
     }
+
 }

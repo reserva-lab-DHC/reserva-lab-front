@@ -19,19 +19,24 @@ span {
     width: 170px;
     text-align: center;
     text-wrap: nowrap;
+
 }
+
 .top-header-red {
+    position: sticky;   
+    top: 100px;    
+    left: 0px;
+    z-index: 1;
+    height: 70px;
     background-color: #C4213E; /* Vermelho vibrante do protótipo */
     color: #FFFFFF; /* Texto branco */
     padding: 10px 20px;
-    position: sticky;
-    top: 100px;
-    height: 70px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 2
+
+    
 }
 
 .date-navigation-wrapper-red {
@@ -102,36 +107,35 @@ img {
 }
 
 /* Responsividade para o cabeçalho e calendário */
+@media (max-width: 1200px) {
+
+
+    .top-header-red {
+        top: 50px;
+        left: 0
+    }
+}
 @media (max-width: 768px) {
     .top-header-red {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        padding: 10px;
-        min-height: auto;
+        left: 0
     }
-
-    .dropdown-button-red {
-        width: calc(100% - 20px);
-        margin-bottom: 5px;
-        justify-content: center;
-    }
-
-    .date-navigation-wrapper-red {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .calendar-notification-group {
-        width: 100%;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 5px;
-    }
-
-
+.top-header-red .current-date-display-red {
+    font-size: 0.9em;
+    font-weight: 600;
 }
 
+    div > button {
+        width: 25px;
+        height: 25px;
+        border-radius: 6px;
+    }
+    img {
+        scale: 1;
+    }
+    .top-header-red {
+        top: 50px;
+    }
+}
 /* Ajustes específicos para telas muito pequenas no cabeçalho */
 @media (max-width: 480px) {
     /* Se precisar de mais ajustes aqui, eles iriam nesta seção */

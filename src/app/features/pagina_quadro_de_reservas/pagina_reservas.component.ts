@@ -3,6 +3,7 @@ import { DailyScheduleHeaderComponent } from '../../shared/daily-schedule-header
 import { ScheduleTableComponent } from '../../shared/schedule-table/schedule-table.component';
 import { Component } from '@angular/core';
 import { HeaderQuadroComponent } from "../../shared/header-quadro/header-quadro.component";
+import { HeaderComponent } from "../../shared/header/header.component";
 
 @Component({
   selector: 'dhc-pagina-reservas', // Confirme se esse é o seletor correto utilizado na rota.
@@ -13,6 +14,7 @@ import { HeaderQuadroComponent } from "../../shared/header-quadro/header-quadro.
     DailyScheduleHeaderComponent,
     ScheduleTableComponent,
     HeaderQuadroComponent,
+    HeaderComponent
 ],
   templateUrl: './pagina_reservas.component.html',
   styleUrls: ['./pagina_reservas.component.scss']
