@@ -1,1 +1,7 @@
-<dhc-acesso [loginForm]="loginForm"></dhc-acesso>
+<ng-container *ngIf="!isCadastro()">
+    <dhc-acesso [loginForm]="loginForm" (goToCadastro)="setCadastroView(true)"></dhc-acesso>
+</ng-container>
+
+<ng-container *ngIf="isCadastro()">
+    <dhc-cadastro (goToAcesso)="setCadastroView(false)"></dhc-cadastro>
+</ng-container>

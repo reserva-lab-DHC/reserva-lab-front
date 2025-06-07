@@ -21,9 +21,9 @@
     <input type="password" id="repetirSenha" placeholder="" />
   </div>
 
-  <span class="erro">Exceção aqui</span>
-
   <dhc-dynamic-button (buttonClick)="onReservar()">
     Reservar
   </dhc-dynamic-button>
+
+  <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem conta? Faça login!</button>
 </div>

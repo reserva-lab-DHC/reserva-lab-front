@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AcessoComponent } from './ui/acesso/acesso.component';
+import { CadastroComponent } from './ui/cadastro/cadastro.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dhc-login',
   standalone: true,
-  imports: [ReactiveFormsModule, AcessoComponent],
+  imports: [
+    ReactiveFormsModule,
+    AcessoComponent,
+    CadastroComponent,
+    CommonModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -16,6 +23,8 @@ export class LoginComponent {
     username: new FormControl(''),
     password: new FormControl('')
   });
+
+  isCadastro = signal(false);
 
   returnUrl = '/';
 
@@ -31,5 +40,9 @@ export class LoginComponent {
 
     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
     this.router.navigateByUrl(returnUrl);
+  }
+
+  setCadastroView(isCadastro: boolean) {
+    this.isCadastro.set(isCadastro);
   }
 }

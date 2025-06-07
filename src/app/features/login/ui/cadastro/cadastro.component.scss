@@ -14,7 +14,7 @@
   border-radius: 1rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 .titulo {
@@ -26,7 +26,7 @@
 
 .campo {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   margin-bottom: 1.5rem;
 }
 
@@ -39,14 +39,15 @@
 
 .campo input {
   padding: 0.75rem 1rem;
-  border: 1px solid #000000;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
   background-color: #f7f7f7;
   font-size: 1rem;
-  width: 100%; 
-  box-sizing: border-box; 
+  width: 100%;
+  box-sizing: border-box;
 
   &::placeholder {
-    color: #F0F1F5;
+    color: #a9a9a9;
   }
 
   &:focus {
@@ -67,7 +68,29 @@
 dhc-dynamic-button {
   width: 100%;
   margin-top: 1.5rem;
-  display: block; 
+  display: block;
+}
+
+.link-alternar {
+  background: none; 
+  border: none;
+  padding: 0; 
+  margin-top: 1.5rem; 
+  text-align: center;
+  color: #d71940; 
+  text-decoration: none; 
+  font-weight: bold; 
+  cursor: pointer;
+  font-size: 0.95rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none; 
+    text-decoration: underline; 
+  }
 }
 
 @media (min-width: 768px) {

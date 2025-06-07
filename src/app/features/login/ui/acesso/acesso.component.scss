@@ -78,3 +78,25 @@ a.esqueceu-senha {
   font-size: 0.95rem;
   cursor: pointer;
 }
+
+.link-alternar {
+  background: none;
+  border: none; 
+  padding: 0; 
+  margin-top: 1.5rem; 
+  text-align: center;
+  color: #d71940; 
+  text-decoration: none; 
+  font-weight: bold; 
+  cursor: pointer;
+  font-size: 0.95rem; 
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+}

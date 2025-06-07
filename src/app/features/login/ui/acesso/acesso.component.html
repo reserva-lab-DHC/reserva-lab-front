@@ -14,11 +14,12 @@
         Senha
         <input type="password" formControlName="password" />
       </label>
-      <span class="erro">Exceção aqui</span>
     </div>
 
     <button type="submit">Acessar</button>
 
     <a class="esqueceu-senha">Esqueceu sua senha?</a>
   </form>
+
+  <button type="button" class="link-alternar" (click)="goToCadastro.emit()">Não tem conta? Cadastre-se!</button>
 </div>

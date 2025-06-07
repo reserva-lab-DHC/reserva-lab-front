@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -11,4 +11,5 @@ import { CommonModule } from '@angular/common';
 })
 export class AcessoComponent {
   @Input() loginForm!: FormGroup;
+  @Output() goToCadastro = new EventEmitter<void>();
 }
