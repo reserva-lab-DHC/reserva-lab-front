@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 // import { ModalsComponent } from '../../shared/modals/modals.component';
 
 // import { DailyScheduleHeaderComponent } from './daily-schedule-header/daily-schedule-header.component';
-import { ScheduleTableComponent } from './schedule-table/schedule-table.component';
+import { ScheduleTableComponent } from '../../shared/schedule-table/schedule-table.component';
 
 @Component({
   selector: 'dhc-quadro-de-reservas', // Confirme se esse é o seletor correto utilizado na rota.
@@ -14,10 +14,9 @@ import { ScheduleTableComponent } from './schedule-table/schedule-table.componen
   imports: [
     CommonModule,
     // ModalsComponent, // Descomente se for utilizado no HTML.
-    ScheduleTableComponent
+    ScheduleTableComponent // Ensure this is a valid Angular standalone component or NgModule
   ],
-  templateUrl: './pagina_reservas.html',
-  styleUrls: ['./pagina_reservas.scss']
+  templateUrl: './pagina_reservas.component.html'
 })
 export class PaginaReservasComponent {
   // Lógica do componente

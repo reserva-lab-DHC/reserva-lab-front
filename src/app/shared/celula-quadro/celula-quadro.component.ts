@@ -1,13 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'dhc-card-quadro',
+  selector: 'dhc-celula-quadro',
   imports: [],
   templateUrl: './celula-quadro.component.html',
   styleUrl: './celula-quadro.component.scss'
 })
 
-export class CardQuadroComponent {
-  @Input() cellColor = '#f0f1f5';
+export class CelulaQuadroComponent {
+
+  showPopup = false;
+
+  closePopup() {
+    this.showPopup = false;
+  }
 }
 

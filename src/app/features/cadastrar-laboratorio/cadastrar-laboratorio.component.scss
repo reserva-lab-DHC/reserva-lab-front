@@ -1,8 +1,129 @@
+*{
+    margin: 0;
+}
+.titulo{
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 20px;
+    color: #000000;
+    margin:26px 0 0 28px ;
+}
+.inserir-nome{
+    margin:43px 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.nome{  
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+}
+#nomelab{
+    width: 293px;
+    height: 32px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    font-family: Montserrat;
+    padding-left: 5px;
+    
+}
+#nomelab::placeholder{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 12px;
+}
 .container-seletores {
   display: flex;
   gap: 2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 0;
+  margin-left: 28px;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
 }
+.texto-foto{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+    margin: 40px 0 0 28px;
+}
+.foto{
+    width: 155px;
+    height: 155px;
+    cursor: pointer;
+    display: block;
+    margin: 36px 0 0 101px;
+    cursor: pointer;
+}
+.botao-registro{
+    margin: 30px 0 20px 120px;
+    border: none;
+    width: 120px;
+    height: 50px;
+    background-color:#DE2445;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.botao-texto{
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 600;
+}
+.botao-registro:hover{
+    background-color: #f9607c;
+}
+.botao-registro:hover .botao-texto{
+    color: #000000;
+}
+
+@media(min-width:1200px){
+    .titulo{
+        font-size: 30px;
+        margin: 52px 0 0 56px;
+    }
+    .inserir-nome{
+        margin: 60px 0 0 56px;
+        gap: 16px;
+    }
+    .nome{
+        font-size: 23px;
+    }
+    #nomelab{
+        width: 500px;
+        height: 50px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        padding-left: 10px;
+        font-size: 20px;
+    }
+    #nomelab::placeholder{
+        font-size: 20px;
+    }
+    .container-seletores{
+        margin-left: 56px;
+    }
+    .texto-foto{
+        font-size: 20px;
+        margin: 100px 0 0 56px;
+    }
+    .foto{
+        width: 280px;
+        height: 280px;
+        margin:50px 0 0 60px;
+    }
+    .botao-registro{
+        margin:80px 0 30px 100px;
+        width: 200px;
+        height: 80px;
+        border-radius: 20px;
+    }
+    .botao-texto{
+        font-size: 28px;
+    }
+}
+

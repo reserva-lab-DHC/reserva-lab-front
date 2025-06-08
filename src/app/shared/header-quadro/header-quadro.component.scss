@@ -1,0 +1,142 @@
+* {
+    font-family: 'Montserrat', 'sans-serif';
+}
+dhc-dropdown {
+    scale: 1.25;
+}
+dhc-calendar {
+    position: absolute;
+    z-index: 3;
+}
+dhc-modal-recent-requests {
+    position: absolute;
+    z-index: 3;
+    top: 20px;
+    right: 80px;
+
+}
+span {
+    width: 170px;
+    text-align: center;
+    text-wrap: nowrap;
+
+}
+
+.top-header-red {
+    position: sticky;   
+    top: 100px;    
+    left: 0px;
+    z-index: 1;
+    height: 70px;
+    background-color: #C4213E; /* Vermelho vibrante do protótipo */
+    color: #FFFFFF; /* Texto branco */
+    padding: 10px 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    
+}
+
+.date-navigation-wrapper-red {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.top-header-red .nav-arrow-red {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #000000;
+    line-height: 0.5;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.top-header-red .nav-arrow-red:hover {
+    background-color: #F0F1F5;
+    transform: scale(1.05);
+}
+
+.top-header-red .current-date-display-red {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.calendar-notification-group {
+    display: flex;
+    align-items: center;
+}
+
+.calendar-button-container-red {
+    position: relative;
+}
+div > button {
+    width: 35px;
+    height: 35px;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, box-shadow 0.1s ease;
+}
+
+.calendar-toggle-button-red:hover {
+    background-color: #F0F1F5;
+}
+
+.notification-button-red:hover {
+    background-color: #F0F1F5;
+}
+img {
+    scale: 1.5
+}
+
+/* Responsividade para o cabeçalho e calendário */
+@media (max-width: 1200px) {
+
+
+    .top-header-red {
+        top: 50px;
+        left: 0
+    }
+}
+@media (max-width: 768px) {
+    .top-header-red {
+        left: 0
+    }
+.top-header-red .current-date-display-red {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+    div > button {
+        width: 25px;
+        height: 25px;
+        border-radius: 6px;
+    }
+    img {
+        scale: 1;
+    }
+    .top-header-red {
+        top: 50px;
+    }
+}
+/* Ajustes específicos para telas muito pequenas no cabeçalho */
+@media (max-width: 480px) {
+    /* Se precisar de mais ajustes aqui, eles iriam nesta seção */
+}

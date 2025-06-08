@@ -1,0 +1,214 @@
+* {
+    font-family: 'Montserrat', 'sans-serif';
+}
+
+.schedule-wrapper {
+    top: 170px;
+    position: sticky;
+    z-index: 1;
+}
+.schedule-header {
+
+    height: 100px;
+
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 50px 50px;
+    background-color: #172944; /* Azul marinho escuro */
+    color: #FFFFFF;
+    font-weight: 500;
+    min-width: max-content;
+    //width: fit-content;
+}
+
+.empty-corner {
+    background-color: #172944; /* Cor do fundo do cabeçalho azul */
+    border-right: none !important; /* Garante que não haja borda direita aqui */
+    position: sticky;
+    left: 0px;
+    z-index: 1;
+}
+
+.periods {
+    display: flex;
+    min-width: max-content;  /* allow flex to define width */
+
+}
+.period-col {
+    flex: 2;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    min-width: 200px;
+}
+
+/* Adiciona a borda esquerda APENAS a partir do segundo 'period-col' */
+.period-col:not(:first-of-type) {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Garante que a primeira coluna de período (Matutino) não tenha borda esquerda */
+.period-col:first-of-type {
+    border-left: none !important;
+}
+.schedule-header,
+.periods,
+.period-col {
+  outline: 2px dashed lime;
+}
+/* Linha dos horários (07:40 / 08:00, etc.) */
+.time-slots {
+    flex: 1;
+    display: flex;
+    min-width: max-content;   /* Needed to expand */
+
+    text-align: center;
+    background-color: #F0F1F5; /* Cinza muito claro */
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #000000; /* Texto preto para os horários */
+    border-top: 1px solid #B9B9B9; /* Borda superior (cinza claro) */
+    border-bottom: 1px solid #B9B9B9; /* Borda inferior para separar da grade de atividades */
+
+}
+
+.time-slot {
+    flex: 1;
+    font-size: 1.2em;
+    display: flex;
+    border-left: 1px solid #B9B9B9; /* Separador vertical cinza claro */
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+
+}
+.time-slot:first-of-type {
+    border-left: none; /* A primeira coluna de tempo não tem borda esquerda */
+}
+.time-slots .time-slot:nth-child(2n + 1) {
+    background-color: #F0f1f5;
+}
+.time-slots .time-slot:nth-child(2n) {
+    background-color: #FFFFFF;
+}
+
+/* --- Estilos do Corpo da Tabela de Horários com Contraste de Colunas e Bordas Visíveis --- */
+.schedule-grid {
+    display: flex;
+    flex-direction: column;
+    /* Removendo qualquer borda lateral aqui, se houver */
+    border-left: none !important; /* Garante que não haja borda esquerda na grade */
+    border-right: none !important; /* Garante que não haja borda direita na grade */
+    overflow: auto;
+
+}
+
+.activity-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.activity-name {
+    padding: 15px 10px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #B9B9B9;
+    border-right: none !important; /* Remove a borda direita da coluna .activity-name */
+    font-weight: 600;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    position: sticky;
+    flex: 0 0 150px;
+    left: 0;
+    z-index: 0;
+}
+
+dhc-celula-quadro {
+
+    border-bottom: 1px solid #B9B9B9; /* Borda inferior visível (cinza claro) */
+    border-right: 1px solid #B9B9B9; /* Mantém as bordas direitas entre as células de horário */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+
+}
+dhc-celula-quadro:nth-child(2n) {
+    background-color: #f0f1f5;
+}
+dhc-celula-quadro:nth-child(2n + 1) {
+    background-color: #ffffff;
+}
+
+
+/* Aplicando o contraste de cinza nas colunas das células de horário */
+.activity-row .schedule-cell:nth-child(2n) {
+    background-color: #F0F1F5;
+}
+
+.activity-row .schedule-cell:nth-child(2n + 1) {
+    background-color: #FFFFFF;
+}
+
+.schedule-cell:last-child {
+    border-right: none; /* Remove a borda direita da última célula de cada linha de horário */
+}
+
+.activity-row:last-child .activity-name,
+.activity-row:last-child .schedule-cell {
+    border-bottom: none;
+}
+
+/* --- Responsividade Geral --- */
+@media (max-width: 1200px){
+    .schedule-header {
+        top: 120px
+    }
+    
+    .schedule-wrapper {
+        top: 120px
+    }
+}
+@media (max-width: 768px) {
+
+    
+
+    .schedule-header {
+        grid-template-columns: 100px auto;
+    }
+
+    .empty-corner {
+        border-right: none !important;
+
+    }
+
+    .time-slots {
+        font-size: 0.75em;
+    }
+
+    .schedule-grid {
+        border-left: none !important;
+        border-right: none !important;
+    }
+
+    .activity-name {
+        flex: 0 0 100px;
+        max-width: 100px;
+        text-wrap: wrap;
+        padding: 10px 5px;
+        font-size: 0.9em;
+        border-right: none !important;
+    }
+
+    .schedule-cell {
+        padding: 5px;
+    }
+
+
+}
+

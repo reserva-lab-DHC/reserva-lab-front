@@ -1,8 +1,16 @@
-<h1>Confirmar Solicitações</h1>
+<div class="popup">
 
-<div class="requests">
+    <div class="options">
+        <button (click)="onClose()" onkeydown="onClose()">
+        <img src="assets/img/close-popup.svg" alt="icon">
+        </button>
+    </div>
+    <h1>Solicitações Recentes</h1>
+
+    <div class="requests">
   <dhc-confirm-request *ngIf="visible[0]" (requestDestroy)="visible[0] = false" lab="Metodologias Ativas II" horario="08:00h" professor="Renata" disciplina="Algoritmos e Estrutura de Dados I" horario_solicitacao="12/02 12:45"></dhc-confirm-request>
   <dhc-confirm-request *ngIf="visible[1]" (requestDestroy)="visible[1] = false" lab="Metodologias Ativas II" horario="10:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I" horario_solicitacao="27/04 07:30"></dhc-confirm-request>
   <dhc-confirm-request *ngIf="visible[2]" (requestDestroy)="visible[2] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Ricardo Freitas" disciplina="Algoritmos e Estrutura de Dados I" horario_solicitacao="12/04 13:00"></dhc-confirm-request>
-  <dhc-confirm-request *ngIf="visible[3]" (requestDestroy)="visible[3] = false" lab="Metodologias Ativas I" horario="08:00h" professor="Vinícus Von Filippo" disciplina="Desenvolvimento Web Front-End" horario_solicitacao="14/11 23:19"></dhc-confirm-request>
+    </div>
+
 </div>

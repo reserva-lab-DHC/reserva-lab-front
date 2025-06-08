@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'dhc-app-daily-schedule-header',
+  selector: 'dhc-daily-schedule-header',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './daily-schedule-header.component.html',
@@ -45,6 +45,7 @@ export class DailyScheduleHeaderComponent implements OnInit, AfterViewInit {
     }
   
     generateCalendarDays(): void {
+
       const calendarGrid = document.getElementById('calendarGrid');
   if (!calendarGrid) return;
 
@@ -96,4 +97,5 @@ export class DailyScheduleHeaderComponent implements OnInit, AfterViewInit {
     });
   }
   }
+ 
 }

@@ -1,22 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { ScheduleTableComponent } from '../schedule-table/schedule-table.component';
-import { CommonModule } from '@angular/common'; // exemplo
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // se usa serviços HTTP
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'; // evita erros de animação
-
+import { ScheduleTableComponent } from '../../../shared/schedule-table/schedule-table.component';
 describe('ScheduleTableComponent', () => {
   let component: ScheduleTableComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ScheduleTableComponent, // Standalone component
-        CommonModule,           // se necessário
-        HttpClientTestingModule,
-        NoopAnimationsModule,   // substitui BrowserAnimationsModule
-        // outros modules ou components necessários
-      ],
-    }).compileComponents();
+      imports: [ScheduleTableComponent] // Garanta que o componente standalone é importado aqui
+    })
+    .compileComponents();
 
     const fixture = TestBed.createComponent(ScheduleTableComponent);
     component = fixture.componentInstance;
