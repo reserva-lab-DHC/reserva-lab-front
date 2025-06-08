@@ -18,6 +18,7 @@ div.card {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 100px;
 }
 
 div.card:active {
@@ -32,7 +33,6 @@ div.card:hover {
     div.card {
         font-size: 10px;
         padding: 8px;
-        width: 100px;
         height: 120px;
         gap: 10px;
     }

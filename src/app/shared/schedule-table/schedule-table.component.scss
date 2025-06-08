@@ -10,9 +10,8 @@
 .schedule-header {
 
     height: 100px;
-
     display: grid;
-    grid-template-columns: 150px auto;
+    grid-template-columns: 150px minmax(684px, auto);
     grid-template-rows: 50px 50px;
     background-color: #172944; /* Azul marinho escuro */
     color: #FFFFFF;
@@ -25,17 +24,22 @@
     background-color: #172944; /* Cor do fundo do cabeçalho azul */
     border-right: none !important; /* Garante que não haja borda direita aqui */
     position: sticky;
+    top: 0px;
     left: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .periods {
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     min-width: max-content;  /* allow flex to define width */
 
 }
 .period-col {
-    flex: 2;
+    flex: 1;
     font-weight: 600;
     display: flex;
     justify-content: center;
@@ -46,21 +50,17 @@
 
 /* Adiciona a borda esquerda APENAS a partir do segundo 'period-col' */
 .period-col:not(:first-of-type) {
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Garante que a primeira coluna de período (Matutino) não tenha borda esquerda */
 .period-col:first-of-type {
     border-left: none !important;
 }
-.schedule-header,
-.periods,
-.period-col {
-  outline: 2px dashed lime;
-}
+
 /* Linha dos horários (07:40 / 08:00, etc.) */
 .time-slots {
-    flex: 1;
+
     display: flex;
     min-width: max-content;   /* Needed to expand */
 
@@ -75,13 +75,16 @@
 }
 
 .time-slot {
+    position: sticky;
+    top: 0;
     flex: 1;
+    z-index: 1;
     font-size: 1.2em;
     display: flex;
-    border-left: 1px solid #B9B9B9; /* Separador vertical cinza claro */
+    border-right: 1px solid #B9B9B9; /* Separador vertical cinza claro */
     align-items: center;
     justify-content: center;
-    min-width: 100px;
+    min-width: 101px;
 
 }
 .time-slot:first-of-type {
@@ -101,7 +104,6 @@
     /* Removendo qualquer borda lateral aqui, se houver */
     border-left: none !important; /* Garante que não haja borda esquerda na grade */
     border-right: none !important; /* Garante que não haja borda direita na grade */
-    overflow: auto;
 
 }
 
@@ -122,7 +124,7 @@
     text-align: left;
     position: sticky;
     flex: 0 0 150px;
-    left: 0;
+    left: 0px;
     z-index: 0;
 }
 
@@ -165,19 +167,24 @@ dhc-celula-quadro:nth-child(2n + 1) {
 }
 
 /* --- Responsividade Geral --- */
-@media (max-width: 1200px){
-    .schedule-header {
-        top: 120px
-    }
-    
+
+@media (max-width: 1200px) {
     .schedule-wrapper {
-        top: 120px
+        top: 120px;
     }
 }
 @media (max-width: 768px) {
 
-    
 
+    .table {
+        overflow-x: scroll;
+        height: calc(100vh - 228px); // provisório
+
+    }
+    .schedule-wrapper {
+        top: 0px;
+
+    }
     .schedule-header {
         grid-template-columns: 100px auto;
     }
@@ -198,8 +205,8 @@ dhc-celula-quadro:nth-child(2n + 1) {
 
     .activity-name {
         flex: 0 0 100px;
-        max-width: 100px;
         text-wrap: wrap;
+        word-break: break-all;
         padding: 10px 5px;
         font-size: 0.9em;
         border-right: none !important;
