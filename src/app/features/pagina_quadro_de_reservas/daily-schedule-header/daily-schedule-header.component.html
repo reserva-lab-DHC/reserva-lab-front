@@ -34,7 +34,7 @@
                             [class.empty]="day.empty"
                             [class.selected]="day.date && isSelectedDate(day.date)"
                             [class.current-day]="day.date && isCurrentDay(day.date)"
-                            (click)="day.date && onDaySelected(day.date)"
+                            (click)="day.date && onDaySelected(day.date)" (keydown)="day.date && onDaySelected(day.date)" tabindex="0"
                         >
                             {{ day.dayNumber }}
                         </span>
