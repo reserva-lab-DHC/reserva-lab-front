@@ -19,7 +19,16 @@
     min-width: max-content;
     //width: fit-content;
 }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
 
+}
 .empty-corner {
     background-color: #172944; /* Cor do fundo do cabeçalho azul */
     border-right: none !important; /* Garante que não haja borda direita aqui */

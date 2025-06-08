@@ -26,7 +26,7 @@ span {
     position: sticky;   
     top: 100px;    
     left: 0px;
-    z-index: 1;
+    z-index: 2;
     height: 70px;
     background-color: #C4213E; /* Vermelho vibrante do protótipo */
     color: #FFFFFF; /* Texto branco */
@@ -119,10 +119,10 @@ img {
     .top-header-red {
         left: 0
     }
-.top-header-red .current-date-display-red {
-    font-size: 0.9em;
-    font-weight: 600;
-}
+    .top-header-red .current-date-display-red {
+        font-size: 0.9em;
+        font-weight: 600;
+    }
 
     div > button {
         width: 25px;
@@ -135,6 +135,10 @@ img {
     .top-header-red {
         top: 50px;
     }
+
+    dhc-dropdown {
+        width: 110px;
+    }   
 }
 /* Ajustes específicos para telas muito pequenas no cabeçalho */
 @media (max-width: 480px) {

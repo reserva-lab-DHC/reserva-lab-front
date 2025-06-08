@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf, DatePipe } from '@angular/common'; // Adicionado NgIf e DatePipe para standalone components
+import { TitleCaseMonthPipe } from '../botao_calendario/date-navigation-header.component';
 
 interface CalendarDay {
   dayNumber: number | '';
@@ -10,7 +11,7 @@ interface CalendarDay {
 @Component({
   selector: 'dhc-daily-schedule-header',
   standalone: true,
-  imports: [CommonModule, NgIf, DatePipe], // DatePipe é necessário para o pipe 'date' no template
+  imports: [CommonModule, NgIf, DatePipe, TitleCaseMonthPipe], // DatePipe é necessário para o pipe 'date' no template
   templateUrl: './daily-schedule-header.component.html',
   styleUrls: ['./daily-schedule-header.component.scss']
 })
