@@ -1,11 +1,20 @@
-.container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 24px;
+.content {
+
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  
+}
+
+.container {
+
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+
+}
+
+.horas{
+  height: 48px;
+  margin: 35px;
 }
 
 .page-title {
@@ -17,10 +26,15 @@
   margin-bottom: 18px;
 }
 
-.selection{
+.selection {
   margin: 0 0 8px;
 }
 
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .caixatexto {
   padding: 8px 33px;
@@ -30,15 +44,15 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-  .descricao {
+.descricao {
   font-size: 14px;
   font-weight: 450;
   margin: 0 0 -8px;
   color: #333;
-  font-family: 'Montserrat',  sans-serif;
-  }
+  font-family: 'Montserrat', sans-serif;
+}
 
-  
+
 
 .text-area-box {
   width: 100%;
@@ -61,17 +75,12 @@
 }
 
 
-.botao{
-   margin: auto;
-  white-space: normal; 
-  text-align: center; 
-  width: 100px;       
-  padding: 0 8px 12px;  
-  display: inline-block;
-  min-width: 180px;   
-  box-sizing: border-box; 
-  word-break: break-word; 
-  
+.botao {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+
 }
 
 
