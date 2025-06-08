@@ -5,7 +5,9 @@
 
     <div class="date-navigation-wrapper-red">
         <button class="nav-arrow-red" id="prevDay">&leftarrow;</button>
-        <span class="current-date-display-red" id="mainDateDisplay"></span>
+        <span class="current-date-display-red" id="mainDateDisplay">
+            {{ selectedMainDate | date: 'fullDate':'':'pt-BR' }}
+        </span>
         <button class="nav-arrow-red" id="nextDay">&rightarrow;</button>
     </div>
 
@@ -17,7 +19,7 @@
                 </svg>
             </button>
 
-            <div class="calendar-popup" id="calendarPopup">
+            <div class="calendar-popup" *ngIf="showCalendar" id="calendarPopup">
                 <div class="calendar-header">
                     <button class="nav-button" id="prevMonth">&lt;</button>
                     <span class="month-year" id="monthYearDisplay"></span>

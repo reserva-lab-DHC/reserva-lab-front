@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 // Caso utilize, descomente e **verifique o caminho correto**.
 // import { ModalsComponent } from '../../shared/modals/modals.component';
 
-import { DailyScheduleHeaderComponent } from './daily-schedule-header/daily-schedule-header.component';
+// import { DailyScheduleHeaderComponent } from './daily-schedule-header/daily-schedule-header.component';
 import { ScheduleTableComponent } from './schedule-table/schedule-table.component';
 
 @Component({
@@ -14,7 +14,6 @@ import { ScheduleTableComponent } from './schedule-table/schedule-table.componen
   imports: [
     CommonModule,
     // ModalsComponent, // Descomente se for utilizado no HTML.
-    DailyScheduleHeaderComponent,
     ScheduleTableComponent
   ],
   templateUrl: './pagina_reservas.html',

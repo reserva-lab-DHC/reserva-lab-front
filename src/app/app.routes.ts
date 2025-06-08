@@ -18,6 +18,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/quadro-de-reservas/quadro-de-reservas.component').then(m => m.QuadroDeReservasComponent),
         canActivate: [authGuard]
     },
+    
     {
         path: 'confirmar-reserva',
         loadComponent: () => import('./features/confirmar-solicitacoes/confirmar-solicitacoes.component').then(m => m.ConfirmarSolicitacoesComponent),
