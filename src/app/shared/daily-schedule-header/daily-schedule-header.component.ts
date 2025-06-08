@@ -1,101 +1,111 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgIf, DatePipe } from '@angular/common'; // Adicionado NgIf e DatePipe para standalone components
+
+interface CalendarDay {
+  dayNumber: number | '';
+  empty: boolean;
+  date?: Date; // Opcional, será preenchido para dias válidos
+}
 
 @Component({
   selector: 'dhc-daily-schedule-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIf, DatePipe], // DatePipe é necessário para o pipe 'date' no template
   templateUrl: './daily-schedule-header.component.html',
   styleUrls: ['./daily-schedule-header.component.scss']
 })
-export class DailyScheduleHeaderComponent implements OnInit, AfterViewInit {
+export class DailyScheduleHeaderComponent implements OnInit {
 
   showCalendar = false;
-  currentCalendarDate: Date = new Date();
-  selectedMainDate: Date = new Date();
+  currentCalendarDate: Date = new Date(); // Controla o mês e ano do calendário pop-up
+  selectedMainDate: Date = new Date();    // A data principal exibida e selecionada
+  calendarDays: CalendarDay[] = [];       // Array para armazenar os dias a serem exibidos no calendário
 
-  titleCase(value: string): string {
-    return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+  ngOnInit(): void {
+    // Apenas para garantir que a data principal esteja inicialmente renderizada
+    this.generateCalendarDays(); // Gera os dias do calendário ao iniciar
   }
 
+  // Helper para capitalizar a primeira letra de cada palavra (útil para meses)
   titleCaseMonth(value: string): string {
     return value
       ? value.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
       : '';
   }
+
   toggleCalendar(): void {
-   this.showCalendar = !this.showCalendar;
- }
-
-
-  ngOnInit(): void {
-    this.updateMainDateDisplay();
-  }
-
-  updateMainDateDisplay(): void {
-    // Implement your logic here, for example:
-    // This could update a display string or perform other actions
-    // For now, we'll just log the selectedMainDate
-    console.log('Main date display updated:', this.selectedMainDate);
-  }
-
-    ngAfterViewInit(): void {
-      this.generateCalendarDays();
-      // this.addEventListeners(); // Removed or comment out this line to fix the error
+    this.showCalendar = !this.showCalendar;
+    if (this.showCalendar) {
+      this.generateCalendarDays(); // Regenera os dias sempre que o calendário é aberto
     }
-  
-    generateCalendarDays(): void {
-
-      const calendarGrid = document.getElementById('calendarGrid');
-  if (!calendarGrid) return;
-
-  // Limpa os dias anteriores
-  calendarGrid.innerHTML = '';
-
-  const year = this.currentCalendarDate.getFullYear();
-  const month = this.currentCalendarDate.getMonth();
-
-  // Primeiro dia do mês
-  const firstDay = new Date(year, month, 1);
-  const startDay = firstDay.getDay() || 7; // Domingo vira 7
-
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  // Adiciona espaços vazios
-  for (let i = 1; i < startDay; i++) {
-    const span = document.createElement('span');
-    span.classList.add('empty');
-    calendarGrid.appendChild(span);
   }
 
-  // Adiciona os dias
-  for (let day = 1; day <= daysInMonth; day++) {
-    const span = document.createElement('span');
-    span.innerText = String(day);
-
-    span.addEventListener('click', () => {
-      this.onDaySelected(year, month, day);
-    });
-
-    calendarGrid.appendChild(span);
+  // --- Navegação da Data Principal (Header) ---
+  goToPreviousDay(): void {
+    this.selectedMainDate = new Date(this.selectedMainDate.setDate(this.selectedMainDate.getDate() - 1));
+    this.currentCalendarDate = new Date(this.selectedMainDate); // Mantém o calendário sincronizado
+    this.generateCalendarDays();
   }
-}
-;
-  onDaySelected(year: number, month: number, day: number): void {
-  this.selectedMainDate = new Date(year, month, day);
-  this.updateMainDateDisplay();
-  this.showCalendar = false; // fecha o calendário
 
-  // Atualiza a data no DOM
-  const dateDisplay = document.getElementById('mainDateDisplay');
-  if (dateDisplay) {
-    dateDisplay.innerText = this.selectedMainDate.toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+  goToNextDay(): void {
+    this.selectedMainDate = new Date(this.selectedMainDate.setDate(this.selectedMainDate.getDate() + 1));
+    this.currentCalendarDate = new Date(this.selectedMainDate); // Mantém o calendário sincronizado
+    this.generateCalendarDays();
   }
+
+  // --- Navegação do Calendário Pop-up ---
+  goToPreviousMonth(): void {
+    this.currentCalendarDate = new Date(this.currentCalendarDate.getFullYear(), this.currentCalendarDate.getMonth() - 1, 1);
+    this.generateCalendarDays();
   }
- 
+
+  goToNextMonth(): void {
+    this.currentCalendarDate = new Date(this.currentCalendarDate.getFullYear(), this.currentCalendarDate.getMonth() + 1, 1);
+    this.generateCalendarDays();
+  }
+
+  // --- Geração e Seleção de Dias do Calendário ---
+  generateCalendarDays(): void {
+    const year = this.currentCalendarDate.getFullYear();
+    const month = this.currentCalendarDate.getMonth();
+
+    const firstDay = new Date(year, month, 1);
+    // getDay() retorna 0 para Domingo, 1 para Segunda...
+    // Queremos 1 para Segunda, 7 para Domingo. Ajuste para o cálculo do grid.
+    const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // 0=Dom vira 6 (último), 1=Seg vira 0 (primeiro)
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    this.calendarDays = [];
+
+    // Adiciona espaços vazios (dias do mês anterior)
+    for (let i = 0; i < startDay; i++) {
+      this.calendarDays.push({ dayNumber: '', empty: true });
+    }
+
+    // Adiciona os dias do mês atual
+    for (let day = 1; day <= daysInMonth; day++) {
+      this.calendarDays.push({
+        dayNumber: day,
+        empty: false,
+        date: new Date(year, month, day)
+      });
+    }
+  }
+
+  onDaySelected(date: Date): void {
+    this.selectedMainDate = date; // Atualiza a data principal
+    this.showCalendar = false;    // Fecha o calendário
+    // Não precisa mais de updateMainDateDisplay() nem de document.getElementById('mainDateDisplay').innerText
+    // O binding {{ selectedMainDate | date }} no HTML já lida com a atualização.
+  }
+
+  // Métodos para aplicar classes CSS dinamicamente
+  isSelectedDate(date: Date): boolean {
+    return this.selectedMainDate.toDateString() === date.toDateString();
+  }
+
+  isCurrentDay(date: Date): boolean {
+    const today = new Date();
+    return today.toDateString() === date.toDateString();
+  }
 }
