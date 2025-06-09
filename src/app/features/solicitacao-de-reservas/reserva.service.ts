@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 export interface Reserva {
- 
+
   responsavel: string;
   disciplina: string;
   descricao: string;
@@ -20,4 +20,7 @@ export class ReservaService {
     // Simular resposta de sucesso após 1 segundo
     return of({ success: true });
   }
+  /* tem que ficar parecido com a página de cadastra laboratorio...
+  ver o que a api retorna e o que voce tem que enviar....
+   */
 }
