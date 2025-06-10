@@ -42,12 +42,22 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
     //     reader.readAsDataURL(file);
     //   }
     // });
+    /* Acho que ao inves de colocar a imagem em si coloca só que o arquivo subiu igual geralmente é nesses sites com upload + basico,
+     a nao ser q seja tao facil assim de colocar a imagem do usuário */
   }
   atualizarNomeLab(valor: string) {
-  this.nomeLab = valor;
+    this.nomeLab = valor;
   }
 
-  registrar() {
+  registrar(
+
+    /* tem que usar os dados da página né 
+      talvez o formgroup resolva isso
+      ou talvez n precise de formgroup, só pegar os valores dos inputs
+      e passar para o service, se cadastrar tá bom sendo sincero
+    */
+
+  ) {
 
     const novoLab: LaboratorioDTO = {
       nomeSala: this.nomeLab,
