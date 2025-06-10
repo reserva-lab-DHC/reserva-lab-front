@@ -1,7 +1,7 @@
-<ng-container *ngIf="!isCadastro()">
-    <dhc-acesso [loginForm]="loginForm" (goToCadastro)="setCadastroView(true)"></dhc-acesso>
-</ng-container>
-
-<ng-container *ngIf="isCadastro()">
-    <dhc-cadastro (goToAcesso)="setCadastroView(false)"></dhc-cadastro>
+<ng-container>
+    <dhc-acesso *ngIf="!isCadastro()" [loginForm]="loginForm"></dhc-acesso>
+    <dhc-cadastro *ngIf="isCadastro()">
+        <!-- esse componente aqui tem que enviar o formulário pro back, realizar o cadastro e logar.... -->
+    </dhc-cadastro>
+    <button type="button" class="link-alternar" (click)="changeForm()">{{btnText()}}</button>
 </ng-container>

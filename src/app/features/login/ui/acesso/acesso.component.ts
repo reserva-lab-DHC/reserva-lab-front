@@ -11,5 +11,4 @@ import { CommonModule } from '@angular/common';
 })
 export class AcessoComponent {
   @Input() loginForm!: FormGroup;
-  @Output() goToCadastro = new EventEmitter<void>();
 }

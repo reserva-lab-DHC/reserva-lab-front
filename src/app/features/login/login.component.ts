@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -26,13 +26,20 @@ export class LoginComponent {
 
   isCadastro = signal(false);
 
+  btnText = signal('Não tem cadastro? Crie agora!');
+
   returnUrl = '/';
 
   constructor(
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+
+    effect(() => {
+      this.btnText.set(this.isCadastro() ? 'Já tem cadastro? Acesse agora!' : 'Não tem cadastro? Crie agora!');
+    });
+  }
 
   login() {
     const user = this.loginForm.value;
@@ -42,7 +49,7 @@ export class LoginComponent {
     this.router.navigateByUrl(returnUrl);
   }
 
-  setCadastroView(isCadastro: boolean) {
-    this.isCadastro.set(isCadastro);
+  changeForm() {
+    this.isCadastro.update(value => !value);
   }
 }

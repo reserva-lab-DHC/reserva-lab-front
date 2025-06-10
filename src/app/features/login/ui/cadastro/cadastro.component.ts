@@ -10,9 +10,13 @@ import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynami
   styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent {
-  @Output() goToAcesso = new EventEmitter<void>();
 
   onReservar() {
     console.log('Botão Reservar clicado');
   }
+
+  /* cade o formulário uai 
+    pq n usou o componente de input já criado? 
+    
+   */
 }
