@@ -1,20 +1,25 @@
-<div class="popup">
+<div class="overlay-backdrop" (click)="closePopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+
     <div class="options">
         <img src="assets/img/edit-reserva.svg" alt="icon">
         <img src="assets/img/apagar-reserva.svg" alt="icon">
-        <button (click)="onClose()" onkeydown="onClose()">
+        <button (click)="closePopup()">
             <img src="assets/img/close-popup.svg" alt="icon">
         </button>
     </div>
-    <p class="prof">{{professor}}</p>
+
+
+    <p class="prof">{{data.teacher}}</p>
     <div class="infoReserva">
 
-        <p class="lab">{{lab}}</p>
-        <p class="discipl">{{disciplina}}</p>
+        <p class="lab">{{data.lab}}</p>
+        <p class="discipl">{{data.disciplina}}</p>
         <ul>
-            <li>{{dia_e_horario}}</li>
-            <li>{{duracao_reserva}}</li>
-            <li>{{inicio_reserva}}</li>
+            <li>{{data.dia_e_horario}}</li>
+            <li>{{data.duracao}}</li>
+            <li>{{data.inicio}}</li>
         </ul>
     </div>
+  </div>
 </div>

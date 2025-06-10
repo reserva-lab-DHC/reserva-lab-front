@@ -22,7 +22,7 @@
             <div class="calendar-popup" *ngIf="showCalendar">
                 <div class="calendar-header">
                     <button class="nav-button" (click)="goToPreviousMonth()">&lt;</button>
-                    <span class="month-year">{{ currentCalendarDate | date: 'MMMM yyyy':'':'pt-BR' | titleCaseMonth }}</span>
+                    <span class="month-year">{{ currentCalendarDate | date: 'MMMM yyyy':'':'pt-BR' | titlecaseMonth }}</span>
                     <button class="nav-button" (click)="goToNextMonth()">&gt;</button>
                 </div>
                 <div class="calendar-days-header">

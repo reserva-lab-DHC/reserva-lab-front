@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'dhc-celula-quadro',
@@ -9,10 +9,19 @@ import { Component } from '@angular/core';
 
 export class CelulaQuadroComponent {
 
-  showPopup = false;
+  @Input() teacher!: string;
+  @Input() lab!: string;
+  @Input() disciplina!: string
+  @Input() dia_e_horario!: string
+  @Input() inicio!: string
+  @Input() duracao!: string
 
-  closePopup() {
-    this.showPopup = false;
+  @Output() cellClicked = new EventEmitter<{ teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }>();
+
+  onClick() {
+    if (this.teacher !== "")
+    this.cellClicked.emit({ teacher: this.teacher, lab: this.lab, disciplina: this.disciplina, dia_e_horario: this.dia_e_horario, inicio: this.inicio, duracao: this.duracao });
   }
+
 }
 

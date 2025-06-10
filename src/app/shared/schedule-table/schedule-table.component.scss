@@ -11,7 +11,7 @@
 
     height: 100px;
     display: grid;
-    grid-template-columns: 150px minmax(684px, auto);
+    grid-template-columns: 150px minmax(600px, auto);
     grid-template-rows: 50px 50px;
     background-color: #172944; /* Azul marinho escuro */
     color: #FFFFFF;
@@ -19,16 +19,7 @@
     min-width: max-content;
     //width: fit-content;
 }
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10000;
 
-}
 .empty-corner {
     background-color: #172944; /* Cor do fundo do cabeçalho azul */
     border-right: none !important; /* Garante que não haja borda direita aqui */
@@ -93,7 +84,7 @@
     border-right: 1px solid #B9B9B9; /* Separador vertical cinza claro */
     align-items: center;
     justify-content: center;
-    min-width: 101px;
+    min-width: 100px;
 
 }
 .time-slot:first-of-type {
@@ -139,13 +130,13 @@
 
 dhc-celula-quadro {
 
+    flex: 1 1 0;
     border-bottom: 1px solid #B9B9B9; /* Borda inferior visível (cinza claro) */
     border-right: 1px solid #B9B9B9; /* Mantém as bordas direitas entre as células de horário */
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     text-align: center;
+    min-width: 100px;
 
 
 }
@@ -204,7 +195,7 @@ dhc-celula-quadro:nth-child(2n + 1) {
     }
 
     .time-slots {
-        font-size: 0.75em;
+        font-size: 0.7em;
     }
 
     .schedule-grid {
@@ -217,7 +208,7 @@ dhc-celula-quadro:nth-child(2n + 1) {
         text-wrap: wrap;
         word-break: break-all;
         padding: 10px 5px;
-        font-size: 0.9em;
+        font-size: 0.75em;
         border-right: none !important;
     }
 

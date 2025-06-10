@@ -139,8 +139,27 @@ img {
     dhc-dropdown {
         width: 110px;
     }   
+    span {
+        width: 140px;
+    }
 }
 /* Ajustes específicos para telas muito pequenas no cabeçalho */
 @media (max-width: 480px) {
     /* Se precisar de mais ajustes aqui, eles iriam nesta seção */
+    .top-header-red .nav-arrow-red {
+        width: 25px;
+        height: 25px;
+        font-size: 16px;
+    }
+    .date-navigation-wrapper-red {
+        gap: 5px
+    }
+    .top-header-red .current-date-display-red {
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+    dhc-dropdown {
+        scale: 1.1;
+    }
+
 }

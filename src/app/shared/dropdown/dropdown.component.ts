@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, EventEmitter, input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface Option {
@@ -13,6 +13,8 @@ export interface Option {
   styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownComponent {
+
+  @Output() shiftSelected = new EventEmitter<string>();
   isOpen = signal(false);
   selected = signal('Todos');
   options = input<{ label: string, value: string }[]>([
@@ -29,6 +31,7 @@ export class DropdownComponent {
   selectOption(option: Option) {
     this.selected.set(option.label);
     this.isOpen.set(false);
+    this.shiftSelected.emit(option.value);
     console.log('Selecionado:', option.label, option.value);
   }
 

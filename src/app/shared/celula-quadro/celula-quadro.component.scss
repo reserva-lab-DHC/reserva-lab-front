@@ -17,8 +17,9 @@ div.card {
     gap: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 100px;
+    flex: 1 1 0
 }
 
 div.card:active {

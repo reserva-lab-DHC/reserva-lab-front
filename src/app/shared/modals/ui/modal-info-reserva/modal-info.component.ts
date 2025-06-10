@@ -9,19 +9,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class InfoComponent {
 
-  @Input() professor = ""
-  @Input() lab = "";
-  @Input() disciplina = "";
-  @Input() dia_e_horario = "";
-  @Input() duracao_reserva = "";
-  @Input() inicio_reserva = "";
+  @Input() data!: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string };
+  @Output() close = new EventEmitter<void>();
 
-
-  @Output() closePopup = new EventEmitter<void>();
-
-
-  onClose() {
-    this.closePopup.emit();
+  closePopup() {
+    console.log(this.data)
+    this.close.emit();
   }
+
 
 }

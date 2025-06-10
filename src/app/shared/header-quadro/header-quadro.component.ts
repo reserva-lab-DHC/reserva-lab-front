@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DropdownComponent } from "../dropdown/dropdown.component";
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { CalendarComponent } from "../calendar/calendar/calendar.component";
 import { RecentRequestComponent } from "../modals/ui/modal-recent-requests/modal-recent-requests";
 
@@ -39,6 +39,19 @@ export class HeaderQuadroComponent {
     this.month = this.date.getMonth() + 1
     this.weekday = this.date.toLocaleDateString('pt-br', {weekday: 'long'})
     this.currentDay = `${this.monthday}/${this.month} (${this.weekday})`
+  }
+
+  @Output() shiftSelected = new EventEmitter<string>();
+  selected = 'todos';
+    options = [
+    { label: 'Matutino', value: 'matutino' },
+    { label: 'Vespertino', value: 'vespertino' },
+    { label: 'Noturno', value: 'noturno' },
+    { label: 'Todos', value: 'todos' }
+  ];
+  selectShift(value: string) {
+    this.selected = value;
+    this.shiftSelected.emit(value);
   }
 
 }
