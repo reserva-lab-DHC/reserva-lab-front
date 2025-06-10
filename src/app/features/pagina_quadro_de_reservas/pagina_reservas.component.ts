@@ -52,7 +52,7 @@ export class PaginaReservasComponent {
   
   ];
 
-  selectedShift: string = 'todos';
+  selectedShift = 'todos';
   onShiftChange(shift: string) {
     this.selectedShift = shift;
   }

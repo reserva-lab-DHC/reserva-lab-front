@@ -1,5 +1,5 @@
-<div class="overlay-backdrop" (click)="closePopup()">
-  <div class="popup" (click)="$event.stopPropagation()">
+<div class="overlay-backdrop" (click)="closePopup()" (keydown)="closePopup()" tabindex="0">
+  <div class="popup" (click)="$event.stopPropagation()" (keydown)="closePopup()" tabindex="0">
 
     <div class="options">
         <img src="assets/img/edit-reserva.svg" alt="icon">
