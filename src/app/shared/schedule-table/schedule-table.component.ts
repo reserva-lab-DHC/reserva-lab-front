@@ -18,14 +18,14 @@ export class ScheduleTableComponent {
     this.cellSelected.emit(cellData);
   }
 
-  @Input() shift: string = 'todos';
+  @Input() shift = 'todos';
 
   get maxCells(): number {
   return this.shift === 'todos' ? 6 : 2;
   
   }
 
-  get visibleItems(): any[] {
+  get visibleItems(): { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }[][] {
   return this.scheduleData;
 }
 }

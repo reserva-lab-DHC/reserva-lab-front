@@ -10,11 +10,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class InfoComponent {
 
   @Input() data!: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string };
-  @Output() close = new EventEmitter<void>();
+  @Output() closeModal = new EventEmitter<void>();
 
   closePopup() {
     console.log(this.data)
-    this.close.emit();
+    this.closeModal.emit();
   }
 
 

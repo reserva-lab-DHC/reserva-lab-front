@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { DropdownComponent } from "../dropdown/dropdown.component";
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { CalendarComponent } from "../calendar/calendar/calendar.component";
 import { RecentRequestComponent } from "../modals/ui/modal-recent-requests/modal-recent-requests";
 
