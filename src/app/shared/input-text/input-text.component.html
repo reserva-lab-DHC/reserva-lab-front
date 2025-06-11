@@ -1,6 +1,4 @@
 <div class="textbox">
   <label [for]='inputId()'>{{ label() }}</label>
-  <input [type]='type()' [placeholder]='placeholder()' (input)="onInput($event)" class="input-text"
-    [formControl]="control" />
-
-</div>
+  <input [type]='type()' [placeholder]='placeholder()' class="input-text"
+    [formControl]="control" [id]="inputId()" /> </div>

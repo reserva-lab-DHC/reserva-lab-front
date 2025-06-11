@@ -2,28 +2,41 @@
   <h2 class="titulo">Cadastro do Usuário</h2>
 
   <div class="campo">
-    <label for="nomeUsuario">Nome do Usuário</label>
-    <input type="text" id="nomeUsuario" placeholder="" />
+    <dhc-input-text
+      label="Nome do Usuário"
+      placeholder=""
+      [control]="cadastroForm.controls.nomeUsuario"
+    ></dhc-input-text>
   </div>
 
   <div class="campo">
-    <label for="email">E-Mail</label>
-    <input type="email" id="email" placeholder="" />
+    <dhc-input-text
+      label="E-Mail"
+      type="email"
+      placeholder=""
+      [control]="cadastroForm.controls.email"
+    ></dhc-input-text>
   </div>
 
   <div class="campo">
-    <label for="senha">Senha</label>
-    <input type="password" id="senha" placeholder="" />
+    <dhc-input-text
+      label="Senha"
+      type="password"
+      placeholder=""
+      [control]="cadastroForm.controls.senha"
+    ></dhc-input-text>
   </div>
 
   <div class="campo">
-    <label for="repetirSenha">Repetir senha</label>
-    <input type="password" id="repetirSenha" placeholder="" />
+    <dhc-input-text
+      label="Repetir senha"
+      type="password"
+      placeholder=""
+      [control]="cadastroForm.controls.repetirSenha"
+    ></dhc-input-text>
   </div>
 
-  <dhc-dynamic-button (buttonClick)="onReservar()">
-    Reservar
-  </dhc-dynamic-button>
+  <dhc-dynamic-button (buttonClick)="onReservar()" label="Reservar" type="primary" color="red"></dhc-dynamic-button>
 
-  <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem conta? Faça login!</button>
+  <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem cadastro? Acesse agora!</button>
 </div>

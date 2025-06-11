@@ -42,7 +42,7 @@ export class LoginComponent {
     this.router.navigateByUrl(returnUrl);
   }
 
-  setCadastroView(isCadastro: boolean) {
-    this.isCadastro.set(isCadastro);
+  changeForm() {
+    this.isCadastro.update(value => !value);
   }
 }

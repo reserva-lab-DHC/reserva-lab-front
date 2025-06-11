@@ -51,3 +51,29 @@ a.esqueceu-senha {
   font-size: 0.95rem;
   cursor: pointer;
 }
+
+dhc-dynamic-button {
+  --button-background: none;
+  --button-border: none;
+  --button-padding: 0; 
+
+  &.link-alternar button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 1.5rem auto 0 auto; 
+    display: block; 
+    color: #d71940; 
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.95rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+    &:focus {
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+}

@@ -15,11 +15,9 @@
         <input type="password" formControlName="password" />
       </label>
     </div>
-
-    <button type="submit">Acessar</button>
-
-    <a class="esqueceu-senha">Esqueceu sua senha?</a>
   </form>
 
-  <button type="button" class="link-alternar" (click)="goToCadastro.emit()">Não tem conta? Cadastre-se!</button>
+  <dhc-dynamic-button (buttonClick)="login()" label="Acessar" type="primary" color="red"></dhc-dynamic-button>
+
+  <button type="button" class="link-alternar" (click)="goToCadastro.emit()">Não tem cadastro? Crie agora!</button>
 </div>

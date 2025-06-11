@@ -37,73 +37,44 @@
   color: #333;
 }
 
-.campo input {
-  padding: 0.75rem 1rem;
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  background-color: #f7f7f7;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-
-  &::placeholder {
-    color: #a9a9a9;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #d71940;
-    background-color: #fff;
-  }
-}
-
-.erro {
-  color: #d71940;
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  display: block;
-}
-
-dhc-dynamic-button {
+dhc-dynamic-button[label="Reservar"] {
   width: 100%;
   margin-top: 1.5rem;
-  display: block;
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #d71940;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #c31539;
+    }
+  }
 }
 
 .link-alternar {
-  background: none; 
+  background: none;
   border: none;
-  padding: 0; 
-  margin-top: 1.5rem; 
-  text-align: center;
-  color: #d71940; 
-  text-decoration: none; 
-  font-weight: bold; 
+  padding: 0;
+  margin: 1.5rem auto 0 auto; 
+  display: block;
+  color: #d71940;
+  text-decoration: none;
+  font-weight: bold;
   cursor: pointer;
   font-size: 0.95rem;
 
   &:hover {
     text-decoration: underline;
   }
-
   &:focus {
-    outline: none; 
-    text-decoration: underline; 
-  }
-}
-
-@media (min-width: 768px) {
-  .cadastro-card {
-    max-width: 500px;
-    padding: 3rem 2rem;
-  }
-
-  .titulo {
-    font-size: 2rem;
-  }
-
-  .campo input {
-    font-size: 1.1rem;
+    outline: none;
+    text-decoration: underline;
   }
 }
