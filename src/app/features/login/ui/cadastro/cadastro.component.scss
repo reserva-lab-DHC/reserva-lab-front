@@ -62,7 +62,7 @@ dhc-dynamic-button[label="Reservar"] {
   background: none;
   border: none;
   padding: 0;
-  margin: 1.5rem auto 0 auto; 
+  margin: 1.5rem auto 0 auto;
   display: block;
   color: #d71940;
   text-decoration: none;
@@ -76,5 +76,16 @@ dhc-dynamic-button[label="Reservar"] {
   &:focus {
     outline: none;
     text-decoration: underline;
+  }
+}
+
+@media (min-width: 768px) {
+  .cadastro-card {
+    max-width: 500px;
+    padding: 3rem 2rem;
+  }
+
+  .titulo {
+    font-size: 2rem;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core'; 
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
 import { InputTextComponent } from '../../../../shared/input-text/input-text.component';

@@ -70,19 +70,19 @@ dhc-dynamic-button[label="Acessar"] {
 }
 
 .link-alternar {
-  background: none; 
-  border: none; 
-  padding: 0; 
-  margin: 1.5rem auto 0 auto; 
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 1.5rem auto 0 auto;
   display: block;
-  color: #d71940; 
+  color: #d71940;
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
-  font-size: 0.95rem; 
+  font-size: 0.95rem;
 
   &:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
   }
   &:focus {
     outline: none;
