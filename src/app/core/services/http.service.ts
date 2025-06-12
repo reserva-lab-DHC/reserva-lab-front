@@ -48,6 +48,43 @@ export class HttpService {
         );
     }
 
+    /**
+     * Generic PUT request
+     * @param endpoint API endpoint (e.g., '/users')
+     * @param body Request payload (JSON)
+     * @param params Query params (JSON)
+     * @param headers Custom headers (optional)
+     */
+    put<T, B>(endpoint: string, body: B, params?: Record<string, string | number | null | boolean | undefined>, headers?: HttpHeaders): Observable<T> {
+        const url = `${this.baseUrl}${endpoint}`;
+
+        const options = {
+            headers: headers || this.getDefaultHeaders(),
+            params: this.createParams(params || {})
+        };
+        return this.http.put<T>(url, body, options).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    /**
+     * Generic DELETE request
+     * @param endpoint API endpoint (e.g., '/users')
+     * @param params Query params (JSON)
+     * @param headers Custom headers (optional)
+     */
+    delete<T>(endpoint: string, params?: Record<string, string | number | null | boolean | undefined>, headers?: HttpHeaders): Observable<T> {
+        const url = `${this.baseUrl}${endpoint}`;
+
+        const options = {
+            headers: headers || this.getDefaultHeaders(),
+            params: this.createParams(params || {})
+        };
+        return this.http.delete<T>(url, options).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private getDefaultHeaders(): HttpHeaders {
         return new HttpHeaders({
             'Content-Type': 'application/json'
