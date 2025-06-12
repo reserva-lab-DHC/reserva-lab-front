@@ -13,6 +13,7 @@ export class ScheduleTableComponent {
 
   @Input() scheduleData: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }[][] = [];
   @Output() cellSelected = new EventEmitter<{ teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }>();
+   @Input() selectedDate!: Date;
 
   onCellClicked(cellData: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }) {
     this.cellSelected.emit(cellData);

@@ -13,6 +13,7 @@ import { NgIf } from '@angular/common';
 export class QuadroDeReservasComponent {
   selectedCell = {teacher: "", lab: "", disciplina: "", dia_e_horario: "", inicio: "", duracao: ""};
   showPopup = false;
+  currentSelectedDate: Date = new Date(); 
 
   onCellSelected(cell: { teacher: string; lab: string; disciplina: string; dia_e_horario: string; inicio: string, duracao: string }) {
     this.selectedCell = cell;
@@ -48,4 +49,9 @@ export class QuadroDeReservasComponent {
   onShiftChange(shift: string) {
     this.selectedShift = shift;
   }
+  onDateChange(newDate: Date): void {
+    this.currentSelectedDate = newDate;
+    console.log('Nova data selecionada no Quadro de Reservas:', this.currentSelectedDate);
+    // Aqui você pode adicionar lógica para carregar novas reservas 
+}
 }

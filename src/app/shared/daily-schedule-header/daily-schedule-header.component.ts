@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { CommonModule, NgIf, DatePipe } from '@angular/common'; // Adicionado NgIf e DatePipe para standalone components
 import { TitleCaseMonthPipe } from '../botao_calendario/date-navigation-header.component';
 
@@ -17,6 +17,8 @@ interface CalendarDay {
 })
 export class DailyScheduleHeaderComponent implements OnInit {
 
+  @Output() dateSelected = new EventEmitter<Date>(); // NOVO: Evento para emitir a data selecionada
+
   showCalendar = false;
   currentCalendarDate: Date = new Date(); // Controla o mês e ano do calendário pop-up
   selectedMainDate: Date = new Date();    // A data principal exibida e selecionada
@@ -25,6 +27,8 @@ export class DailyScheduleHeaderComponent implements OnInit {
   ngOnInit(): void {
     // Apenas para garantir que a data principal esteja inicialmente renderizada
     this.generateCalendarDays(); // Gera os dias do calendário ao iniciar
+    this.emitSelectedDate();
+    
   }
 
   // Helper para capitalizar a primeira letra de cada palavra (útil para meses)
@@ -39,19 +43,28 @@ export class DailyScheduleHeaderComponent implements OnInit {
     if (this.showCalendar) {
       this.generateCalendarDays(); // Regenera os dias sempre que o calendário é aberto
     }
+
+   
   }
+   private emitSelectedDate(): void {
+    this.dateSelected.emit(this.selectedMainDate);
+   }
 
   // --- Navegação da Data Principal (Header) ---
   goToPreviousDay(): void {
     this.selectedMainDate = new Date(this.selectedMainDate.setDate(this.selectedMainDate.getDate() - 1));
     this.currentCalendarDate = new Date(this.selectedMainDate); // Mantém o calendário sincronizado
     this.generateCalendarDays();
+    this.emitSelectedDate();
+    
   }
 
   goToNextDay(): void {
     this.selectedMainDate = new Date(this.selectedMainDate.setDate(this.selectedMainDate.getDate() + 1));
     this.currentCalendarDate = new Date(this.selectedMainDate); // Mantém o calendário sincronizado
     this.generateCalendarDays();
+    this.emitSelectedDate();
+    
   }
 
   // --- Navegação do Calendário Pop-up ---
@@ -95,7 +108,9 @@ export class DailyScheduleHeaderComponent implements OnInit {
 
   onDaySelected(date: Date): void {
     this.selectedMainDate = date; // Atualiza a data principal
-    this.showCalendar = false;    // Fecha o calendário
+    this.showCalendar = false; 
+    this.emitSelectedDate(); 
+    
     // Não precisa mais de updateMainDateDisplay() nem de document.getElementById('mainDateDisplay').innerText
     // O binding {{ selectedMainDate | date }} no HTML já lida com a atualização.
   }
