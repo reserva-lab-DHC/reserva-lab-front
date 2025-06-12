@@ -11,7 +11,7 @@ import { Observable, catchError, throwError } from 'rxjs';
     providedIn: 'root'
 })
 export class HttpService {
-    private readonly baseUrl = 'http://naotemainda';
+    private readonly baseUrl = 'http://localhost:8080'; //p teste local
 
     constructor(private http: HttpClient) { }
 
@@ -50,8 +50,7 @@ export class HttpService {
 
     private getDefaultHeaders(): HttpHeaders {
         return new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Content-Type': 'application/json'
         });
     }
 

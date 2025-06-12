@@ -10,6 +10,6 @@ export class LaboratorioService {
   constructor(private http: HttpService) { }
 
   async cadastrarLaboratorio(lab: LaboratorioDTO): Promise<LaboratorioDTO | undefined> {
-    return lastValueFrom(this.http.post<LaboratorioDTO, LaboratorioDTO>('/laboratorio', lab));
+    return lastValueFrom(this.http.post<LaboratorioDTO, LaboratorioDTO>('/sala', lab));
   }
 }
