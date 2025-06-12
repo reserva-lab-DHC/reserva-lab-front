@@ -1,5 +1,5 @@
 <div >
-  <button (click)="onClick()" class="botao">
+  <button (click)="onClick()" (keyup.enter)="onClick()" class="botao" tabindex="0" aria-label="Abrir ou fechar menu">
     <div class="menu">
       <img [src]="iconUrl()" alt="icon" class="imagem-menu">
     </div>

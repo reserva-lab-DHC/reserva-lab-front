@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'dhc-modal-exclusao',
@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './modal-exclusao.component.html',
   styleUrls: ['./modal-exclusao.component.scss']
 })
-export class ExclusaoComponent {}
+export class ExclusaoComponent {
+  @Output() fechar = new EventEmitter<void>();
+
+  onFechar() {
+    this.fechar.emit();
+  }
+}

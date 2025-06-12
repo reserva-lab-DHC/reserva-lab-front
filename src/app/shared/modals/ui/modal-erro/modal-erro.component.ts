@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'dhc-modal-erro',
@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './modal-erro.component.html',
   styleUrls: ['./modal-erro.component.scss']
 })
-export class ErroComponent {}
+export class ErroComponent {
+    @Output() fechar = new EventEmitter<void>();
+
+  onFechar() {
+    this.fechar.emit();
+  }
+}

@@ -1,0 +1,41 @@
+@use "../../../../variables.scss" as variables;
+
+.calendar {
+    user-select: none;
+}
+
+.calendar,
+.calendar .p-inputtext,
+.calendar .p-datepicker {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
+:host {
+  --p-datepicker-date-selected-background: #{variables.$primary-red};
+  --p-datepicker-date-range-selected-background: #{variables.$second-red};
+  --p-datepicker-date-range-selected-color: #000;
+  --p-button-text-primary-color: #000;
+  --p-datepicker-date-border-radius: 15%;
+  --p-button-primary-hover-background: #{variables.$second-red};
+  --p-button-text-primary-hover-background: #{variables.$third-red};
+  --p-button-primary-hover-border-color: #{variables.$primary-red};
+  --p-button-text-primary-active-background: #{variables.$third-red};
+  --p-button-primary-focus-ring-color: #{variables.$primary-red};
+  --p-disabled-opacity: 0.2;
+}
+
+::ng-deep .p-datepicker-title button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+}
+
+::ng-deep {
+  .p-datepicker-title button {
+    &.p-ripple {
+      &.p-datepicker-select-month {
+        font-weight: bold !important;
+      }
+    }
+  }
+}

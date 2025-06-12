@@ -1,6 +1,7 @@
 .navegacao {
   position: absolute;
   top: 50px;
+  cursor: pointer;
 
   &__item {
 
@@ -16,17 +17,27 @@
     box-sizing: border-box;
     max-width: 110px;
     min-height: 40px;
-    padding: 12px 10px;
     width: 100%;
     height: auto;
+    cursor: pointer;
 
     &:hover {
       background-color: #dadada;
     }
+
+    & a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 12px 10px;
+      color: #000000;
+    }
+
   }
 }
 
-.principal{
+.principal {
   font-weight: 700;
 }
 

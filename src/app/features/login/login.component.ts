@@ -15,6 +15,7 @@ export class LoginComponent {
     username: new FormControl(''),
     password: new FormControl('')
   });
+  returnUrl = '/';
 
   constructor(
     private auth: AuthService,

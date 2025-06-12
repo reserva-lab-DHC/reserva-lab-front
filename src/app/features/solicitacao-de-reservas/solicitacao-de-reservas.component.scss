@@ -1,0 +1,95 @@
+.content {
+
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+
+}
+
+.horas{
+  height: 48px;
+  margin: 35px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+  margin: 15px;
+  margin-bottom: 18px;
+}
+
+.selection {
+  margin: 0 0 8px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.caixatexto {
+  padding: 8px 33px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.descricao {
+  font-size: 14px;
+  font-weight: 450;
+  margin: 0 0 -8px;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.text-area-box {
+  width: 100%;
+  padding: 5px 12px;
+  border: 1px solid #706f6f;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Montserrat';
+  box-sizing: border-box;
+  height: 100px;
+  resize: vertical;
+
+}
+
+.text-area-box::placeholder {
+  color: #999;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+.botao {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+
+}
+
+
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+}
