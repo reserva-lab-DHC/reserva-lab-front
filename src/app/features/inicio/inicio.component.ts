@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { InputSelectComponent } from "../../shared/input-select/input-select.component";
-import { CardComponent } from "../../shared/card/card.component";
+
 
 @Component({
-  selector: 'app-inicio',
+  selector: 'dhc-app-inicio',
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.scss',
   standalone: true,
-  imports: [InputSelectComponent, CardComponent]
+  imports: [InputSelectComponent]
 })
 export class InicioComponent {
 
