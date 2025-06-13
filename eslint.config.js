@@ -30,6 +30,12 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "@typescript-eslint/no-empty-function": [
+        "error",
+        {
+          allow: ["constructors"], // Permite construtores vazios
+        },
+      ],
     },
   },
   {
@@ -40,4 +46,4 @@ module.exports = tseslint.config(
     ],
     rules: {},
   }
-);
+); 

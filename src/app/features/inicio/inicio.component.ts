@@ -1,14 +1,42 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
-import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
+import { Component } from '@angular/core';
+import { InputSelectComponent } from "../../shared/input-select/input-select.component";
+
 
 @Component({
-  selector: 'dhc-inicio',
-  imports: [CommonModule, DynamicButtonComponent],
+  selector: 'dhc-app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.scss'
+  styleUrl: './inicio.component.scss',
+  standalone: true,
+  imports: [InputSelectComponent]
 })
 export class InicioComponent {
-  authService = inject(AuthService);
+
+  dataSelecionada = '06/01';
+
+  salasDisponiveis = [
+    {
+      nome: 'Laboratório Tecnológico I',
+      horario: '18:20',
+      horario2: '20:00',
+      local: 'S2 (subsolo)',
+      imagem: 'assets/img/lab-tec1.jpg'
+    },
+    {
+      nome: 'Laboratório de Química',
+      horario: '18:20',
+      horario2: '20:00',
+      local: 'S2 (subsolo)',
+      imagem: 'assets/img/lab-quimica.jpg'
+    }
+  ];
+
+  salasIndisponiveis = [
+    {
+      nome: 'Metodologias Ativas II',
+      horario: '20:00',
+      horario2: '',
+      local: '1º Andar',
+      imagem: 'assets/img/metodologias.jpg'
+    }
+  ];
 }

@@ -1,26 +1,33 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
-import { FormsModule } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
-import { InputTextComponent } from "../../shared/input-text/input-text.component";
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
+import { InputTextComponent } from "../../shared/input-text/input-text.component";
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent, FormsModule, InputTextComponent, DynamicButtonComponent],
+  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone: true,
 
 })
-export class CadastrarLaboratorioComponent implements AfterViewInit {
-  nomeLab = '';
+export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
   predioSelecionado = 0;
   andarSelecionado = 0;
 
-  constructor(private laboratorioService: LaboratorioService) { }
+  laboratorioService = inject(LaboratorioService);
 
-  ngAfterViewInit(): void {
+  formulario = new FormGroup({
+    andarSelecionado: new FormControl<number>(0, [Validators.required]),
+    predioSelecionado: new FormControl<number>(0, [Validators.required]),
+    nomeSala: new FormControl('', [Validators.required]),
+  });
+
+  constructor() { }
+
+  /* ngAfterViewInit(): void {
     const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
     const uploadInput = document.getElementById('upload') as HTMLInputElement;
 
@@ -42,27 +49,25 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
     //     reader.readAsDataURL(file);
     //   }
     // });
-    /* Acho que ao inves de colocar a imagem em si coloca só que o arquivo subiu igual geralmente é nesses sites com upload + basico,
-     a nao ser q seja tao facil assim de colocar a imagem do usuário */
-  }
-  atualizarNomeLab(valor: string) {
-    this.nomeLab = valor;
-  }
+  } */
+  registrar() {
+    if (
+      this.formulario.invalid ||
+      this.formulario.get('predioSelecionado')?.value === 0 ||
+      this.formulario.get('andarSelecionado')?.value === 0 ||
+      this.formulario.get('nomeSala')?.value === '') {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
 
-  registrar(
-
-    /* tem que usar os dados da página né 
-      talvez o formgroup resolva isso
-      ou talvez n precise de formgroup, só pegar os valores dos inputs
-      e passar para o service, se cadastrar tá bom sendo sincero
-    */
-
-  ) {
+    const nomeSala = this.formulario.get('nomeSala')?.value ?? '';
+    const predio = this.formulario.get('predioSelecionado')?.value ?? 0;
+    const andar = this.formulario.get('andarSelecionado')?.value ?? 0;
 
     const novoLab: LaboratorioDTO = {
-      nomeSala: this.nomeLab,
-      predio: this.predioSelecionado,
-      andar: this.andarSelecionado,
+      nomeSala: nomeSala,
+      predio: predio,
+      andar: andar,
     };
 
 
