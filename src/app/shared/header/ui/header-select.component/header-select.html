@@ -5,7 +5,7 @@
   </dhc-icon-button>
 </div>
 
-<div class="navegacao" *ngIf="isOpen()" (click)="close()">
+<div class="navegacao" *ngIf="isOpen()" (click)="close()" (keydown.enter)="close()" tabindex="0">
   <div class="navegacao__item principal">
     <a routerLink="/home">Página inicial</a>
   </div>
