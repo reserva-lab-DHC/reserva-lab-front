@@ -11,5 +11,4 @@ import { QuadroDeReservasComponent } from "./features/quadro-de-reservas/quadro-
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-}
+export class AppComponent {}

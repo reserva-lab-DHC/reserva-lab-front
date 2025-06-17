@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, forwardRef, input, output } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'dhc-input-select',
@@ -8,19 +8,44 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './input-select.component.html',
   styleUrls: ['./input-select.component.scss'],
   imports: [FormsModule, CommonModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputSelectComponent),
+      multi: true
+    }
+  ]
 })
-export class InputSelectComponent {
+export class InputSelectComponent implements ControlValueAccessor {
 
-  value = signal('');
+ onSelectChangeFromModel() {
+  // método vazio
+}
+
+  value = '';
   label = input('');
   placeholder = input('');
-  options = input(['']);
-  valueChange = output();
+  options = input<string[]>();
+  valueChange = output<string>();
 
-  onSelectChangeFromModel(value: string) {
-    if (value !== undefined) {
-      this.value.set(value);
-      this.valueChange.emit();
-    }
+  private _onChange?: (value: string) => void;
+  private _onTouched?: () => void;
+
+  writeValue(value: string): void {
+    this.value = value ?? '';
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this._onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this._onTouched = fn;
+  }
+
+  selectValue(value: string): void {
+    this.value = value;
+    this._onChange?.(value);
+    this._onTouched?.();
   }
 }

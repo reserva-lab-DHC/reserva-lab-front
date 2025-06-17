@@ -1,0 +1,42 @@
+<div class="cadastro-card">
+  <h2 class="titulo">Cadastro do Usuário</h2>
+
+  <div class="campo">
+    <dhc-input-text
+      label="Nome do Usuário"
+      placeholder="Digite seu nome"
+      [formControl]="cadastroForm.controls.nomeUsuario"
+    ></dhc-input-text>
+  </div>
+
+  <div class="campo">
+    <dhc-input-text
+      label="E-Mail"
+      type="email"
+      placeholder="Digite seu e-mail"
+      [formControl]="cadastroForm.controls.email"
+    ></dhc-input-text>
+  </div>
+
+  <div class="campo">
+    <dhc-input-text
+      label="Senha"
+      type="password"
+      placeholder="Digite sua senha"
+      [formControl]="cadastroForm.controls.senha"
+    ></dhc-input-text>
+  </div>
+
+  <div class="campo">
+    <dhc-input-text
+      label="Repetir senha"
+      type="password"
+      placeholder="Confirme sua senha"
+      [formControl]="cadastroForm.controls.repetirSenha"
+    ></dhc-input-text>
+  </div>
+
+  <dhc-dynamic-button (clicked)="cadastrar()" label="Cadastrar" type="primary" color="red"></dhc-dynamic-button>
+
+  <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem cadastro? Acesse agora!</button>
+</div>

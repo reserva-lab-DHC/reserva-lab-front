@@ -1,8 +1,7 @@
 <div class="seletorbox">
-
   <select 
     [ngModel]="value" 
-    (ngModelChange)="onSelectChangeFromModel($event)" 
+    (ngModelChange)="selectValue($event)" 
     class="input-select"
   >
     <option value="" disabled hidden>{{ placeholder() }}</option>
