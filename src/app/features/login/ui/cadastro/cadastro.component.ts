@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
 import { InputTextComponent } from '../../../../shared/input-text/input-text.component';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'dhc-cadastro',
@@ -26,11 +28,21 @@ export class CadastroComponent {
 
   @Output() goToAcesso = new EventEmitter<void>();
 
-  onReservar() {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+
+  cadastrar() {
     if (this.cadastroForm.valid) {
-      console.log('Formulário de cadastro válido:', this.cadastroForm.value);
+      alert('Cadastrado com sucesso!');
+      const user = this.cadastroForm.value;
+      this.auth.login(user);
+      const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
+      this.router.navigateByUrl(returnUrl);
     } else {
-      console.log('Formulário de cadastro inválido');
+      alert('Formulário de cadastro inválido');
     }
   }
 }

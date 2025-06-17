@@ -4,8 +4,8 @@
   <div class="campo">
     <dhc-input-text
       label="Nome do Usuário"
-      placeholder=""
-      [control]="cadastroForm.controls.nomeUsuario"
+      placeholder="Digite seu nome"
+      [formControl]="cadastroForm.controls.nomeUsuario"
     ></dhc-input-text>
   </div>
 
@@ -13,8 +13,8 @@
     <dhc-input-text
       label="E-Mail"
       type="email"
-      placeholder=""
-      [control]="cadastroForm.controls.email"
+      placeholder="Digite seu e-mail"
+      [formControl]="cadastroForm.controls.email"
     ></dhc-input-text>
   </div>
 
@@ -22,8 +22,8 @@
     <dhc-input-text
       label="Senha"
       type="password"
-      placeholder=""
-      [control]="cadastroForm.controls.senha"
+      placeholder="Digite sua senha"
+      [formControl]="cadastroForm.controls.senha"
     ></dhc-input-text>
   </div>
 
@@ -31,12 +31,12 @@
     <dhc-input-text
       label="Repetir senha"
       type="password"
-      placeholder=""
-      [control]="cadastroForm.controls.repetirSenha"
+      placeholder="Confirme sua senha"
+      [formControl]="cadastroForm.controls.repetirSenha"
     ></dhc-input-text>
   </div>
 
-  <dhc-dynamic-button (buttonClick)="onReservar()" label="Reservar" type="primary" color="red"></dhc-dynamic-button>
+  <dhc-dynamic-button (clicked)="cadastrar()" label="Cadastrar" type="primary" color="red"></dhc-dynamic-button>
 
   <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem cadastro? Acesse agora!</button>
 </div>
