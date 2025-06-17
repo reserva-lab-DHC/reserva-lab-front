@@ -7,10 +7,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent)
   },
   {
-    path: 'cadastro',
-    loadComponent: () => import('./features/login/ui/cadastro/cadastro.component').then(m => m.CadastroComponent)
-  },
-  {
     path: 'inicio',
     loadComponent: () => import('./features/inicio/inicio.component').then(m => m.InicioComponent),
     canActivate: [authGuard]
@@ -30,6 +26,5 @@ export const routes: Routes = [
     loadComponent: () => import('./features/solicitacao-de-reservas/solicitacao-de-reservas.component').then(m => m.SolicitacaoDeReservasComponent),
     canActivate: [authGuard]
   },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: '**', redirectTo: 'inicio' }
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' }
 ];

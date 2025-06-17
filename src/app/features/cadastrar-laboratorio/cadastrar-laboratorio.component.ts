@@ -5,10 +5,10 @@ import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, NgIf],
+  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, CommonModule],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone: true,
