@@ -13,5 +13,6 @@ export class CardComponent {
   horario2 = input.required<string>()
   andar = input.required<string>()
   imgSrc = input.required<string>()
+  disabled = false;
 }
 

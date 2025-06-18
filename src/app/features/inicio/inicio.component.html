@@ -1,133 +1,100 @@
 <div class="inicio-container">
   <p class="label-turno">Turno</p>
-  
+
   <div class="filtro">
-    <dhc-input-select class="turno" label="Turno" [options]="['Manhã', 'Tarde', 'Noite']" placeholder="Todos"
-      formControlName="filtroTurno">
-    </dhc-input-select>
-    
-    <div id="data-container">
-      <p>06/01</p>
-    </div>
-    
-    <img class="calendar-icon" src="assets/img/calendar-icon.svg" alt="calendário">
+    <form [formGroup]="filtroForm">
+      <div class="filtro-inputs-wrapper">
+        <dhc-input-select class="turno" label="Turno" [options]="['Manhã', 'Tarde', 'Noite', 'Todos']" placeholder="Todos"
+          formControlName="filtroTurno">
+        </dhc-input-select>
+
+        <div class="data-calendario-wrapper"
+             (click)="abrirCalendario()"
+             (keydown.enter)="abrirCalendario()"
+             tabindex="0"
+             role="button">
+          <span class="data-selecionada">{{ dataSelecionada | date: 'dd/MM' }}</span>
+          <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário">
+        </div>
+      </div>
+      <dhc-calendar
+        *ngIf="mostrarCalendario"
+        formControlName="dataSelecionada"
+        selectionMode="single">
+      </dhc-calendar>
+    </form>
   </div>
 
-  <div class="salas-disponiveis">
+  <div class="cards-background">
+    <div class="cards-box">
+      <div class="scrollable-cards-wrapper">
+        <div class="salas-disponiveis"
+          (mousedown)="onMouseDown($event)"
+          (mouseleave)="onMouseLeave()"
+          (mouseup)="onMouseUp()"
+          (mousemove)="onMouseMove($event)"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd()"
+          (touchmove)="onTouchMove($event)">
 
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
+          <ng-container *ngFor="let sala of salasDisponiveisFiltradas">
+            <div class="sala-grupo">
+              <div class="sala-imagem-container">
+                <img [src]="sala.imagem" [alt]="sala.nome" class="sala-imagem">
+              </div>
+              <div class="sala-conteudo">
+                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Manhã' && sala.horarios.manha">
+                  {{ sala.horarios.manha[0] }} - {{ sala.horarios.manha[1] }}
+                </p>
+                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Tarde' && sala.horarios.tarde">
+                  {{ sala.horarios.tarde[0] }} - {{ sala.horarios.tarde[1] }}
+                </p>
+                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Noite' && sala.horarios.noite">
+                  {{ sala.horarios.noite[0] }} - {{ sala.horarios.noite[1] }}
+                </p>
+                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Todos' && sala.horarios.manha">
+                  {{ sala.horarios.manha[0] }} - {{ sala.horarios.manha[1] }}
+                </p>
+                <h2>{{ sala.nome }}</h2>
+                <p class="sala-info">{{ sala.local }}</p>
+                <p class="sala-info">{{ sala.sublocal }}</p>
+              </div>
+            </div>
+          </ng-container>
+
         </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>Laboratório Tecnológico I</h2>
-        <p class="sala-info">Prédio I</p>
-        <p class="sala-info">S2 [subsolo]</p>
       </div>
     </div>
 
-    
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>Laboratório de Química</h2>
-        <p class="sala-info">Prédio I</p>
-        <p class="sala-info">S2 [subsolo]</p>
-      </div>
-    </div>
+    <div class="cards-box">
+      <h2 class="titulo-indisponiveis">Indisponíveis</h2>
+      <div class="scrollable-cards-wrapper">
+        <div class="salas-indisponiveis"
+          (mousedown)="onMouseDown($event)"
+          (mouseleave)="onMouseLeave()"
+          (mouseup)="onMouseUp()"
+          (mousemove)="onMouseMove($event)"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd()"
+          (touchmove)="onTouchMove($event)">
 
- 
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>Metodologias Ativas II</h2>
-        <p class="sala-info">Prédio I</p>
-        <p class="sala-info">S2 [subsolo]</p>
-      </div>
-    </div>
+          <ng-container *ngFor="let sala of salasIndisponiveisFiltradas">
+            <div class="sala-grupo">
+              <div class="sala-imagem-container">
+                <img [src]="sala.imagem" [alt]="sala.nome" class="sala-imagem">
+              </div>
+              <div class="sala-conteudo">
+                <p class="sala-horario" *ngIf="sala.horarios.noite">
+                  {{ sala.horarios.noite[0] }} - {{ sala.horarios.noite[1] }}
+                </p>
+                <h2>{{ sala.nome }}</h2>
+                <p class="sala-info">{{ sala.local }}</p>
+                <p class="sala-info">{{ sala.sublocal }}</p>
+              </div>
+            </div>
+          </ng-container>
 
- 
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
         </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>Laboratório de Inovação</h2>
-        <p class="sala-info">Prédio I</p>
-        <p class="sala-info">S2 [subsolo]</p>
-      </div>
-    </div>
-
- 
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>Maquetaria</h2>
-        <p class="sala-info">Prédio I</p>
-        <p class="sala-info">S2 [subsolo]</p>
-      </div>
-    </div>
-  </div>
-
-  <div>
-  <h2 class="titulo-indisponiveis">Indisponíveis</h2>
-  
-  <div class="salas-indisponiveis">
-   
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>2000</h2>
-        <p class="sala-info">Metodologias Ativas II</p>
-        <p class="sala-info">Prédio I</p>
-      </div>
-    </div>
-
-   
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>2000</h2>
-        <p class="sala-info">Medio I</p>
-        <p class="sala-info">1º Andar</p>
-      </div>
-    </div>
-
-   
-    <div class="sala-grupo">
-      <div class="sala-imagem-container">
-        <div class="sala-imagem-placeholder">
-          
-        </div>
-      </div>
-      <div class="sala-conteudo">
-        <h2>22º</h2>
-        <p class="sala-info">[subsolo]</p>
-        <p class="sala-info">Prédio I</p>
       </div>
     </div>
   </div>

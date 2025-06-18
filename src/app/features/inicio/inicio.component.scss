@@ -13,50 +13,105 @@
 
 .filtro {
   display: flex;
-  align-items: center;
-  font-size: 25px;
-  font-weight: 600;
+  flex-direction: column; 
+  align-items: flex-start; 
   margin-bottom: 40px;
 }
 
-.turno {
-  width: 34%;
-  margin: 5px 8px;
-  cursor: pointer;
+.filtro form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-#data-container p {
-  margin: 0;
-  font-size: 16px;
+.filtro-inputs-wrapper {
+  display: flex; 
+  align-items: center; 
+  gap: 15px; 
+  width: auto; 
+  margin-left: 0; 
+}
+
+.data-calendario-wrapper {
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  cursor: pointer; 
+}
+
+.turno {
+  width: 150px; 
+  padding: 8px 12px; 
+  font-size: 16px; 
+  font-weight: 500;
+  color: #333; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+  cursor: pointer;
+  margin: 0; 
+}
+
+.data-selecionada {
+  font-size: 25px; 
+  font-weight: 600; 
+  color: #333; 
 }
 
 .calendar-icon {
-  height: 24px;
-  margin-left: 15px;
+  height: 50px; 
+  width: 50px;
+
 }
 
-/* CARDS DISPONÍVEIS */
-.salas-disponiveis {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+.cards-background {
+  background: #F0F1F5; 
+  border-radius: 20px; 
+  padding: 5px 0;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+}
+
+.cards-box {
+  background: #F0F1F5; 
+  padding: 5px 0;
+  margin-bottom: 0; 
+  box-shadow: none; 
+}
+
+.salas-disponiveis,
+.salas-indisponiveis {
+  display: flex;
+  flex-direction: row;
   gap: 24px;
+  overflow-x: auto; 
+  padding: 20px;
   margin-bottom: 20px;
-  margin: 20px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE e Edge */
 }
-
+.salas-disponiveis::-webkit-scrollbar,
+.salas-indisponiveis::-webkit-scrollbar {
+  display: none;
+}
 .sala-grupo {
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   overflow: hidden;
   transition: transform 0.2s;
-  aspect-ratio: 1/1; /* Torna os cards quadrados */
+  min-width: 300px; 
+  max-width: 300px;
+  flex: 0 0 300px;
   display: flex;
   flex-direction: column;
 }
 
 .sala-grupo:hover {
   transform: translateY(-4px);
+  cursor: pointer;
 }
 
 .sala-imagem-container {
@@ -68,20 +123,16 @@
   position: relative;
 }
 
-.sala-imagem-placeholder {
-  width: 80px;
-  height: 80px;
-  background: #e0e0e0;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #999;
-  font-size: 40px;
+.sala-imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
 }
 
 .sala-conteudo {
-  padding: 16px;
+  padding: 16px; 
   height: 30%;
   display: flex;
   flex-direction: column;
@@ -89,35 +140,44 @@
 }
 
 .sala-grupo h2 {
-  font-size: 18px;
-  margin: 0 0 8px 0;
+  font-size: 18px; 
+  margin: 0 0 8px 0; 
   color: #333;
   font-weight: 600;
 }
 
 .sala-info {
-  font-size: 14px;
+  font-size: 14px; 
   color: #666;
   margin: 2px 0;
 }
 
-/* SEÇÃO INDISPONÍVEIS */
-.titulo-indisponiveis {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 40px 0 20px 0;
-  color: #333;
 
+.sala-horario {
+    font-size: 14px; 
+    color: #333; 
+    font-weight: bold; 
+    margin: 0 0 5px 0; 
 }
 
 
+.titulo-indisponiveis {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0 24px 0;
+  color: #333;
+  width: 100%;
+  text-align: center;
+}
 
-.salas-indisponiveis {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-  margin: 40px;
+.salas-indisponiveis .sala-imagem {
+  filter: grayscale(1) brightness(0.8); 
+  opacity: 0.7;
+}
 
+.salas-indisponiveis .sala-grupo h2,
+.salas-indisponiveis .sala-info {
+  color: #666;
 }
 
 
@@ -125,20 +185,23 @@
   .inicio-container {
     padding: 0 24px;
   }
-  
-  .salas-disponiveis,
-  .salas-indisponiveis {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  }
 }
 
 @media (max-width: 480px) {
-  .filtro {
-    flex-wrap: wrap;
+  .filtro-inputs-wrapper {
+    flex-wrap: wrap; 
+    justify-content: center; 
   }
-  
+
   .turno {
-    width: 100%;
-    margin-bottom: 15px;
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+
+  .data-selecionada,
+  .calendar-icon {
+    font-size: 20px; 
+    height: 20px;
+    width: 20px;
   }
 }
