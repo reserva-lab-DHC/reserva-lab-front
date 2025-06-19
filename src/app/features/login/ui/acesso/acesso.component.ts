@@ -23,7 +23,14 @@ export class AcessoComponent {
   ) { }
 
   login() {
+    if (this.auth.isLoggedIn()) {
+      console.log('Usuário já está logado');
+      const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
+      this.router.navigateByUrl(returnUrl);
+    }
+
     const user = this.loginForm.value;
+
     this.auth.login(user);
 
     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
