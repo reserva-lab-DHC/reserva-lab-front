@@ -19,10 +19,10 @@ export class InfoComponent {
     this.closeModal.emit();
   }
 
-  editReserva() {
+/*   editReserva() {
 
   }
-
+ */
   apagarReserva() {
       this.reservaService.cadastrarReserva(this.reserva)
       .then((res: ReservaDTO | undefined) => {
