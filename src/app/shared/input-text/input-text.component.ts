@@ -23,7 +23,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   label = input('');
   type = input("text");
   placeholder = input('');
-  valueChange = output();
+  valueChange = output<string>();
   control: FormControl = new FormControl('');
   inputId = signal('');
   variant = input<variant>('input');

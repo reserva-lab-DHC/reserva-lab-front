@@ -1,0 +1,91 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  background: #FFFFFF;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.campo label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.campo input {
+  border: none;
+  border-bottom: 1px solid #333;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+    border-color: #d71940;
+  }
+}
+
+dhc-dynamic-button[label="Acessar"] {
+  width: 100%;
+  margin-top: 0.5rem;
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #d71940;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #c31539;
+    }
+  }
+}
+
+.link-alternar {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 1.5rem auto 0 auto;
+  display: block;
+  color: #d71940;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+}

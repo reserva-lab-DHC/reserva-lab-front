@@ -1,4 +1,4 @@
-import { Component, signal, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconButtonComponent } from "../icon-button/icon-button.component";
 import { RouterModule } from '@angular/router';
@@ -12,33 +12,11 @@ import { RouterModule } from '@angular/router';
 export class HeaderSelectComponent {
   isOpen = signal(false);
 
-  @ViewChild('menuContainer', { static: false }) menuRef!: ElementRef;
-
-  openMenu(): void {
+  toggle(): void {
     this.isOpen.set(!this.isOpen());
   }
 
-  showMenu(): void {
-    this.isOpen.set(true);
-  }
-
-  closeMenu(): void {
+  close(): void {
     this.isOpen.set(false);
-  }
-
-  isMenuOpen(): boolean {
-    return this.isOpen();
-  }
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (this.isOpen() && this.menuRef && !this.menuRef.nativeElement.contains(event.target)) {
-      this.closeMenu();
-    }
-  }
-
-  @HostListener('document:keyup.enter')
-  onEnterKey(): void {
-    this.openMenu();
   }
 }
