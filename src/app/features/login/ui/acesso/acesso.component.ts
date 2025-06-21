@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
 import { InputTextComponent } from '../../../../shared/input-text/input-text.component';
+import { UserDTO } from '../../../../shared/models/user.dto';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'dhc-acesso',
@@ -16,20 +18,33 @@ import { InputTextComponent } from '../../../../shared/input-text/input-text.com
   templateUrl: './acesso.component.html',
   styleUrl: './acesso.component.scss'
 })
-export class AcessoComponent implements OnInit {
+export class AcessoComponent {
 
-  @Input() loginForm!: FormGroup;
+  loginForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  auth = inject(AuthService);
   @Output() goToCadastro = new EventEmitter<void>();
-  @Output() submitLogin = new EventEmitter<void>();
 
   constructor() { }
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
-      // Este método está vazio por design, pois a lógica de redirecionamento está no LoginComponent (pai).
-  }
-
   login() {
-    this.submitLogin.emit();
+    if (this.loginForm.valid) {
+      const username = this.loginForm.get('username')?.value;
+      const password = this.loginForm.get('password')?.value;
+      if (!username || !password) {
+        return;
+      }
+      const user: UserDTO = {
+        nomeUsuario: username,
+        senha: password
+      }
+      this.auth.login(user);
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.');
+      this.loginForm.markAllAsTouched();
+    }
   }
 }

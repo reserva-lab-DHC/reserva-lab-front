@@ -1,8 +1,7 @@
-import { Component, forwardRef, input, OnInit, output, signal, Input } from '@angular/core';
+import { Component, forwardRef, input, OnInit, output, signal } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 export type variant = 'textarea' | 'input';
-
 @Component({
   selector: 'dhc-input-text',
   standalone: true,
@@ -17,25 +16,22 @@ export type variant = 'textarea' | 'input';
     }
   ]
 })
+
 export class InputTextComponent implements OnInit, ControlValueAccessor {
   value: string | undefined;
 
   label = input('');
   type = input("text");
   placeholder = input('');
-  valueChange = output<string>(); 
-
-  @Input() control!: FormControl;
-
+  valueChange = output<string>();
+  control: FormControl = new FormControl('');
   inputId = signal('');
   variant = input<variant>('input');
 
+  text = '';
+
   private _onChange?: (value: string) => void;
   private _onTouched?: () => void;
-
-  ngOnInit(): void {
-    this.inputId.set('input-' + Math.random().toString(36).substring(2, 10));
-  }
 
   writeValue(value: string): void {
     this.value = value;
@@ -51,11 +47,14 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setDisabledState?(isDisabled: boolean): void {
-    // Agora só desabilita a regra para 'isDisabled' não usado.
+    // opcional
   }
-  
+
   onInput() {
     this._onChange?.(this.control.value);
-    this._onTouched?.();
+  }
+
+  ngOnInit(): void {
+    this.inputId.set('input-' + Math.random().toString(36).substring(2, 10));
   }
 }

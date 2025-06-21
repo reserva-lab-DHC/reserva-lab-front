@@ -6,9 +6,9 @@
       <dhc-input-text
         label="Usuário"
         placeholder="Digite seu usuário"
-        [control]="loginForm.controls.username"
+        formControlName="username"
       ></dhc-input-text>
-      <span class="erro" *ngIf="loginForm.controls.username?.invalid && (loginForm.controls.username?.dirty || loginForm.controls.username?.touched)">
+      <span class="erro" *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
         Usuário é obrigatório.
       </span>
     </div>
@@ -18,9 +18,9 @@
         label="Senha"
         type="password"
         placeholder="Digite sua senha"
-        [control]="loginForm.controls.password"
+        formControlName="password"
       ></dhc-input-text>
-      <span class="erro" *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.dirty || loginForm.controls.password?.touched)">
+      <span class="erro" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
         Senha é obrigatória.
       </span>
     </div>
@@ -29,4 +29,4 @@
   <dhc-dynamic-button (clicked)="login()" label="Acessar" type="primary" color="red"></dhc-dynamic-button>
 
   <button type="button" class="link-alternar" (click)="goToCadastro.emit()">Não tem cadastro? Crie agora!</button>
-</div>
+</div> 
