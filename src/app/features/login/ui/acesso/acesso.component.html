@@ -3,21 +3,30 @@
 
   <form [formGroup]="loginForm">
     <div class="campo">
-      <label>
-        Usuário
-        <input formControlName="username" />
-      </label>
+      <dhc-input-text
+        label="Usuário"
+        placeholder="Digite seu usuário"
+        [control]="loginForm.controls.username"
+      ></dhc-input-text>
+      <span class="erro" *ngIf="loginForm.controls.username?.invalid && (loginForm.controls.username?.dirty || loginForm.controls.username?.touched)">
+        Usuário é obrigatório.
+      </span>
     </div>
 
     <div class="campo">
-      <label>
-        Senha
-        <input type="password" formControlName="password" />
-      </label>
+      <dhc-input-text
+        label="Senha"
+        type="password"
+        placeholder="Digite sua senha"
+        [control]="loginForm.controls.password"
+      ></dhc-input-text>
+      <span class="erro" *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.dirty || loginForm.controls.password?.touched)">
+        Senha é obrigatória.
+      </span>
     </div>
   </form>
 
-  <dhc-dynamic-button (buttonClick)="login()" label="Acessar" type="primary" color="red"></dhc-dynamic-button>
+  <dhc-dynamic-button (clicked)="login()" label="Acessar" type="primary" color="red"></dhc-dynamic-button>
 
   <button type="button" class="link-alternar" (click)="goToCadastro.emit()">Não tem cadastro? Crie agora!</button>
 </div>

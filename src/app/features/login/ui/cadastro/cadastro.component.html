@@ -4,39 +4,51 @@
   <div class="campo">
     <dhc-input-text
       label="Nome do Usuário"
-      placeholder=""
+      placeholder="Digite seu nome"
       [control]="cadastroForm.controls.nomeUsuario"
     ></dhc-input-text>
+    <span class="erro" *ngIf="cadastroForm.controls.nomeUsuario?.invalid && (cadastroForm.controls.nomeUsuario?.dirty || cadastroForm.controls.nomeUsuario?.touched)">
+      Nome de usuário é obrigatório.
+    </span>
   </div>
 
   <div class="campo">
     <dhc-input-text
       label="E-Mail"
       type="email"
-      placeholder=""
+      placeholder="Digite seu e-mail"
       [control]="cadastroForm.controls.email"
     ></dhc-input-text>
+    <span class="erro" *ngIf="cadastroForm.controls.email?.invalid && (cadastroForm.controls.email?.dirty || cadastroForm.controls.email?.touched)">
+      E-mail é obrigatório e deve ser válido.
+    </span>
   </div>
 
   <div class="campo">
     <dhc-input-text
       label="Senha"
       type="password"
-      placeholder=""
+      placeholder="Digite sua senha"
       [control]="cadastroForm.controls.senha"
     ></dhc-input-text>
+    <span class="erro" *ngIf="cadastroForm.controls.senha?.invalid && (cadastroForm.controls.senha?.dirty || cadastroForm.controls.senha?.touched)">
+      Senha é obrigatória.
+    </span>
   </div>
 
   <div class="campo">
     <dhc-input-text
       label="Repetir senha"
       type="password"
-      placeholder=""
+      placeholder="Confirme sua senha"
       [control]="cadastroForm.controls.repetirSenha"
     ></dhc-input-text>
-  </div>
+    <span class="erro" *ngIf="cadastroForm.controls.repetirSenha?.invalid && (cadastroForm.controls.repetirSenha?.dirty || cadastroForm.controls.repetirSenha?.touched)">
+      Confirmação de senha é obrigatória.
+    </span>
+    </div>
 
-  <dhc-dynamic-button (buttonClick)="onReservar()" label="Reservar" type="primary" color="red"></dhc-dynamic-button>
+  <dhc-dynamic-button (clicked)="cadastrar()" label="Cadastrar" type="primary" color="red"></dhc-dynamic-button>
 
   <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem cadastro? Acesse agora!</button>
 </div>

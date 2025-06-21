@@ -25,12 +25,17 @@ export class CadastroComponent {
   });
 
   @Output() goToAcesso = new EventEmitter<void>();
+  @Output() submitCadastro = new EventEmitter<void>();
 
-  onReservar() {
+  constructor() { }
+
+  cadastrar() {
     if (this.cadastroForm.valid) {
-      console.log('Formulário de cadastro válido:', this.cadastroForm.value);
+      alert('Formulário de cadastro válido (simulação)!');
+      this.submitCadastro.emit();
     } else {
-      console.log('Formulário de cadastro inválido');
+      alert('Formulário de cadastro inválido. Por favor, preencha todos os campos corretamente.');
+      this.cadastroForm.markAllAsTouched();
     }
   }
 }

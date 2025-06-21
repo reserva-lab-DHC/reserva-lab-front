@@ -1,14 +1,12 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'login',
     loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent)
-  },
-  {
-    path: 'cadastro',
-    loadComponent: () => import('./features/login/ui/cadastro/cadastro.component').then(m => m.CadastroComponent)
   },
   {
     path: 'inicio',
@@ -21,6 +19,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'confirmar-reserva',
+    loadComponent: () => import('./features/confirmar-solicitacoes/confirmar-solicitacoes.component').then(m => m.ConfirmarSolicitacoesComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'cadastrar-laboratorio',
     loadComponent: () => import('./features/cadastrar-laboratorio/cadastrar-laboratorio.component').then(m => m.CadastrarLaboratorioComponent),
     canActivate: [authGuard]
@@ -30,6 +33,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/solicitacao-de-reservas/solicitacao-de-reservas.component').then(m => m.SolicitacaoDeReservasComponent),
     canActivate: [authGuard]
   },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '**', redirectTo: 'inicio' }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
