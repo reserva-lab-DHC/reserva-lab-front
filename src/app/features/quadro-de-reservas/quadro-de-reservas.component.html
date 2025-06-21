@@ -1,10 +1,10 @@
 <div class="container-for-schedule-page">
     <h1>Quadro de Reservas</h1>
     <dhc-header-quadro (shiftSelected)="onShiftChange($event)"></dhc-header-quadro>
-    <dhc-schedule-table (cellSelected)="onCellSelected($event)" [scheduleData]="scheduleGrid" [shift]="selectedShift"></dhc-schedule-table>
+    <dhc-schedule-table (cellSelected)="onCellSelected($event)" [shift]="selectedShift" [scheduleData]="scheduleGrid"></dhc-schedule-table>
     <dhc-modal-info-reserva
       *ngIf="showPopup"
-    [data]="selectedCell!"
+    [reserva]="selectedCell!"
     (closeModal)="closePopup()"
     >
     </dhc-modal-info-reserva>

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderQuadroComponent } from "../../shared/header-quadro/header-quadro.component";
 import { ScheduleTableComponent } from "../../shared/schedule-table/schedule-table.component";
 import { InfoComponent } from "../../shared/modals/ui/modal-info-reserva/modal-info.component";
 import { NgIf } from '@angular/common';
+import { ReservaDTO } from '../../shared/models/reserva.dto';
+import { ReservaService } from './reserva.service';
+import { SalaService } from './sala.service';
+import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 
 @Component({
   selector: 'dhc-quadro-de-reservas',
@@ -11,41 +15,75 @@ import { NgIf } from '@angular/common';
   styleUrl: './quadro-de-reservas.component.scss'
 })
 export class QuadroDeReservasComponent {
-  selectedCell = {teacher: "", lab: "", disciplina: "", dia_e_horario: "", inicio: "", duracao: ""};
-  showPopup = false;
 
-  onCellSelected(cell: { teacher: string; lab: string; disciplina: string; dia_e_horario: string; inicio: string, duracao: string }) {
+  reservaService = inject(ReservaService)
+  labService = inject(SalaService)
+  showPopup = false;
+  selectedShift = 'todos';
+  scheduleMap: Map<string, number> = this.indexBySchedule()
+  selectedCell: ReservaDTO | undefined;
+
+  scheduleGrid: ReservaDTO[][] = []
+  reservaList: ReservaDTO[] = []
+  labs: LaboratorioDTO[] = []
+  labsName: string[] = []
+
+  onCellSelected(cell: ReservaDTO) {
     this.selectedCell = cell;
     this.showPopup = true;
   }
-
   closePopup() {
     this.showPopup = false;
-    this.selectedCell = {teacher: "", lab: "", disciplina: "", dia_e_horario: "", inicio: "", duracao: ""};
+    this.selectedCell = undefined;
   }
-
-  scheduleGrid = [ // dados para demonstração da tabela
-    [
-      { teacher: 'Ricardo Freitas', lab: 'Metodologias Ativas II', disciplina: 'Algoritmos e Estrutura de Dados I', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-      { teacher: 'Renata Santana', lab: 'Laboratório Tecnológico I', disciplina: 'Paradigmas de Programação', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-      { teacher: 'Diego Caldeira', lab: 'Metodologias Ativas III', disciplina:'Algoritmos e Estrutura de Dados III', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-      { teacher: 'Ricardo Freitas', lab: 'Metodologias Ativas IV', disciplina:'Algoritmos e Estrutura de Dados III', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-    ],
-    [
-      { teacher: 'Vinícus Von Filippo', lab: 'Laboratório Tecnológico II', disciplina:'Algoritmos e Estrutura de Dados III', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-      { teacher: 'Diego Caldeira', lab: 'Laboratório Tecnológico III', disciplina:'Algoritmos e Estrutura de Dados III', dia_e_horario: 'Terça 10:00 e Quinta 08:00', inicio: "1 de Maio", duracao: "Até 4 de julho" },
-      { teacher: '', lab: '', disciplina: '', dia_e_horario: '', inicio: '', duracao: '' },
-    ],
-  
-  ];
-
-  selectedShift = 'todos';
   onShiftChange(shift: string) {
     this.selectedShift = shift;
+    this.fillTable()
   }
+
+  async ngOnInit() {
+    try {
+      
+      this.reservaList = await this.reservaService.listAllReservas("ALL")
+      const labRequests = this.reservaList.map(reserva => 
+        this.labService.getSalaById(reserva.salaReservada.id!)
+      );
+
+      this.labs = await Promise.all(labRequests);
+      this.fillTable()
+    }
+    catch (err: any) {
+      console.trace("Um erro ocorreu ao preencher a tabela:" + err)
+    }
+  }
+
+  indexBySchedule(): Map<string, number> { // isso é provisório até que todos os horários do quadro estejam no back
+    const shiftMaps: Record<string, Map<string, number>> = {
+      matutino: new Map([["H08_00", 0], ["H10_00", 1]]),
+      vespertino: new Map([["H13_00", 0], ["H15_00", 1]]),
+      noturno: new Map([["H18_20", 0], ["H20_20", 1]])
+    };
+    return shiftMaps[this.selectedShift] ?? new Map([
+      ["H08_00", 0], ["H08_50", 1], ["H10_00", 2],
+      ["H10_50", 3], ["H13_00", 4], ["H15_00", 5]
+    ]);
+  }
+
+  async fillTable() {
+
+    let labsName: string[] = []
+    for (let i=0; i<this.reservaList.length; i++) {
+      let lab = this.labs[i]
+      let labName = lab.nomeSala
+      let row: ReservaDTO[] = this.selectedShift === 'todos' ? new Array(6) : new Array(2)
+      if (!labsName.includes(labName)) labsName.push(labName)
+      
+      for (const horario of this.reservaList[i].horariosReservados) {
+        let reservaPosition = this.scheduleMap.get(horario)!
+        if (reservaPosition !== undefined) row[reservaPosition] = this.reservaList[i]
+        this.scheduleGrid[labsName.indexOf(labName)] = row
+      }
+    }
+  }
+
 }

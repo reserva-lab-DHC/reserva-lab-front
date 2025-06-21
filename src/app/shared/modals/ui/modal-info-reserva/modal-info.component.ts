@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ReservaDTO } from '../../../models/reserva.dto';
+import { ReservaService } from '../../../../features/quadro-de-reservas/reserva.service';
 
 @Component({
   selector: 'dhc-modal-info-reserva',
@@ -9,13 +11,29 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class InfoComponent {
 
-  @Input() data!: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string };
+  @Input() reserva!: ReservaDTO;
   @Output() closeModal = new EventEmitter<void>();
+  reservaService = inject(ReservaService)
 
   closePopup() {
-    console.log(this.data)
     this.closeModal.emit();
   }
 
+  editReserva() {
 
+  }
+
+  apagarReserva() {
+      this.reservaService.cadastrarReserva(this.reserva)
+      .then((res: ReservaDTO | undefined) => {
+        console.log('Reserva excluída:', res);
+        alert('Reserva excluída com êxito!');
+      })
+      .catch((err: Error) => {
+        console.error('Erro ao excluir a reserva:', err);
+        alert('Erro ao excluir a reserva!');
+      });
+    
+    // this.reservaService.deleteReserva(this.reserva.)
+  }
 }

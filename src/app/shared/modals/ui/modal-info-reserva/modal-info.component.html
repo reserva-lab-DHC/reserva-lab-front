@@ -2,23 +2,27 @@
   <div class="popup" (click)="$event.stopPropagation()" (keydown)="closePopup()" tabindex="0">
 
     <div class="options">
+      <button (click)="editReserva()">
         <img src="assets/img/edit-reserva.svg" alt="icon">
+      </button>
+      <button (click)="apagarReserva()">
         <img src="assets/img/apagar-reserva.svg" alt="icon">
+      </button>
         <button (click)="closePopup()">
             <img src="assets/img/close-popup.svg" alt="icon">
         </button>
     </div>
 
 
-    <p class="prof">{{data.teacher}}</p>
+    <p class="prof">{{reserva.solicitante.userName}}</p>
     <div class="infoReserva">
 
-        <p class="lab">{{data.lab}}</p>
-        <p class="discipl">{{data.disciplina}}</p>
+        <p class="lab">{{reserva.salaReservada.nomeSala}}</p>
+        <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
         <ul>
-            <li>{{data.dia_e_horario}}</li>
-            <li>{{data.duracao}}</li>
-            <li>{{data.inicio}}</li>
+            <li>{{reserva.horariosReservados}}</li>
+           <!-- <li>{{reserva.duracao}}</li> -->
+            <li>{{reserva.dataReserva}}</li>
         </ul>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { CelulaQuadroComponent } from '../celula-quadro/celula-quadro.component';
+import { ReservaDTO } from '../models/reserva.dto';
 
 @Component({
   selector:'dhc-schedule-table', 
@@ -11,21 +12,25 @@ import { CelulaQuadroComponent } from '../celula-quadro/celula-quadro.component'
 })
 export class ScheduleTableComponent {
 
-  @Input() scheduleData: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }[][] = [];
-  @Output() cellSelected = new EventEmitter<{ teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }>();
+  isLoaded = false;
+  @Input() scheduleData: ReservaDTO[][] = [] 
+  @Input() shift = 'todos';
+  @Output() cellSelected = new EventEmitter<ReservaDTO>();
 
-  onCellClicked(cellData: { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }) {
+  get visibleItemsFiltered() {
+    return this.scheduleData.filter(row => row.some(cell => cell !== undefined));
+  }
+  get maxCells(): number {
+    return this.shift === 'todos' ? 6 : 2;
+  }
+
+  onCellClicked(cellData: ReservaDTO) {
     this.cellSelected.emit(cellData);
   }
-
-  @Input() shift = 'todos';
-
-  get maxCells(): number {
-  return this.shift === 'todos' ? 6 : 2;
-  
+  getRoomName(row: ReservaDTO[]): string {
+    for (const cell of row) {
+      if (cell) return cell.salaReservada.nomeSala
+    }
+    return 'Sala não informada'
   }
-
-  get visibleItems(): { teacher: string; lab: string, disciplina: string, dia_e_horario: string, inicio: string, duracao: string }[][] {
-  return this.scheduleData;
-}
 }

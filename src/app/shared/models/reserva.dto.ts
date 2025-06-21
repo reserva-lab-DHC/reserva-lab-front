@@ -1,3 +1,6 @@
+import { LaboratorioDTO } from "./laboratorio.dto";
+import { SolicitanteDTO } from "./solicitante.dto";
+
 /**
  * Data Transfer Object representing a reservation.
  *
@@ -14,9 +17,13 @@ export interface ReservaDTO {
   dataReserva: string;
   horariosReservados: string[];
   status: string;
-  solicitanteId: string;
-  salaReservadaId: string;
+  //solicitanteId: string;
+  //salaReservadaId: string;
   disciplinaRelacionada: string;
   motivoReserva: string;
   dataSolicitacao: string;
+  dataConclusao: string;
+  salaReservada: LaboratorioDTO;
+  solicitante: SolicitanteDTO
+  id: string;
 }
