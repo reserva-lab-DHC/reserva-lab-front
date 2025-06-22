@@ -21,6 +21,18 @@ export class HeaderQuadroComponent {
   weekday = this.date.toLocaleDateString('pt-BR', {weekday: 'long'})
   currentDay = `${this.monthday}/${this.month} (${this.weekday})`
 
+  isMobile = false;
+  private mediaQueryList = window.matchMedia('(max-width: 480px)');
+  private listener = (event: MediaQueryListEvent) => {
+    this.isMobile = event.matches;
+  };
+  ngOnInit(): void {
+    this.isMobile = this.mediaQueryList.matches; // emit initial state
+    this.mediaQueryList.addEventListener('change', this.listener); // listen to changes
+  }
+  ngOnDestroy(): void {
+    this.mediaQueryList.removeEventListener('change', this.listener);
+  }
 
   closePopup() {
     this.showPopup = false;

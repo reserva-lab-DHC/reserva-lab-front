@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="calendar-notification-group">
+    <div class="calendar-notification-group" *ngIf="!isMobile">
         <button class="notification-button-red" id="notificationsButton"
         (click)="showPopup = !showPopup" onkeydown="showPopup = !showPopup">
             <img src="/assets/img/notification--new.svg" alt="icon">
