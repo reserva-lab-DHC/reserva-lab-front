@@ -1,14 +1,13 @@
-import { Component, inject,signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
-import { CommonModule } from '@angular/common';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, CommonModule],
+  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone: true,
@@ -21,12 +20,10 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
   laboratorioService = inject(LaboratorioService);
 
   formulario = new FormGroup({
-    andarSelecionado: new FormControl<number |null>(null, [Validators.required]),
-    predioSelecionado: new FormControl<number |null>(null, [Validators.required]),
+    andarSelecionado: new FormControl<number>(0, [Validators.required]),
+    predioSelecionado: new FormControl<number>(0, [Validators.required]),
     nomeSala: new FormControl('', [Validators.required]),
   });
-
-  isLoading = signal(false);
 
   constructor() { }
 
@@ -54,10 +51,11 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
     // });
   } */
   registrar() {
-    if (this.formulario.invalid) {
-      // Marcar todos os campos como tocados para ativar mensagens de erro
-      this.formulario.markAllAsTouched();
-
+    if (
+      this.formulario.invalid ||
+      this.formulario.get('predioSelecionado')?.value === 0 ||
+      this.formulario.get('andarSelecionado')?.value === 0 ||
+      this.formulario.get('nomeSala')?.value === '') {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
@@ -72,27 +70,15 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
       andar: andar,
     };
 
-    this.isLoading.set(true);
 
     this.laboratorioService.cadastrarLaboratorio(novoLab)
       .then((res: LaboratorioDTO | undefined) => {
         console.log('Laboratório cadastrado:', res);
         alert('Cadastro realizado com sucesso!');//aqui caberia aparecer um modal 
-        this.formulario.reset({
-        nomeSala: '',
-        predioSelecionado: null,
-        andarSelecionado: null
-    });
       })
       .catch((err: Error) => {
         console.error('Erro ao cadastrar laboratório:', err);
         alert('Erro ao cadastrar laboratório');//aqui caberia aparecer um modal 
-      })
-      .finally(() => {
-        // Sempre desliga loading, sucesso ou erro
-        this.isLoading.set(false);
       });
-      
-
   }
 }

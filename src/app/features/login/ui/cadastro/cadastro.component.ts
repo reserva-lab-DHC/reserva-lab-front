@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
 import { InputTextComponent } from '../../../../shared/input-text/input-text.component';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UserDTO } from '../../../../shared/models/user.dto';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
@@ -20,29 +20,43 @@ import { AuthService } from '../../../../core/services/auth.service';
 })
 export class CadastroComponent {
   cadastroForm = new FormGroup({
-    nomeUsuario: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    senha: new FormControl('', Validators.required),
-    repetirSenha: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    repassword: new FormControl('', Validators.required)
   });
 
+  auth = inject(AuthService);
   @Output() goToAcesso = new EventEmitter<void>();
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor() { }
 
   cadastrar() {
     if (this.cadastroForm.valid) {
-      alert('Cadastrado com sucesso!');
-      const user = this.cadastroForm.value;
-      this.auth.login(user);
-      const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
-      this.router.navigateByUrl(returnUrl);
+      const username = this.cadastroForm.get('username')?.value;
+      const password = this.cadastroForm.get('password')?.value;
+      const email = this.cadastroForm.get('email')?.value;
+      const repassword = this.cadastroForm.get('repassword')?.value;
+
+      if (password !== repassword) {
+        //usa o setErrors para adicionar um erro ao campo de senha
+        // this.cadastroForm.get('repassword')?.setErrors({ mismatch: true }); <- talvez isso funcione
+        return;
+      }
+
+      if (!username || !password || !email || !repassword) {
+        return;
+      }
+
+      const user: UserDTO = {
+        nomeUsuario: username,
+        senha: password
+      }
+        this.auth.login(user);
     } else {
-      alert('Formulário de cadastro inválido');
+      alert('Por favor, preencha todos os campos corretamente.');
+      this.cadastroForm.markAllAsTouched();
     }
+
   }
 }
