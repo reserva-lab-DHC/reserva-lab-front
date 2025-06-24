@@ -13,3 +13,4 @@ export class LaboratorioService {
     return lastValueFrom(this.http.post<LaboratorioDTO, LaboratorioDTO>('/sala', lab));
   }
 }
+  

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownComponent } from "../dropdown/dropdown.component";
 import { NgIf } from '@angular/common';
 import { CalendarComponent } from "../calendar/calendar/calendar.component";
@@ -11,7 +11,7 @@ import { RecentRequestComponent } from "../modals/ui/modal-recent-requests/modal
   styleUrl: './header-quadro.component.scss'
 })
 
-export class HeaderQuadroComponent {
+export class HeaderQuadroComponent implements OnInit, OnDestroy {
   showCalendar = false
   showPopup = false;
   date = new Date()
@@ -21,6 +21,18 @@ export class HeaderQuadroComponent {
   weekday = this.date.toLocaleDateString('pt-BR', {weekday: 'long'})
   currentDay = `${this.monthday}/${this.month} (${this.weekday})`
 
+  isMobile = false;
+  private mediaQueryList = window.matchMedia('(max-width: 480px)');
+  private listener = (event: MediaQueryListEvent) => {
+    this.isMobile = event.matches;
+  };
+  ngOnInit(): void {
+    this.isMobile = this.mediaQueryList.matches; // emit initial state
+    this.mediaQueryList.addEventListener('change', this.listener); // listen to changes
+  }
+  ngOnDestroy(): void {
+    this.mediaQueryList.removeEventListener('change', this.listener);
+  }
 
   closePopup() {
     this.showPopup = false;

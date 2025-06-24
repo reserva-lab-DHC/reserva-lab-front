@@ -2,6 +2,10 @@
     font-family: 'Montserrat', 'sans-serif';
 }
 
+.table {
+    height: calc(100vh - 260px); // provisório
+}
+
 .schedule-wrapper {
     top: 170px;
     position: sticky;
@@ -66,7 +70,7 @@
 
     text-align: center;
     background-color: #F0F1F5; /* Cinza muito claro */
-    font-size: 0.85em;
+    font-size: 0.8em;
     font-weight: 400;
     color: #000000; /* Texto preto para os horários */
     border-top: 1px solid #B9B9B9; /* Borda superior (cinza claro) */
@@ -172,14 +176,17 @@ dhc-celula-quadro:nth-child(2n + 1) {
     .schedule-wrapper {
         top: 120px;
     }
+    .table {
+        height: calc(100vh - 210px); // provisório
+    }
+
 }
 @media (max-width: 768px) {
 
 
     .table {
         overflow-x: scroll;
-        height: calc(100vh - 228px); // provisório
-
+        height: calc(100vh - 210px); // provisório
     }
     .schedule-wrapper {
         top: 0px;
@@ -219,3 +226,8 @@ dhc-celula-quadro:nth-child(2n + 1) {
 
 }
 
+@media (max-width: 480px) {
+    .table {
+        height: calc(100vh - 230px); // provisório
+    }
+}

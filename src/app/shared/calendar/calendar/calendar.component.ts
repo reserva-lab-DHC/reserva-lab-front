@@ -27,7 +27,7 @@ export class CalendarComponent {
   @Output() dateSelected = new EventEmitter<Date>(); // Ou EventEmitter<Date[]> se for 'range'/'multiple'
 
   
-  onDateChange(event: any) { // Ou 'event: Date' se tiver certeza que é sempre uma única data
+  onDateChange(event:Date | null ) { // Ou 'event: Date' se tiver certeza que é sempre uma única data
 
 
     // Acessando o valor do input 'selectionMode' usando selectionMode()

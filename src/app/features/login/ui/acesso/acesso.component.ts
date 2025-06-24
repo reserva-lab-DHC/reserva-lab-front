@@ -1,33 +1,50 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { InputTextComponent } from '../../../../shared/input-text/input-text.component';
+import { UserDTO } from '../../../../shared/models/user.dto';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'dhc-acesso',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DynamicButtonComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DynamicButtonComponent,
+    InputTextComponent
+  ],
   templateUrl: './acesso.component.html',
   styleUrl: './acesso.component.scss'
 })
 export class AcessoComponent {
-  @Input() loginForm!: FormGroup;
+
+  loginForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  auth = inject(AuthService);
   @Output() goToCadastro = new EventEmitter<void>();
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor() { }
 
   login() {
-    const user = this.loginForm.value;
-    this.auth.login(user);
-
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
-    this.router.navigateByUrl(returnUrl);
+    if (this.loginForm.valid) {
+      const username = this.loginForm.get('username')?.value;
+      const password = this.loginForm.get('password')?.value;
+      if (!username || !password) {
+        return;
+      }
+      const user: UserDTO = {
+        nomeUsuario: username,
+        senha: password
+      }
+      this.auth.login(user);
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.');
+      this.loginForm.markAllAsTouched();
+    }
   }
-
 }

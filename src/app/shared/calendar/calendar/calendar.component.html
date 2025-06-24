@@ -2,8 +2,6 @@
     <p-calendar
         [(ngModel)]="selectedDate"
         [selectionMode]="selectionMode()"
-        (onSelect)="onDateChange($event)"
-        (onBlur)="onDateChange(selectedDate)"
-        [inline]="true"
+        (onSelect)="onDateChange($event)"  (onBlur)="onDateChange(selectedDate)" [inline]="true"
     ></p-calendar>
 </div>
