@@ -8,7 +8,7 @@ dhc-dropdown {
 }
 dhc-calendar {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
 }
 dhc-modal-recent-requests {
     position: absolute;
@@ -16,6 +16,7 @@ dhc-modal-recent-requests {
     right: 80px;
     z-index: 3;
 }
+
 
 .top-header-red {
     background-color: vars.$primary-red;

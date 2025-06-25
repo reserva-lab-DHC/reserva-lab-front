@@ -26,6 +26,16 @@ export class HeaderQuadroComponent implements OnInit, OnDestroy {
   private listener = (event: MediaQueryListEvent) => {
     this.isMobile = event.matches;
   };
+
+  onCalendarDateSelected(selectedDate: Date) {
+  this.date = selectedDate; 
+  this.monthday = this.date.getDate();
+  this.month = this.date.getMonth() + 1;
+  this.weekday = this.date.toLocaleDateString('pt-br', { weekday: 'long' });
+  this.currentDay = `${this.monthday}/${this.month} (${this.weekday})`;
+  this.showCalendar = false; // Opcional: fechar o calendário após a seleção
+}
+
   ngOnInit(): void {
     this.isMobile = this.mediaQueryList.matches; // emit initial state
     this.mediaQueryList.addEventListener('change', this.listener); // listen to changes

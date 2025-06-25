@@ -1,25 +1,25 @@
 <div class="top-header-red">
-    <dhc-dropdown (shiftSelected)="selectShift($event)"></dhc-dropdown>
 
-    <div class="date-navigation-wrapper-red">
-        <button class="nav-arrow-red" id="prevDay" (click)="prevDay()">&leftarrow;</button>
-        <span class="current-date-display-red" id="mainDateDisplay">{{currentDay}}</span>
-        <button class="nav-arrow-red" id="nextDay" (click)="nextDay()">&rightarrow;</button>
-        <div class="calendar-button-container-red" id="calendarContainer">
-            <button class="calendar-toggle-button-red" id="calendarToggle"
-            (click)="showCalendar = !showCalendar" onkeydown="showCalendar = !showCalendar">
-                <img src="/assets/img/calendar--add.svg" alt="icon">
-            </button>
-            <dhc-calendar *ngIf="showCalendar"></dhc-calendar>
-        </div>
-    </div>
+    <dhc-dropdown (shiftSelected)="selectShift($event)"></dhc-dropdown>
+    <div class="date-navigation-wrapper-red">
+        <button class="nav-arrow-red" id="prevDay" (click)="prevDay()">&leftarrow;</button>
+        <span class="current-date-display-red" id="mainDateDisplay">{{currentDay}}</span>
+        <button class="nav-arrow-red" id="nextDay" (click)="nextDay()">&rightarrow;</button>
+        <div class="calendar-button-container-red" id="calendarContainer">
+            <button class="calendar-toggle-button-red" id="calendarToggle"
+            (click)="showCalendar = !showCalendar" onkeydown="showCalendar = !showCalendar">
+                <img src="/assets/img/calendar--add.svg" alt="icon">
+            </button>
+                        <dhc-calendar *ngIf="showCalendar" (dateSelected)="onCalendarDateSelected($event)"></dhc-calendar>
+        </div>
+    </div>
 
-    <div class="calendar-notification-group" *ngIf="!isMobile">
-        <button class="notification-button-red" id="notificationsButton"
-        (click)="showPopup = !showPopup" onkeydown="showPopup = !showPopup">
-            <img src="/assets/img/notification--new.svg" alt="icon">
-        </button>
-        <dhc-modal-recent-requests *ngIf="showPopup" (closePopup)="closePopup()"></dhc-modal-recent-requests>
-    </div> 
+    <div class="calendar-notification-group" *ngIf="!isMobile">
+        <button class="notification-button-red" id="notificationsButton"
+        (click)="showPopup = !showPopup" onkeydown="showPopup = !showPopup">
+            <img src="/assets/img/notification--new.svg" alt="icon">
+        </button>
+        <dhc-modal-recent-requests *ngIf="showPopup" (closePopup)="closePopup()"></dhc-modal-recent-requests>
+    </div>
 
 </div>

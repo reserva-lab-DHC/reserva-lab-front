@@ -1,7 +1,7 @@
 <div class="calendar">
-    <p-calendar
-        [(ngModel)]="selectedDate"
-        [selectionMode]="selectionMode()"
-        (onSelect)="onDateChange($event)"  (onBlur)="onDateChange(selectedDate)" [inline]="true"
-    ></p-calendar>
+   <p-calendar
+  [(ngModel)]="selectedDate"
+  [selectionMode]="selectionMode()"
+  (onSelect)="onDateChange(selectedDate)"
+  (onClearClick)="onDateChange(null)" [inline]="true" ></p-calendar>
 </div>

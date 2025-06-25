@@ -13,6 +13,7 @@
 
 :host {
   --p-datepicker-date-selected-background: #{variables.$primary-red};
+   --p-datepicker-date-selected-color: #FFFFFF;
   --p-datepicker-date-range-selected-background: #{variables.$second-red};
   --p-datepicker-date-range-selected-color: #000;
   --p-button-text-primary-color: #000;
@@ -37,5 +38,20 @@
         font-weight: bold !important;
       }
     }
+  }
+  .p-datepicker-calendar td.p-highlight > span {
+      color: #FFFFFF !important; /* Força o texto do dia selecionado a ser branco */
+  }
+
+  // Se for APENAS o dia de hoje (não selecionado, mas marcado como "hoje")
+  .p-datepicker-calendar td.p-datepicker-today > span {
+      // Você pode querer que o dia de hoje tenha uma cor de texto diferente ou apenas force-o a não ser cinza
+      color: #000000; // Ou outra cor, como o preto padrão para dias não selecionados
+      font-weight: bold; // Opcional: para destacar o dia de hoje
+  }
+
+  // Se o dia de hoje estiver selecionado (combinação de ambas as classes)
+  .p-datepicker-calendar td.p-datepicker-today.p-highlight > span {
+      color: #FFFFFF !important; // Garante que, mesmo sendo "hoje" e "selecionado", o texto seja branco
   }
 }
