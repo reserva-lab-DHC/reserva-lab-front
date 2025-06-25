@@ -29,8 +29,8 @@ export class ReservaService {
   constructor(private http: HttpClient) {}
 
   enviarReserva(reserva: ReservaDTO): Observable<void> {
-  // Usando 'void' pois o retorno da API não foi especificado.
-  // Atualizar o tipo se o backend passar a retornar algum dado.
-  return this.http.post<void>(this.apiUrl, reserva);
-}
+    // Usando 'void' pois o retorno da API não foi especificado.
+    // Atualizar o tipo se o backend passar a retornar algum dado.
+    return this.http.post<void>(this.apiUrl, reserva);
+  }
 }

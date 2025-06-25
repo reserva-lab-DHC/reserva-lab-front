@@ -6,7 +6,7 @@ import { InputTextComponent } from "../../shared/input-text/input-text.component
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { HorarioSelectComponent } from "./horario-select.component";
 import { ReservaService } from "./reserva.service";
-import { HttpClientModule } from "@angular/common/http";
+import { CardFeedbackComponent } from "./card-feedback.component";
 
 @Component({
   selector: 'dhc-solicitacao-de-reservas',
@@ -14,17 +14,16 @@ import { HttpClientModule } from "@angular/common/http";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     InputTextComponent,
     InputSelectComponent,
     DynamicButtonComponent,
-    HorarioSelectComponent
+    HorarioSelectComponent,
+    CardFeedbackComponent
   ],
   templateUrl: './solicitacao-de-reservas.component.html',
   styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
 export class SolicitacaoDeReservasComponent {
-
   horariosSelecionados: string[] = [];
 
   reservaForm = new FormGroup({
@@ -35,6 +34,9 @@ export class SolicitacaoDeReservasComponent {
   });
 
   isAdmin = signal(false);
+  feedbackMessage = '';
+  feedbackStatus: 'sucesso' | 'erro' = 'sucesso';
+  telaAtual: 'form' | 'feedback' = 'form';
 
   constructor(private reservaService: ReservaService) {}
 
@@ -68,17 +70,28 @@ export class SolicitacaoDeReservasComponent {
       };
 
       this.reservaService.enviarReserva(reserva).subscribe({
-        next: (response) => {
-          console.log('Reserva criada com sucesso:', response);
+        next: () => {
+          this.feedbackMessage = 'Sua solicitação foi enviada!';
+          this.feedbackStatus = 'sucesso';
+          this.telaAtual = 'feedback';
         },
-        error: (error) => {
-          console.error('Erro ao criar reserva:', error);
+        error: (error: Error) => {
+          this.feedbackMessage = error.message || 'Ocorreu um erro ao processar sua solicitação.';
+          this.feedbackStatus = 'erro';
+          this.telaAtual = 'feedback';
         }
       });
-
     } else {
       console.log('Formulário inválido');
       this.reservaForm.markAllAsTouched();
+    }
+  }
+
+  voltarTela() {
+    if (this.feedbackStatus === 'sucesso') {
+      window.location.href = '/';
+    } else {
+      this.telaAtual = 'form';
     }
   }
 }

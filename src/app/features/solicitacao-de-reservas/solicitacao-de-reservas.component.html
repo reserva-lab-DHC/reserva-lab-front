@@ -1,13 +1,13 @@
-<div class="container">
+<!-- Formulário -->
+<div *ngIf="telaAtual === 'form'" class="container">
   <div class="content">
     <h1 class="page-title">Reserva</h1>
 
     <form [formGroup]="reservaForm" (ngSubmit)="solicitarReserva()">
       <div class="formulario">
-
         <div class="horas">
           <p class="horario-label">Horário</p>
-        <dhc-horario-select (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
+          <dhc-horario-select (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
         </div>
 
         <div class="selection">
@@ -24,17 +24,26 @@
         </dhc-input-text>
 
         <div class="caixatexto">
-          <label for="descricaoReserva" class="descricao">Descrição</label>
-          <textarea class="text-area-box" placeholder="Dê um motivo para sua reserva"
+          <label for="descricao" class="descricao">Descrição</label>
+          <textarea id="descricao" class="text-area-box" placeholder="Dê um motivo para sua reserva"
             formControlName="descricao"></textarea>
         </div>
-
-
       </div>
     </form>
+
     <div class="botao">
-      <dhc-dynamic-button (clicked)="solicitarReserva()" label="Solicitar reserva" type="primary" [disabled]="reservaForm.invalid">
+      <dhc-dynamic-button (clicked)="solicitarReserva()" label="Solicitar reserva" type="primary"
+        [disabled]="reservaForm.invalid">
       </dhc-dynamic-button>
     </div>
   </div>
+</div>
+
+<!-- Card Feedback -->
+<div *ngIf="telaAtual === 'feedback'" class="overlay">
+  <dhc-card-feedback 
+    [message]="feedbackMessage" 
+    [status]="feedbackStatus"
+    (botaoClicado)="voltarTela()">
+  </dhc-card-feedback>
 </div>
