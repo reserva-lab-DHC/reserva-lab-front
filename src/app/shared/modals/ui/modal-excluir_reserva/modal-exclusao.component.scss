@@ -62,34 +62,13 @@
     
 }
 .botao{
-    position: absolute;
-    top: 199px;
-    left: 90px;
-}
-.botao-confirmar{
-    width:120px;
-    height: 50px;
-    border-radius: 10px;
-    border:none;
-    cursor: pointer;
-    background-color:#DE2445;
-    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
-}
-.texto-botao-confirmar{
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: Montserrat;
+    display: flex;
+    width: 112%;
+    justify-content: center;
 }
 .botao-fechar:hover .icone-fechar{
     width:18px;
     height:18px;
-}
-.botao-confirmar:hover{
-    background-color:#f9607c;
-}
-.botao-confirmar:hover .texto-botao-confirmar{
-    color: #000000;
 }
 /* Deixando comentado para caso precise, mas não está sendo usado no momento
 @media(min-width:1200px){
