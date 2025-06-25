@@ -20,7 +20,7 @@ export interface RepeatSelection {
 })
 export class RepeatSelectComponent {
     showOpts = signal(false);
-    selectedOption = signal<'none' | 'day' | 'week' | 'month'>('none');
+    selectedOption = signal<'none' | 'day' | 'week' | 'month' | null>(null);
     dateSelected = signal<Date | null>(null);
 
     selectionChange = output<RepeatSelection>();
@@ -33,6 +33,24 @@ export class RepeatSelectComponent {
         calendar: new FormControl<Date | null>(null)
     });
 
+    constructor() {
+        this.form.get('day')?.valueChanges.subscribe(value => {
+            if (this.selectedOption() === 'day' && value) {
+                this.emitSelection('day', value, this.dateSelected());
+            }
+        });
+        this.form.get('week')?.valueChanges.subscribe(value => {
+            if (this.selectedOption() === 'week' && value) {
+                this.emitSelection('week', value, this.dateSelected());
+            }
+        });
+        this.form.get('month')?.valueChanges.subscribe(value => {
+            if (this.selectedOption() === 'month' && value) {
+                this.emitSelection('month', value, this.dateSelected());
+            }
+        });
+    }
+
     showOptions(): void {
         this.showOpts.set(!this.showOpts());
     }
@@ -40,16 +58,17 @@ export class RepeatSelectComponent {
     selectOption(option: 'none' | 'day' | 'week' | 'month'): void {
         this.selectedOption.set(option);
         const value = this.form.get(option)?.value ?? '';
-        if (option === 'none' || option === 'day') {
-            this.selectionChange.emit({ category: option, value, finalDate: null });
+        if (option === 'none') {
+            this.emitSelection(option, value, new Date());
         }
     }
 
     onCalendarDateChanges(date: Date | null) {
         this.dateSelected.set(date);
         const option = this.selectedOption();
+        if (!option) return;
         const value = this.form.get(option)?.value ?? '';
-        if ((option === 'week' || option === 'month') && date) {
+        if (date) {
             this.selectionChange.emit({ category: option, value, finalDate: date });
         }
     }
@@ -68,4 +87,19 @@ export class RepeatSelectComponent {
         return `Até ${diaSemana}, ${dia} de ${mes} de ${ano}`;
     }
 
+    private emitSelection(
+        category: 'none' | 'day' | 'week' | 'month',
+        value: string,
+        finalDate: Date | null
+    ) {
+        if (category === 'none') {
+            this.selectionChange.emit({ category, value, finalDate: new Date() });
+            return;
+        }
+        if (
+            (['day', 'week', 'month'].includes(category) && finalDate)
+        ) {
+            this.selectionChange.emit({ category, value, finalDate });
+        }
+    }
 }

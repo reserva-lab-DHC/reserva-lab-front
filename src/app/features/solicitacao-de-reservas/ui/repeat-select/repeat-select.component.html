@@ -56,7 +56,7 @@
         </form>
     </ng-container>
     <ng-container>
-        <div *ngIf="selectedOption() !=='none' && selectedOption() !== 'day'">
+        <div *ngIf="selectedOption() !== 'none' && selectedOption() !== null && showOpts() " class="calendar-container">
             <div class="calendar">
                 <p style="align-self: start;">Duração</p>
                 <div class="calendar-header">
