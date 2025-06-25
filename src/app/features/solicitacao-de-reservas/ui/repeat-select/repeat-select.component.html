@@ -1,0 +1,72 @@
+<div class="container" aria-label="Duração">
+    <div class="header" tabindex="0" (click)="showOptions()" (keydown.enter)="showOptions()"
+        (keydown.space)="showOptions()">
+        <p>Repetir</p>
+        <img [class.open]="showOpts()" src="/assets/img/right-arrow.svg" alt="Seta para direita">
+    </div>
+    <ng-container *ngIf="showOpts()">
+        <form [formGroup]="form">
+            <div class="options">
+                <div class="option">
+                    <button class="box" [class.selected]="selectedOption() === 'none'" type="button"
+                        (click)="selectOption('none')">
+                        <div class="fill"></div>
+                    </button>
+                    <div class="text">
+                        <p>Não repetir</p>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="box" [class.selected]="selectedOption() === 'day'" type="button"
+                        (click)="selectOption('day')">
+                        <div class="fill"></div>
+                    </button>
+                    <div class="text">
+                        <p>A cada</p>
+                        <dhc-input-text class="input" type="number" placeholder="1"
+                            formControlName="day"></dhc-input-text>
+                        <p>dia</p>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="box" [class.selected]="selectedOption() === 'week'" type="button"
+                        (click)="selectOption('week')">
+                        <div class="fill"></div>
+                    </button>
+                    <div class="text">
+                        <p>A cada</p>
+                        <dhc-input-text class="input" type="number" placeholder="1"
+                            formControlName="week"></dhc-input-text>
+                        <p>semana</p>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="box" [class.selected]="selectedOption() === 'month'" type="button"
+                        (click)="selectOption('month')">
+                        <div class="fill"></div>
+                    </button>
+                    <div class="text">
+                        <p>A cada</p>
+                        <dhc-input-text class="input" type="number" placeholder="1"
+                            formControlName="month"></dhc-input-text>
+                        <p>mês</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <ng-container>
+        <div *ngIf="selectedOption() !=='none' && selectedOption() !== 'day'">
+            <div class="calendar">
+                <p style="align-self: start;">Duração</p>
+                <div class="calendar-header">
+                    <button class="box" [class.selected]=true type="button">
+                        <div class="fill"></div>
+                    </button>
+                    <p>{{formatDateToLongString(dateSelected())}}</p>
+                </div>
+                <dhc-calendar [date]="dateSelected()" (dateChange)="onCalendarDateChanges($event)" />
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -1,12 +1,12 @@
 import { Component, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { InputSelectComponent } from "../../shared/input-select/input-select.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { HorarioSelectComponent } from "./horario-select.component";
 // import { ReservaDTO } from "../../shared/models/reserva.dto";
 import { ReservaService } from "./reserva.service";
+import { RepeatSelectComponent, RepeatSelection } from "./ui/repeat-select/repeat-select.component";
 
 
 @Component({
@@ -16,10 +16,10 @@ import { ReservaService } from "./reserva.service";
     CommonModule,
     ReactiveFormsModule,
     InputTextComponent,
-    InputSelectComponent,
     DynamicButtonComponent,
-    HorarioSelectComponent
-  ],
+    HorarioSelectComponent,
+    RepeatSelectComponent
+],
   templateUrl: './solicitacao-de-reservas.component.html',
   styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
@@ -38,6 +38,10 @@ export class SolicitacaoDeReservasComponent {
   onHorarioChange(horarios: string[]) {
     console.log('Horários selecionados:', horarios);
 
+  }
+
+  repetirChanges(event : RepeatSelection) {
+    console.log('Repetir selecionado:', event);
   }
 
   toggleTipoUsuario() {

@@ -7,13 +7,14 @@
 
         <div class="horas">
           <p class="horario-label">Horário</p>
-        <dhc-horario-select (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
+          <dhc-horario-select (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
         </div>
 
         <div class="selection">
-          <dhc-input-select label="Repetir" [options]="['Não repetir', 'Diário', 'Semanal']" placeholder="Repetir"
+          <!-- <dhc-input-select label="Repetir" [options]="['Não repetir', 'Diário', 'Semanal']" placeholder="Repetir"
             formControlName="repetir">
-          </dhc-input-select>
+          </dhc-input-select> -->
+          <dhc-repeat-select (selectionChange)="repetirChanges($event)"/>
         </div>
 
         <dhc-input-text *ngIf="!isAdmin()" label="Responsável" placeholder="Responsável pela reserva"
@@ -33,7 +34,8 @@
       </div>
     </form>
     <div class="botao">
-      <dhc-dynamic-button (clicked)="solicitarReserva()" label="Solicitar reserva" type="primary" [disabled]="reservaForm.invalid">
+      <dhc-dynamic-button (clicked)="solicitarReserva()" label="Solicitar reserva" type="primary"
+        [disabled]="reservaForm.invalid">
       </dhc-dynamic-button>
     </div>
   </div>
