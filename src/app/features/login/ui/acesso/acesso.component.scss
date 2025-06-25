@@ -48,10 +48,23 @@
   }
 }
 
-dhc-dynamic-button {
+.erro {
+  color: #d71940;
+  font-size: 12px;
+  margin-top: 0.25rem;
+  display: block;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .erro {
+    font-size: 12px;
+  }
+}
+
+dhc-dynamic-button[label="Acessar"] {
   width: 100%;
   margin-top: 0.5rem;
-
   button {
     width: 100%;
     padding: 0.75rem;
@@ -85,7 +98,6 @@ dhc-dynamic-button {
   &:hover {
     text-decoration: underline;
   }
-
   &:focus {
     outline: none;
     text-decoration: underline;

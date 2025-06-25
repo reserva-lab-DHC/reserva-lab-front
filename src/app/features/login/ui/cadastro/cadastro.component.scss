@@ -37,7 +37,21 @@
   color: #333;
 }
 
-dhc-dynamic-button[label="Reservar"] {
+.erro {
+  color: #d71940;
+  font-size: 12px;
+  margin-top: 0.25rem;
+  display: block;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .erro {
+    font-size: 12px;
+  }
+}
+
+dhc-dynamic-button[label="Cadastrar"] {
   width: 100%;
   margin-top: 1.5rem;
   button {

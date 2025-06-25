@@ -5,7 +5,7 @@
     <div class="campo">
       <dhc-input-text label="Nome do Usuário" placeholder="Digite seu nome" formControlName="username"></dhc-input-text>
       <span class="erro"
-        *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.controls.username?.dirty || cadastroForm.controls.username?.touched)">
+        *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.get('username')?.dirty || cadastroForm.get('username')?.touched)">
         Nome de usuário é obrigatório.
       </span>
     </div>
@@ -14,7 +14,7 @@
       <dhc-input-text label="E-mail" type="email" placeholder="Digite seu e-mail"
         formControlName="email"></dhc-input-text>
       <span class="erro"
-        *ngIf="cadastroForm.get('email')?.invalid && (cadastroForm.controls.email?.dirty || cadastroForm.controls.email?.touched)">
+        *ngIf="cadastroForm.get('email')?.invalid && (cadastroForm.get('email')?.dirty || cadastroForm.get('email')?.touched)">
         E-mail é obrigatório e deve ser válido.
       </span>
     </div>
@@ -23,7 +23,7 @@
       <dhc-input-text label="Senha" type="password" placeholder="Digite sua senha"
         formControlName="password"></dhc-input-text>
       <span class="erro"
-        *ngIf="cadastroForm.get('password')?.invalid && (cadastroForm.controls.password?.dirty || cadastroForm.controls.password?.touched)">
+        *ngIf="cadastroForm.get('password')?.invalid && (cadastroForm.get('password')?.dirty || cadastroForm.get('password')?.touched)">
         Senha é obrigatória.
       </span>
     </div>
@@ -32,10 +32,13 @@
       <dhc-input-text label="Repetir senha" type="password" placeholder="Confirme sua senha"
         formControlName="repassword"></dhc-input-text>
       <span class="erro"
-        *ngIf="cadastroForm.get('repassword')?.invalid && (cadastroForm.controls.repassword?.dirty || cadastroForm.controls.repassword?.touched)">
-        Confirmação de password é obrigatória.
+        *ngIf="cadastroForm.get('repassword')?.invalid && (cadastroForm.get('repassword')?.dirty || cadastroForm.get('repassword')?.touched)">
+        Confirmação de senha é obrigatória.
       </span>
-      <!-- implementar aqui o erro de senhas não coincidem -->
+      <span class="erro"
+        *ngIf="cadastroForm.errors?.['mismatch'] && (cadastroForm.get('repassword')?.dirty || cadastroForm.get('repassword')?.touched)">
+        Senhas não coincidem.
+      </span>
     </div>
 
     <dhc-dynamic-button (clicked)="cadastrar()" label="Cadastrar" type="primary" color="red"></dhc-dynamic-button>
