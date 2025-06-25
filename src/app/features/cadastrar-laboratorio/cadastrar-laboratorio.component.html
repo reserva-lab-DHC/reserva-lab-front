@@ -1,28 +1,38 @@
+<div class="tudo">
 <form [formGroup]="formulario">
   <h1 class="titulo">Cadastro de laboratório</h1>
+
   <div class="inserir-nome">
     <p class="texto-nome">Insira o nome do laboratório</p>
     <dhc-input-text formControlName="nomeSala"></dhc-input-text>
+    <p *ngIf="formulario.get('nomeSala')?.invalid && formulario.get('nomeSala')?.touched" class="erro">
+      Nome é obrigatório
+    </p>
   </div>
+
   <div class="container-seletores">
     <dhc-selecao titulo="Prédio" [opcoes]="[1, 2]" layout="vertical" formControlName="predioSelecionado">
     </dhc-selecao>
-    <dhc-selecao titulo="Andar" [opcoes]="[1,2,3,4,5,6,7,8,9,10,11]" layout="horizontal"
-      formControlName="andarSelecionado">
+    <div class="mensagem-erro" *ngIf="formulario.get('predioSelecionado')?.invalid && formulario.get('predioSelecionado')?.touched">
+      Selecione um prédio.
+    </div>
+
+    <dhc-selecao titulo="Andar" [opcoes]="[1,2,3,4,5,6,7,8,9,10,11]" layout="horizontal" formControlName="andarSelecionado">
     </dhc-selecao>
+    <div class="mensagem-erro" *ngIf="formulario.get('andarSelecionado')?.invalid && formulario.get('andarSelecionado')?.touched">
+      Selecione um andar.
+    </div>
   </div>
 </form>
 <!-- <p class="texto-foto">Selecione a foto do laboratório</p>
   <img src="/assets/img/foto-lab.png" alt="Colocar foto laboratório" class="foto" id="imagemLab">
 <input type="file" id="upload" accept="image/*" style="display: none;"> -->
+  <div class="botao">
+    <dhc-dynamic-button
+      [label]="isLoading() ? 'Registrando...' : 'Registrar'"
+      (clicked)="registrar()"
+      [disabled]="formulario.invalid || isLoading()"
+    ></dhc-dynamic-button>
+  </div>
 
-<dhc-dynamic-button label="Registrar" (clicked)="registrar()"></dhc-dynamic-button>
-
-<!-- todo:
-  adicionar loading na request de registro (registrar() no ts)
-  adicionar pós registro (resetar formulário, exibir mensagem de sucesso, etc)
-  adicionar validação de formulário (ngIf para exibir mensagem de erro se o campo estiver vazio e etc)
-  adicionar foto do laboratório (upload de imagem)
-  adicionar validação de foto (se a imagem for muito grande, se não for uma imagem, etc)
-  adicionar validação do prédio e andar (se o prédio ou andar, predio 1 tem mais andares que o predio 2, por exemplo)
--->
+</div>
