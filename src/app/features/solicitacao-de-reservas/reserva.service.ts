@@ -1,13 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-export interface Reserva {
-
-  responsavel: string;
-  disciplina: string;
-  descricao: string;
-  repetir: string;
+export interface DiaReserva {
+  diaReserva: string;
   horarios: string[];
+}
+
+export interface ReservaDTO {
+  dataReserva: string;
+  diasReservados: DiaReserva[];
+  status: string;
+  solicitanteId: string;
+  salaReservadaId: string;
+  disciplinaRelacionada: string;
+  motivoReserva: string;
+  dataInicio: string;
+  dataConclusao: string;
 }
 
 @Injectable({
@@ -15,12 +24,13 @@ export interface Reserva {
 })
 export class ReservaService {
 
-  enviarReserva(reserva: Reserva): Observable<{ success: boolean }> {
-    console.log('Enviando reserva para o backend:', reserva);
-    // Simular resposta de sucesso após 1 segundo
-    return of({ success: true });
-  }
-  /* tem que ficar parecido com a página de cadastra laboratorio...
-  ver o que a api retorna e o que voce tem que enviar....
-   */
+  private apiUrl = 'http://localhost:8080/reserva';
+
+  constructor(private http: HttpClient) {}
+
+  enviarReserva(reserva: ReservaDTO): Observable<void> {
+  // Usando 'void' pois o retorno da API não foi especificado.
+  // Atualizar o tipo se o backend passar a retornar algum dado.
+  return this.http.post<void>(this.apiUrl, reserva);
+}
 }

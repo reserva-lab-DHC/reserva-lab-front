@@ -4,9 +4,9 @@ import { CommonModule } from "@angular/common";
 import { InputSelectComponent } from "../../shared/input-select/input-select.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
-import { Reserva} from "./reserva.service";
 import { HorarioSelectComponent } from "./horario-select.component";
-
+import { ReservaService } from "./reserva.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @Component({
   selector: 'dhc-solicitacao-de-reservas',
@@ -14,6 +14,7 @@ import { HorarioSelectComponent } from "./horario-select.component";
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     InputTextComponent,
     InputSelectComponent,
     DynamicButtonComponent,
@@ -23,19 +24,22 @@ import { HorarioSelectComponent } from "./horario-select.component";
   styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
 export class SolicitacaoDeReservasComponent {
-  reservaForm = new FormGroup({
 
+  horariosSelecionados: string[] = [];
+
+  reservaForm = new FormGroup({
     repetir: new FormControl('', Validators.required),
     responsavel: new FormControl('', Validators.required),
     disciplina: new FormControl('', Validators.required),
-    descricao: new FormControl('', Validators.required),
-
+    descricao: new FormControl('', Validators.required)
   });
+
   isAdmin = signal(false);
 
-  onHorarioChange(horarios: string[]) {
-    console.log('Horários selecionados:', horarios);
+  constructor(private reservaService: ReservaService) {}
 
+  onHorarioChange(horarios: string[]) {
+    this.horariosSelecionados = horarios;
   }
 
   toggleTipoUsuario() {
@@ -44,27 +48,37 @@ export class SolicitacaoDeReservasComponent {
 
   solicitarReserva() {
     if (this.reservaForm.valid) {
-      const responsavel = this.reservaForm.get('responsavel')?.value ?? '';
-      const disciplina = this.reservaForm.get('disciplina')?.value ?? '';
-      const descricao = this.reservaForm.get('descricao')?.value ?? '';
-      const repetir = this.reservaForm.get('repetir')?.value ?? '';
-      const horarios = this.reservaForm.get('horarios')?.value || [];
-      const reserva: Reserva = {
-        responsavel,
-        disciplina,
-        descricao,
-        repetir,
-        horarios
+      const formValues = this.reservaForm.value;
+
+      const reserva = {
+        dataReserva: new Date().toISOString().split('T')[0],
+        diasReservados: [
+          {
+            diaReserva: "SEG",
+            horarios: this.horariosSelecionados
+          }
+        ],
+        status: "PENDENTE",
+        solicitanteId: "04e88769-e0fa-421a-a7b9-39e266874549",
+        salaReservadaId: "2878abd2-d047-4773-888e-a398419820e1",
+        disciplinaRelacionada: formValues.disciplina ?? '',
+        motivoReserva: formValues.descricao ?? '',
+        dataInicio: new Date().toISOString(),
+        dataConclusao: new Date().toISOString()
       };
-      console.log('Solicitação de reserva:', reserva);
+
+      this.reservaService.enviarReserva(reserva).subscribe({
+        next: (response) => {
+          console.log('Reserva criada com sucesso:', response);
+        },
+        error: (error) => {
+          console.error('Erro ao criar reserva:', error);
+        }
+      });
+
     } else {
       console.log('Formulário inválido');
       this.reservaForm.markAllAsTouched();
     }
-
   }
 }
-
-
-
-
