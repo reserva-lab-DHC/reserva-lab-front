@@ -34,18 +34,18 @@ button.pressed {
 }
 
 button.red {
-  background: $primary-red-oficial;
+  background: $primary-red;
   color: #fff;
 }
 
 button.red:hover {
   background-color: #F8ECEC;
-  color: $primary-red-oficial;
+  color: $primary-red;
 }
 
 button.white-red {
   background: #fff;
-  color: $primary-red-oficial;
+  color: $primary-red;
   border: 2px solid #F8ECEC;
 }
 
