@@ -1,23 +1,21 @@
-    <div class="modal-exclusao">
-        <button class="botao-fechar" (click)="onFechar()">
-            <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar">
-        </button>
-        <div class="box-texto">
-            <p class="texto">Como deseja excluir esta reserva?</p>
-        </div>
-        <div class="box-escolhas">
-            <label class="opcao">
-                <input type="checkbox">
-                <span class="texto-opcao">Excluir recorrente</span>
-            </label>
-            <label class="opcao">
-                <input type="checkbox">
-                <span class="texto-opcao">Excluir apenas um dia</span>
-            </label>
-        </div>
-        <div class="botao">
-            <button class="botao-confirmar">
-                <p class="texto-botao-confirmar">Confirmar</p>
-            </button>
-        </div>
+<div class="modal-exclusao">
+  <button class="botao-fechar" (click)="onFechar()">
+    <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar" />
+  </button>
+  <div class="box-texto">
+    <p class="texto">Como deseja excluir esta reserva?</p>
+  </div>
+  <div class="box-escolhas">
+    <label class="opcao">
+      <input type="checkbox" />
+      <span class="texto-opcao">Excluir recorrente</span>
+    </label>
+    <label class="opcao">
+      <input type="checkbox" />
+      <span class="texto-opcao">Excluir apenas um dia</span>
+    </label>
+    <div class="botao">
+      <dhc-dynamic-button label="Confirmar"></dhc-dynamic-button>
     </div>
+  </div>
+</div>
