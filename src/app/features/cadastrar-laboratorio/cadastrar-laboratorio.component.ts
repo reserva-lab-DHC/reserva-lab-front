@@ -1,4 +1,4 @@
-import { Component,effect, inject,signal } from '@angular/core';
+import { Component, inject,signal } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
@@ -28,6 +28,10 @@ export class CadastrarLaboratorioComponent {
 
   isLoading = signal(false);
   andaresDisponiveis = signal<number[]>([]);
+
+  imagemSelecionada:File | null=null;
+  erroImagem =signal<string>('');
+
 constructor() {
   this.andaresDisponiveis.set(this.calcularAndares(1));
 
@@ -46,35 +50,52 @@ calcularAndares(predio: number): number[] {
   return predio === 1 ? [1,2,3,4,5,6,7,8,9,10,11] : [1,2,3,4,5,6];
 }
 
-  /* ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
     const uploadInput = document.getElementById('upload') as HTMLInputElement;
 
     imagemLab?.addEventListener('click', () => {
       uploadInput?.click();
     });
-    //SISTEMA QUE FAZ A IMAGEM APARECER NO LUGAR DO ICONE AO SELECIONA-LA
-    // uploadInput?.addEventListener('change', (event: Event) => {
-    //   const file = (event.target as HTMLInputElement).files?.[0];
 
-    //   if (file && file.type.startsWith('image/')) {
-    //     const reader = new FileReader();
+    uploadInput?.addEventListener('change', (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (!file) return;
 
-    //     reader.onload = (e: ProgressEvent<FileReader>) => {
-    //       const result = e.target?.result as string;
-    //       imagemLab.src = result;
-    //     };
+      if (!file.type.startsWith('image/')) {
+        this.erroImagem.set('O arquivo selecionado não é uma imagem.');
+        this.imagemSelecionada = null;
+        return;
+      }
 
-    //     reader.readAsDataURL(file);
-    //   }
-    // });
-  } */
+      if (file.size > 2 * 1024 * 1024) {
+        this.erroImagem.set('A imagem deve ter no máximo 2MB.');
+        this.imagemSelecionada = null;
+        return;
+      }
+
+      this.erroImagem.set('');
+      this.imagemSelecionada = file;
+
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const result = e.target?.result as string;
+        imagemLab.src = result;
+      };
+      reader.readAsDataURL(file);                
+    });
+  }
   registrar() {
     if (this.formulario.invalid) {
       // Marcar todos os campos como tocados para ativar mensagens de erro
       this.formulario.markAllAsTouched();
 
       alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    if (!this.imagemSelecionada) { 
+      alert('Por favor, selecione uma imagem válida.');
       return;
     }
 
@@ -99,6 +120,10 @@ calcularAndares(predio: number): number[] {
         predioSelecionado: null,
         andarSelecionado: null
     });
+      this.imagemSelecionada = null; 
+      const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
+      if (imagemLab) imagemLab.src = '/assets/img/foto-lab.png';
+
       })
       .catch((err: Error) => {
         console.error('Erro ao cadastrar laboratório:', err);
