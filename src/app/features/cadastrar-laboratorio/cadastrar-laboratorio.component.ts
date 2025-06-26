@@ -72,7 +72,7 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
 
 
     this.laboratorioService.cadastrarLaboratorio(novoLab)
-      .then((res: LaboratorioDTO | undefined) => {
+      .then((res: LaboratorioDTO) => {
         console.log('Laboratório cadastrado:', res);
         alert('Cadastro realizado com sucesso!');//aqui caberia aparecer um modal 
       })

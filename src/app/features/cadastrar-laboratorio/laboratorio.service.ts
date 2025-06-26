@@ -9,7 +9,7 @@ import { HttpService } from '../../core/services/http.service';
 export class LaboratorioService {
   constructor(private http: HttpService) { }
 
-  async cadastrarLaboratorio(lab: LaboratorioDTO): Promise<LaboratorioDTO | undefined> {
+  async cadastrarLaboratorio(lab: LaboratorioDTO): Promise<LaboratorioDTO> {
     return lastValueFrom(this.http.post<LaboratorioDTO, LaboratorioDTO>('/sala', lab));
   }
 }
