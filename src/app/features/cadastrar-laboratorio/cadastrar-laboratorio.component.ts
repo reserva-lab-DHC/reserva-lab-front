@@ -1,4 +1,4 @@
-import { Component, inject,signal } from '@angular/core';
+import { Component,effect, inject,signal } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
   standalone: true,
 
 })
-export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
+export class CadastrarLaboratorioComponent {
   predioSelecionado = 0;
   andarSelecionado = 0;
 
@@ -27,8 +27,24 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
   });
 
   isLoading = signal(false);
+  andaresDisponiveis = signal<number[]>([]);
+constructor() {
+  this.andaresDisponiveis.set(this.calcularAndares(1));
 
-  constructor() { }
+  this.formulario.get('predioSelecionado')?.valueChanges.subscribe(predio => {
+    if (predio != null) {
+      const andares = this.calcularAndares(predio);
+      this.andaresDisponiveis.set(andares);
+
+      const campoAndar = this.formulario.get('andarSelecionado');
+      campoAndar?.setValue(null);
+      campoAndar?.markAsUntouched(); 
+    }
+  });
+}
+calcularAndares(predio: number): number[] {
+  return predio === 1 ? [1,2,3,4,5,6,7,8,9,10,11] : [1,2,3,4,5,6];
+}
 
   /* ngAfterViewInit(): void {
     const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
