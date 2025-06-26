@@ -1,9 +1,8 @@
 :host {
   display: block;
   width: 100%;
-  max-width: 360px;
   margin: auto;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
 }
 
 input {
@@ -55,15 +54,15 @@ a.esqueceu-senha {
 dhc-dynamic-button {
   --button-background: none;
   --button-border: none;
-  --button-padding: 0; 
+  --button-padding: 0;
 
   &.link-alternar button {
     background: none;
     border: none;
     padding: 0;
-    margin: 1.5rem auto 0 auto; 
-    display: block; 
-    color: #d71940; 
+    margin: 1.5rem auto 0 auto;
+    display: block;
+    color: #d71940;
     font-weight: bold;
     text-decoration: none;
     font-size: 0.95rem;
@@ -71,6 +70,7 @@ dhc-dynamic-button {
     &:hover {
       text-decoration: underline;
     }
+
     &:focus {
       outline: none;
       text-decoration: underline;

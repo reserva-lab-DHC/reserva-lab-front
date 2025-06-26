@@ -1,9 +1,9 @@
 <div class="cadastro-card">
   <form [formGroup]="cadastroForm">
-    <h2 class="titulo">Cadastro do Usuário</h2>
+    <h2 class="titulo">Cadastro</h2>
 
     <div class="campo">
-      <dhc-input-text label="Nome do Usuário" placeholder="Digite seu nome" formControlName="username"></dhc-input-text>
+      <dhc-input-text label="Nome" placeholder="Digite seu nome" formControlName="username"></dhc-input-text>
       <span class="erro"
         *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.get('username')?.dirty || cadastroForm.get('username')?.touched)">
         Nome de usuário é obrigatório.
