@@ -31,6 +31,13 @@ dhc-modal-recent-requests {
     justify-content: space-between;
     align-items: center;
 }
+.top-header-left {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ flex-shrink: 0; // Impede o encolhimento em telas menores
+}
+
 
 .date-navigation-wrapper-red {
     display: flex;
