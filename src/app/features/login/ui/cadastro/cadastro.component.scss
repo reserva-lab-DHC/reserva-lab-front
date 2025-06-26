@@ -53,23 +53,9 @@
 
 dhc-dynamic-button[label="Cadastrar"] {
   width: 100%;
+  display: flex;
+  justify-content: center;
   margin-top: 1.5rem;
-  button {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #d71940;
-    color: white;
-    border: none;
-    border-radius: 999px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: none;
-
-    &:hover {
-      background-color: #c31539;
-    }
-  }
 }
 
 .link-alternar {
@@ -87,6 +73,7 @@ dhc-dynamic-button[label="Cadastrar"] {
   &:hover {
     text-decoration: underline;
   }
+
   &:focus {
     outline: none;
     text-decoration: underline;
