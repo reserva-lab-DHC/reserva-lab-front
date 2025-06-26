@@ -22,10 +22,10 @@
 </div>
 
 <div class="schedule-grid">
-  <div class="activity-row" *ngFor="let row of visibleItemsFiltered let i = index">
+  <div class="activity-row" *ngFor="let row of visibleItemsFiltered">
     <div class="activity-name">{{ getRoomName(row) }}</div>
     <dhc-celula-quadro
-      *ngFor="let cell of row.slice(0, maxCells)"
+      *ngFor="let cell of getRowValues(row)"
       [teacher]="cell?.solicitante?.userName"
       [disciplina]="cell?.disciplinaRelacionada"
       [reserva]="cell"

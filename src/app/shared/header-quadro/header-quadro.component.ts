@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownComponent } from "../dropdown/dropdown.component";
 import { NgIf } from '@angular/common';
 import { CalendarComponent } from "../calendar/calendar/calendar.component";
@@ -14,11 +14,11 @@ import { RecentRequestComponent } from "../modals/ui/modal-recent-requests/modal
 export class HeaderQuadroComponent implements OnInit, OnDestroy {
   showCalendar = false
   showPopup = false;
-  date = new Date()
+  public date = new Date()
 
   monthday = this.date.getDate()
   month = this.date.getMonth() + 1
-  weekday = this.date.toLocaleDateString('pt-BR', {weekday: 'long'})
+  public weekday = this.date.toLocaleDateString('pt-BR', {weekday: 'long'})
   currentDay = `${this.monthday}/${this.month} (${this.weekday})`
 
   isMobile = false;
@@ -37,6 +37,7 @@ export class HeaderQuadroComponent implements OnInit, OnDestroy {
 }
 
   ngOnInit(): void {
+    //this.date.setHours(0, 0, 0, 0)
     this.isMobile = this.mediaQueryList.matches; // emit initial state
     this.mediaQueryList.addEventListener('change', this.listener); // listen to changes
   }
@@ -54,13 +55,14 @@ export class HeaderQuadroComponent implements OnInit, OnDestroy {
 
     this.updateDate(-1)
   }
-
+  @Output() dayChanged = new EventEmitter<string>()
   updateDate(value: number) {
     this.date.setDate(this.date.getDate() + value)
     this.monthday = this.date.getDate()
     this.month = this.date.getMonth() + 1
     this.weekday = this.date.toLocaleDateString('pt-br', {weekday: 'long'})
     this.currentDay = `${this.monthday}/${this.month} (${this.weekday})`
+    this.dayChanged.emit(this.weekday)
   }
 
   @Output() shiftSelected = new EventEmitter<string>();
