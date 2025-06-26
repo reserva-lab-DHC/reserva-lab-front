@@ -47,18 +47,20 @@ export class CadastroComponent {
     if (this.cadastroForm.valid) {
       const nomeDeUsuario = this.cadastroForm.get('username')?.value as string;
       const senhaDoUsuario = this.cadastroForm.get('password')?.value as string;
+      const emailDoUsuario = this.cadastroForm.get('email')?.value as string;
+
 
       console.log('Formulário de cadastro válido (simulação):', this.cadastroForm.value);
       alert('Formulário de cadastro válido (simulação)!');
 
       const user: UserDTO = {
         nomeUsuario: nomeDeUsuario,
-        senha: senhaDoUsuario
+        senha: senhaDoUsuario,
+        email: emailDoUsuario
       };
 
       this.auth.login(user);
 
-      this.submitCadastro.emit();
     } else {
       console.log('Formulário de cadastro inválido');
       alert('Por favor, preencha todos os campos corretamente.');
