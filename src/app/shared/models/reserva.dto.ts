@@ -2,6 +2,7 @@ import { LaboratorioDTO } from "./laboratorio.dto";
 import { SolicitanteDTO } from "./solicitante.dto";
 
 export interface ReservaDTO {
+  uuid: string;
   dataReserva: string;
   diasReservados: [
     {

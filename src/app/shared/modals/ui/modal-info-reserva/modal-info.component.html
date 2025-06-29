@@ -2,28 +2,27 @@
   <div class="popup" (click)="$event.stopPropagation()" (keydown)="closePopup()" tabindex="0">
 
     <div class="options">
-      <!-- <button (click)="editReserva()"> -->
-        <img src="assets/img/edit-reserva.svg" alt="icon">
-      <!-- </button> -->
-      <button (click)="apagarReserva()">
-        <img src="assets/img/apagar-reserva.svg" alt="icon">
+       <button (click)="editReserva()" class="icon-button">
+        <img src="assets/img/edit-reserva.svg" alt="Editar Reserva">
       </button>
-        <button (click)="closePopup()">
-            <img src="assets/img/close-popup.svg" alt="icon">
+      <button (click)="apagarReserva()" class="icon-button">
+        <img src="assets/img/apagar-reserva.svg" alt="Apagar Reserva">
+      </button>
+        <button (click)="closePopup()" class="icon-button">
+            <img src="assets/img/close-popup.svg"  alt="Fechar">
         </button>
     </div>
 
 
-    <p class="prof">{{reserva.solicitante.userName}}</p>
+    <p class="prof" id="modal-title">{{reserva.solicitante.userName}}</p>
     <div class="infoReserva">
 
-        <p class="lab">{{reserva.salaReservada.nomeSala}}</p>
-        <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
-        <ul>
-            <li>{{reserva.diasReservados[0].horarios}}</li>
-           <!-- <li>{{reserva.duracao}}</li> -->
-            <li>{{reserva.dataReserva}}</li>
-        </ul>
+       <p class="lab">{{reserva.salaReservada.nomeSala}}</p>
+    <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
+    <ul>
+        <li>{{reserva.diasReservados[0].horarios}}</li>
+       <li>{{reserva.dataReserva | date:'dd/MM/yyyy'}}</li>
+    </ul>
     </div>
   </div>
 </div>

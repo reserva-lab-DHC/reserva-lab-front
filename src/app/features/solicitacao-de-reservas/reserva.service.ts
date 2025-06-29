@@ -12,4 +12,11 @@ export class ReservaService {
   async solicitarReserva(reserva: ReservaDTO): Promise<ReservaDTO | undefined> {
     return lastValueFrom(this.http.post<ReservaDTO, ReservaDTO>('/reserva', reserva));
   }
+  async editReserva(reserva: ReservaDTO, id: string): Promise<ReservaDTO | undefined> { 
+  return lastValueFrom(this.http.put<ReservaDTO, ReservaDTO>(`/reserva/${id}`, reserva));
+}
+
+ async deleteReserva(id: string): Promise<ReservaDTO | undefined> { 
+  return lastValueFrom(this.http.delete<ReservaDTO>(`/reserva/${id}`));
+ }
 }

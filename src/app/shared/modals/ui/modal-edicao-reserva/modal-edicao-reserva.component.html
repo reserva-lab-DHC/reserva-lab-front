@@ -1,0 +1,36 @@
+<div class="overlay-backdrop"
+     (click)="closePopup()"
+     (keydown.escape)="closePopup()"  (keydown.enter)="closePopup()"  tabindex="0">                   <div class="popup"
+       (click)="$event.stopPropagation()"
+       (keydown.enter)="$event.stopPropagation()" tabindex="0"> </div>
+</div>
+    <h2>Editar Reserva</h2>
+    <button class="close-button" (click)="closePopup()">X</button>
+
+    <form (ngSubmit)="salvarEdicao()">
+      <div class="form-group">
+        <label for="solicitanteName">Nome do Solicitante:</label>
+        <input type="text" id="solicitanteName" [(ngModel)]="reservaEditavel.solicitante.userName" name="solicitanteName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="disciplinaRelacionada">Disciplina:</label>
+        <input type="text" id="disciplinaRelacionada" [(ngModel)]="reservaEditavel.disciplinaRelacionada" name="disciplinaRelacionada" required>
+      </div>
+
+      <div class="form-group" *ngIf="reservaEditavel.diasReservados && reservaEditavel.diasReservados.length > 0">
+        <label for="horario">Horário (Primeiro Dia/Primeiro Horário):</label>
+        <input type="text" id="horario" [(ngModel)]="reservaEditavel.diasReservados[0].horarios" name="horario">
+      </div>
+
+      <div class="form-group">
+        <label for="dataReserva">Data da Reserva:</label>
+        <input type="date" id="dataReserva" [(ngModel)]="reservaEditavel.dataReserva" name="dataReserva" required>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        <button type="button" class="btn btn-secondary" (click)="closePopup()">Cancelar</button>
+      </div>
+    </form>
+  

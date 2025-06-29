@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { CelulaQuadroComponent } from '../celula-quadro/celula-quadro.component';
 import { ReservaDTO } from '../models/reserva.dto';
@@ -41,12 +41,12 @@ export class ScheduleTableComponent implements OnChanges {
     return lab
   }
 
-  labValues: Map<Map<string, ReservaDTO | undefined>, (ReservaDTO | undefined)[]> = new Map()
+  labValues: Map<Map<string, ReservaDTO | undefined>, (ReservaDTO | undefined)[]> = new Map<Map<string, ReservaDTO | undefined>, (ReservaDTO | undefined)[]>()
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['scheduleData'] && this.scheduleData.length > 0) {
       for (const row of this.visibleItemsFiltered) {
-        this.labValues.set(row, [...row.values()])//
+        this.labValues.set(row, [...row.values()])
       }
     }
   }

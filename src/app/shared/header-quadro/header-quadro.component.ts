@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownComponent } from "../dropdown/dropdown.component";
 import { NgIf } from '@angular/common';
 import { CalendarComponent } from "../calendar/calendar/calendar.component";
