@@ -1,5 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-    <input formControlName="username" placeholder="Username">
-    <input formControlName="password" type="password" placeholder="Password">
-    <button type="submit">Login</button>
-</form>
+<ng-container>
+    <dhc-acesso *ngIf="!isCadastro()" (goToCadastro)="changeForm()"></dhc-acesso>
+    <dhc-cadastro *ngIf="isCadastro()" (goToAcesso)="changeForm()"></dhc-cadastro>
+</ng-container> 

@@ -1,0 +1,72 @@
+.card {
+  padding: 32px;
+  border-radius: 12px;
+  margin: 20px auto;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  &.sucesso {
+    background-color: #f3f5f3;
+    h2 {
+      color: #000000;
+    }
+    p {
+      color: #666666;
+    }
+  }
+  
+  &.erro {
+    background-color: #f8eeef;
+    h2 {
+      color: #000000;
+    }
+    p {
+      color: #666666;
+    }
+  }
+  
+  h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin-bottom: 24px;
+    font-size: 1rem;
+  }
+  
+  button {
+    background-color: #DE2445;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    font-size: 1rem;
+    
+    &:hover {
+      background-color: #ac1f39;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

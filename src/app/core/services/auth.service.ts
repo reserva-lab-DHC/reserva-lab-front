@@ -8,6 +8,7 @@ export class AuthService {
   // Save user to localStorage
   login(user: object): void {
     localStorage.setItem('currentUser', JSON.stringify(user));
+    this.router.navigate(['/inicio']);
   }
 
   // Remove user from localStorage

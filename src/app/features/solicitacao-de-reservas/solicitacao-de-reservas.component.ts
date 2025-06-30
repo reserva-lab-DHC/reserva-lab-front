@@ -1,12 +1,14 @@
-import { Component, signal } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { InputSelectComponent } from "../../shared/input-select/input-select.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
-import { Reserva} from "./reserva.service";
 import { HorarioSelectComponent } from "./horario-select.component";
-
+// import { ReservaDTO } from "../../shared/models/reserva.dto";
+import { ReservaService } from "./reserva.service";
+import { RepeatSelectComponent, RepeatSelection } from "./ui/repeat-select/repeat-select.component";
+import { CardFeedbackComponent } from "./card-feedback.component";
+import { ReservaDTO } from "../../shared/models/reserva.dto";
 
 @Component({
   selector: 'dhc-solicitacao-de-reservas',
@@ -15,56 +17,86 @@ import { HorarioSelectComponent } from "./horario-select.component";
     CommonModule,
     ReactiveFormsModule,
     InputTextComponent,
-    InputSelectComponent,
     DynamicButtonComponent,
-    HorarioSelectComponent
+    HorarioSelectComponent,
+    RepeatSelectComponent,
+    CardFeedbackComponent
   ],
   templateUrl: './solicitacao-de-reservas.component.html',
   styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
 export class SolicitacaoDeReservasComponent {
-  reservaForm = new FormGroup({
+  horariosSelecionados: string[] = [];
 
+  reservaForm = new FormGroup({
     repetir: new FormControl('', Validators.required),
     responsavel: new FormControl('', Validators.required),
     disciplina: new FormControl('', Validators.required),
-    descricao: new FormControl('', Validators.required),
-
+    descricao: new FormControl('', Validators.required)
   });
+
   isAdmin = signal(false);
+  reservaService = inject(ReservaService);
+  feedbackMessage = '';
+  feedbackStatus: 'sucesso' | 'erro' = 'sucesso';
+  telaAtual: 'form' | 'feedback' = 'form';
+
+  constructor() { }
 
   onHorarioChange(horarios: string[]) {
-    console.log('Horários selecionados:', horarios);
+    this.horariosSelecionados = horarios;
+  }
 
+  repetirChanges(event : RepeatSelection) {
+    console.log('Repetir selecionado:', event);
   }
 
   toggleTipoUsuario() {
     this.isAdmin.update(value => !value);
   }
 
-  solicitarReserva() {
+  async solicitarReserva() {
     if (this.reservaForm.valid) {
-      const responsavel = this.reservaForm.get('responsavel')?.value ?? '';
-      const disciplina = this.reservaForm.get('disciplina')?.value ?? '';
-      const descricao = this.reservaForm.get('descricao')?.value ?? '';
-      const repetir = this.reservaForm.get('repetir')?.value ?? '';
-      const horarios = this.reservaForm.get('horarios')?.value || [];
-      const reserva: Reserva = {
-        responsavel,
-        disciplina,
-        descricao,
-        repetir,
-        horarios
+      const formValues = this.reservaForm.value;
+
+      const reserva = {
+        dataReserva: new Date().toISOString().split('T')[0],
+        diasReservados: [
+          {
+            diaReserva: "SEG",
+            horarios: this.horariosSelecionados
+          }
+        ],
+        status: "PENDENTE",
+        solicitanteId: "04e88769-e0fa-421a-a7b9-39e266874549", 
+        salaReservadaId: "2878abd2-d047-4773-888e-a398419820e1", 
+        disciplinaRelacionada: formValues.disciplina ?? '',
+        motivoReserva: formValues.descricao ?? '',
+        dataInicio: new Date().toISOString(), 
+        dataConclusao: new Date().toISOString() 
       };
-      console.log('Solicitação de reserva:', reserva);
+
+      const res: ReservaDTO = await this.reservaService.solicitarReserva(reserva);
+
+      if (res.status === 'PENDENTE') {
+        this.telaAtual = 'feedback';
+        this.feedbackMessage = 'Reserva solicitada com sucesso!';
+        this.feedbackStatus = 'sucesso';
+      } else {
+        this.telaAtual = 'feedback';
+        this.feedbackMessage = 'Erro ao solicitar reserva. Tente novamente.';
+        this.feedbackStatus = 'erro';
+      }
     } else {
-      console.log('Formulário inválido');
       this.reservaForm.markAllAsTouched();
     }
+  }
 
+  voltarTela() {
+    if (this.feedbackStatus === 'sucesso') {
+      window.location.href = '/';
+    } else {
+      this.telaAtual = 'form';
+    }
   }
 }
-
-
-
-

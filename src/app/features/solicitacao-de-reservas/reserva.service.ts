@@ -1,26 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-
-export interface Reserva {
-
-  responsavel: string;
-  disciplina: string;
-  descricao: string;
-  repetir: string;
-  horarios: string[];
-}
+import { lastValueFrom  } from 'rxjs';
+import { HttpService } from '../../core/services/http.service';
+import { ReservaDTO } from '../../shared/models/reserva.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
+  constructor(private http: HttpService) { }
 
-  enviarReserva(reserva: Reserva): Observable<{ success: boolean }> {
-    console.log('Enviando reserva para o backend:', reserva);
-    // Simular resposta de sucesso após 1 segundo
-    return of({ success: true });
+  async solicitarReserva(reserva: ReservaDTO): Promise<ReservaDTO> {
+    return lastValueFrom(this.http.post<ReservaDTO, ReservaDTO>('/reserva', reserva));
   }
-  /* tem que ficar parecido com a página de cadastra laboratorio...
-  ver o que a api retorna e o que voce tem que enviar....
-   */
 }
