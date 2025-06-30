@@ -50,7 +50,7 @@ export class CadastrarLaboratorioComponent /* implements AfterViewInit  */ {
     //   }
     // });
   } */
-  registrar() {
+  async registrar() {
     if (
       this.formulario.invalid ||
       this.formulario.get('predioSelecionado')?.value === 0 ||

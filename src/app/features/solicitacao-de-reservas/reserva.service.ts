@@ -9,7 +9,7 @@ import { ReservaDTO } from '../../shared/models/reserva.dto';
 export class ReservaService {
   constructor(private http: HttpService) { }
 
-  async solicitarReserva(reserva: ReservaDTO): Promise<ReservaDTO | undefined> {
+  async solicitarReserva(reserva: ReservaDTO): Promise<ReservaDTO> {
     return lastValueFrom(this.http.post<ReservaDTO, ReservaDTO>('/reserva', reserva));
   }
 }
