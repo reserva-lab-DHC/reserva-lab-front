@@ -12,16 +12,17 @@ export type Mode = 'range' | 'multiple' | 'single';
 })
 
 export class CalendarComponent {
-  date = input<Date | null>(null);
+  date = input<Date | null>(new Date());
   /* selectionMode -> 'range' | 'multiple' | 'single' */
   selectionMode = input<Mode>('single');
   dateChange = output<Date | null>();
   
   get modelDate(): Date | null {
-    return this.date();
+    return this.date() || new Date();
   }
+  
   set modelDate(value: Date | null) {
-    this.dateChange.emit(value);
+    this.dateChange.emit(value || new Date());
   }
 
   onDateChange(value: Date) {

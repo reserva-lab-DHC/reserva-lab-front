@@ -13,8 +13,8 @@
 
 .filtro {
   display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 40px;
 }
 
@@ -25,60 +25,73 @@
 }
 
 .filtro-inputs-wrapper {
-  display: flex; 
-  align-items: center; 
-  gap: 15px; 
-  width: auto; 
-  margin-left: 0; 
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: auto;
+  margin-left: 0;
 }
 
 .data-calendario-wrapper {
-  display: flex; 
-  align-items: center; 
-  gap: 8px; 
-  cursor: pointer; 
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.calendario-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 5px;
+  min-width: 300px;
 }
 
 .turno {
-  width: 150px; 
-  padding: 8px 12px; 
-  font-size: 16px; 
+  width: 150px;
+  padding: 8px 12px;
+  font-size: 16px;
   font-weight: 500;
-  color: #333; 
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  margin: 0; 
+  margin: 0;
 }
 
 .data-selecionada {
-  font-size: 25px; 
-  font-weight: 600; 
-  color: #333; 
+  font-size: 25px;
+  font-weight: 600;
+  color: #333;
 }
 
 .calendar-icon {
-  height: 50px; 
+  height: 50px;
   width: 50px;
 
 }
 
 
 .cards-background {
-  background: #F0F1F5; 
-  border-radius: 20px; 
+  background: #F0F1F5;
+  border-radius: 20px;
   padding: 5px 0;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   display: flex;
-  flex-direction: column; 
-  gap: 10px; 
+  flex-direction: column;
+  gap: 10px;
 }
 
 .cards-box {
-  background: #F0F1F5; 
+  background: #F0F1F5;
   padding: 5px 0;
-  margin-bottom: 0; 
-  box-shadow: none; 
+  margin-bottom: 0;
+  box-shadow: none;
 }
 
 .salas-disponiveis,
@@ -86,23 +99,27 @@
   display: flex;
   flex-direction: row;
   gap: 24px;
-  overflow-x: auto; 
+  overflow-x: auto;
   padding: 20px;
   margin-bottom: 20px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE e Edge */
 }
+
 .salas-disponiveis::-webkit-scrollbar,
 .salas-indisponiveis::-webkit-scrollbar {
   display: none;
 }
+
 .sala-grupo {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: transform 0.2s;
-  min-width: 300px; 
+  min-width: 300px;
   max-width: 300px;
   flex: 0 0 300px;
   display: flex;
@@ -132,7 +149,7 @@
 }
 
 .sala-conteudo {
-  padding: 16px; 
+  padding: 16px;
   height: 30%;
   display: flex;
   flex-direction: column;
@@ -140,24 +157,24 @@
 }
 
 .sala-grupo h2 {
-  font-size: 18px; 
-  margin: 0 0 8px 0; 
+  font-size: 18px;
+  margin: 0 0 8px 0;
   color: #333;
   font-weight: 600;
 }
 
 .sala-info {
-  font-size: 14px; 
+  font-size: 14px;
   color: #666;
   margin: 2px 0;
 }
 
 
 .sala-horario {
-    font-size: 14px; 
-    color: #333; 
-    font-weight: bold; 
-    margin: 0 0 5px 0; 
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+  margin: 0 0 5px 0;
 }
 
 
@@ -171,7 +188,7 @@
 }
 
 .salas-indisponiveis .sala-imagem {
-  filter: grayscale(1) brightness(0.8); 
+  filter: grayscale(1) brightness(0.8);
   opacity: 0.7;
 }
 
@@ -189,18 +206,18 @@
 
 @media (max-width: 480px) {
   .filtro-inputs-wrapper {
-    flex-wrap: wrap; 
-    justify-content: center; 
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .turno {
-    width: 100%; 
-    margin-bottom: 10px; 
+    width: 100%;
+    margin-bottom: 10px;
   }
 
   .data-selecionada,
   .calendar-icon {
-    font-size: 20px; 
+    font-size: 20px;
     height: 20px;
     width: 20px;
   }

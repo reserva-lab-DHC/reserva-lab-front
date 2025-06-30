@@ -10,12 +10,14 @@
 
         <div class="data-calendario-wrapper" (click)="abrirCalendario()" (keydown.enter)="abrirCalendario()"
           tabindex="0" role="button">
-          <span class="data-selecionada">{{ dataSelecionada | date: 'dd/MM' }}</span>
+          <span class="data-selecionada">{{ dataFormatada }}</span>
           <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário">
+
+          <div class="calendario-container">
+            <dhc-calendar (dateChange)="onDateChange($event)" *ngIf="mostrarCalendario()" selectionMode="single" />
+          </div>
         </div>
       </div>
-      <dhc-calendar *ngIf="mostrarCalendario" formControlName="dataSelecionada" selectionMode="single">
-      </dhc-calendar>
     </form>
   </div>
 
