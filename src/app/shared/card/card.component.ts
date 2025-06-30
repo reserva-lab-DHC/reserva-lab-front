@@ -8,11 +8,11 @@ import { Component, input } from '@angular/core';
 })
 
 export class CardComponent {
-  titulo = input.required<string>()
-  horario1 = input.required<string>()
-  horario2 = input.required<string>()
-  andar = input.required<string>()
-  imgSrc = input.required<string>()
-  disabled = false;
+  titulo = input<string>()
+  horario1 = input<string>()
+  horario2 = input<string>()
+  andar = input<string>()
+  imgSrc = input<string>()
+  disabled = input(false)
 }
 

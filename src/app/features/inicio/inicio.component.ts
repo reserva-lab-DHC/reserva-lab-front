@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CalendarComponent } from '../../shared/calendar/calendar/calendar.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { CardComponent } from "../../shared/card/card.component";
 
 
 interface SalaCard {
@@ -16,6 +17,7 @@ interface SalaCard {
     tarde?: string[];
     noite?: string[];
   };
+  andar: number;
 }
 
 @Component({
@@ -27,14 +29,15 @@ interface SalaCard {
     InputSelectComponent,
     CalendarComponent,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CardComponent
   ]
 })
 export class InicioComponent implements OnInit {
   mostrarCalendario = false;
   filtroForm!: FormGroup;
 
-  todasSalasDisponiveis: SalaCard[] = [
+  todasSalasDisponiveis: (SalaCard)[] = [
     {
       nome: 'Laboratório Tecnológico I',
       local: 'Prédio I',
@@ -44,7 +47,8 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório de Exemplo I',
@@ -55,7 +59,8 @@ export class InicioComponent implements OnInit {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 6) + 1 // 1-6 para Prédio II
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -66,7 +71,8 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 6) + 1 // 1-6 para Prédio II
     },
     {
       nome: 'Laboratório de Química',
@@ -77,7 +83,8 @@ export class InicioComponent implements OnInit {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Metodologias Ativas II',
@@ -88,7 +95,8 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório de Inovação',
@@ -99,7 +107,8 @@ export class InicioComponent implements OnInit {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Maquetaria',
@@ -110,18 +119,20 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório de Robótica',
-      local: 'Prédio III',
+      local: 'Prédio II',
       sublocal: '1º Andar',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 6) + 1 // 1-6 para Prédio II
     },
     {
       nome: 'Laboratório Exemplo III',
@@ -132,18 +143,20 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório Exemplo IV',
-      local: 'Prédio Central',
+      local: 'Prédio I',
       sublocal: 'Térreo',
       imagem: 'assets/img/lab_metodologias.webp',
       horarios: {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório Exemplo V',
@@ -154,7 +167,8 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 6) + 1 // 1-6 para Prédio II
     },
     {
       nome: 'Laboratório Exemplo VI',
@@ -165,7 +179,8 @@ export class InicioComponent implements OnInit {
         manha: ['10:00', '11:40'],
         tarde: ['15:00', '16:40'],
         noite: ['20:20', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 4) + 1 // 1-4 para Prédio IV
     },
     {
       nome: 'Laboratório Exemplo VII',
@@ -176,11 +191,12 @@ export class InicioComponent implements OnInit {
         manha: ['08:00', '09:40'],
         tarde: ['13:00', '14:40'],
         noite: ['18:20', '20:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     }
   ];
 
-  todasSalasIndisponiveis: SalaCard[] = [
+  todasSalasIndisponiveis: (SalaCard)[] = [
     {
       nome: 'Laboratório Exemplo ',
       local: 'Prédio I',
@@ -188,16 +204,18 @@ export class InicioComponent implements OnInit {
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório Exemplo II',
-      local: 'Medio I',
+      local: 'Prédio I',
       sublocal: '1º Andar',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -206,7 +224,8 @@ export class InicioComponent implements OnInit {
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório de Física',
@@ -215,7 +234,8 @@ export class InicioComponent implements OnInit {
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 6) + 1 // 1-6 para Prédio II
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -224,7 +244,8 @@ export class InicioComponent implements OnInit {
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     },
     {
       nome: 'Laboratório Exemplo III',
@@ -233,7 +254,8 @@ export class InicioComponent implements OnInit {
       imagem: 'assets/img/lab_metodologias.webp',
       horarios: {
         noite: ['20:00', '22:00']
-      }
+      },
+      andar: Math.floor(Math.random() * 11) + 1 // 1-11 para Prédio I
     }
   ];
 

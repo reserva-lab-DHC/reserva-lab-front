@@ -6,9 +6,12 @@ div.card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 150px; 
+  width: 150px;
   height: 180px;
   box-shadow: 2.5px 2.5px 2.5px 0 rgba(0, 0, 0, 0.25);
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
 }
 
 div.card.card-indisponivel {
@@ -17,9 +20,15 @@ div.card.card-indisponivel {
   pointer-events: none;
 }
 
-img, div.photo {
+img,
+div.photo {
   width: 150px;
   height: 100px;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 div.horarios {
@@ -30,7 +39,7 @@ div.horarios {
   gap: 2.5px
 }
 
-div.horarios > div {
+div.horarios>div {
   padding: 1px 2px 1px 2px;
   font-size: 10px;
   font-weight: 500;
@@ -70,26 +79,30 @@ div.local {
     box-shadow: 3.75px 3.75px 3.75px 0 rgba(0, 0, 0, 0.25);
   }
 
-  img, div.photo {
+  img,
+  div.photo {
     width: 225px;
     height: 150px;
   }
+
   div.horarios {
     gap: 7.5px
   }
-  div.horarios > div {
+
+  div.horarios>div {
     padding: 1.5px 3px 1.5px 3px;
     font-size: 15px;
     font-weight: 500;
   }
+
   div.titulo {
     font-size: 21px;
     font-weight: 500;
   }
 
   div.local {
-  font-size: 18px;
-  font-weight: 300;
-  padding: 0px 7.5px 7.5px 7.5px;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 0px 7.5px 7.5px 7.5px;
   }
 }

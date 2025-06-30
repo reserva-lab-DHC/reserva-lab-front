@@ -4,23 +4,17 @@
   <div class="filtro">
     <form [formGroup]="filtroForm">
       <div class="filtro-inputs-wrapper">
-        <dhc-input-select class="turno" label="Turno" [options]="['Manhã', 'Tarde', 'Noite', 'Todos']" placeholder="Todos"
-          formControlName="filtroTurno">
+        <dhc-input-select class="turno" label="Turno" [options]="['Manhã', 'Tarde', 'Noite', 'Todos']"
+          placeholder="Todos" formControlName="filtroTurno">
         </dhc-input-select>
 
-        <div class="data-calendario-wrapper"
-             (click)="abrirCalendario()"
-             (keydown.enter)="abrirCalendario()"
-             tabindex="0"
-             role="button">
+        <div class="data-calendario-wrapper" (click)="abrirCalendario()" (keydown.enter)="abrirCalendario()"
+          tabindex="0" role="button">
           <span class="data-selecionada">{{ dataSelecionada | date: 'dd/MM' }}</span>
           <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário">
         </div>
       </div>
-      <dhc-calendar
-        *ngIf="mostrarCalendario"
-        formControlName="dataSelecionada"
-        selectionMode="single">
+      <dhc-calendar *ngIf="mostrarCalendario" formControlName="dataSelecionada" selectionMode="single">
       </dhc-calendar>
     </form>
   </div>
@@ -28,38 +22,14 @@
   <div class="cards-background">
     <div class="cards-box">
       <div class="scrollable-cards-wrapper">
-        <div class="salas-disponiveis"
-          (mousedown)="onMouseDown($event)"
-          (mouseleave)="onMouseLeave()"
-          (mouseup)="onMouseUp()"
-          (mousemove)="onMouseMove($event)"
-          (touchstart)="onTouchStart($event)"
-          (touchend)="onTouchEnd()"
-          (touchmove)="onTouchMove($event)">
+        <div class="salas-disponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
+          (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
 
           <ng-container *ngFor="let sala of salasDisponiveisFiltradas">
-            <div class="sala-grupo">
-              <div class="sala-imagem-container">
-                <img [src]="sala.imagem" [alt]="sala.nome" class="sala-imagem">
-              </div>
-              <div class="sala-conteudo">
-                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Manhã' && sala.horarios.manha">
-                  {{ sala.horarios.manha[0] }} - {{ sala.horarios.manha[1] }}
-                </p>
-                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Tarde' && sala.horarios.tarde">
-                  {{ sala.horarios.tarde[0] }} - {{ sala.horarios.tarde[1] }}
-                </p>
-                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Noite' && sala.horarios.noite">
-                  {{ sala.horarios.noite[0] }} - {{ sala.horarios.noite[1] }}
-                </p>
-                <p class="sala-horario" *ngIf="filtroForm.get('filtroTurno')?.value === 'Todos' && sala.horarios.manha">
-                  {{ sala.horarios.manha[0] }} - {{ sala.horarios.manha[1] }}
-                </p>
-                <h2>{{ sala.nome }}</h2>
-                <p class="sala-info">{{ sala.local }}</p>
-                <p class="sala-info">{{ sala.sublocal }}</p>
-              </div>
-            </div>
+            <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}"
+              horario1="{{ sala.horarios.manha ? sala.horarios.manha[0] : '' }}"
+              horario2="{{ sala.horarios.tarde ? sala.horarios.tarde[0] : '' }}"></dhc-card>
           </ng-container>
 
         </div>
@@ -69,29 +39,14 @@
     <div class="cards-box">
       <h2 class="titulo-indisponiveis">Indisponíveis</h2>
       <div class="scrollable-cards-wrapper">
-        <div class="salas-indisponiveis"
-          (mousedown)="onMouseDown($event)"
-          (mouseleave)="onMouseLeave()"
-          (mouseup)="onMouseUp()"
-          (mousemove)="onMouseMove($event)"
-          (touchstart)="onTouchStart($event)"
-          (touchend)="onTouchEnd()"
-          (touchmove)="onTouchMove($event)">
+        <div class="salas-indisponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
+          (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
 
           <ng-container *ngFor="let sala of salasIndisponiveisFiltradas">
-            <div class="sala-grupo">
-              <div class="sala-imagem-container">
-                <img [src]="sala.imagem" [alt]="sala.nome" class="sala-imagem">
-              </div>
-              <div class="sala-conteudo">
-                <p class="sala-horario" *ngIf="sala.horarios.noite">
-                  {{ sala.horarios.noite[0] }} - {{ sala.horarios.noite[1] }}
-                </p>
-                <h2>{{ sala.nome }}</h2>
-                <p class="sala-info">{{ sala.local }}</p>
-                <p class="sala-info">{{ sala.sublocal }}</p>
-              </div>
-            </div>
+            <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}"
+              horario1="{{ sala.horarios.manha ? sala.horarios.manha[0] : '' }}"
+              horario2="{{ sala.horarios.tarde ? sala.horarios.tarde[0] : '' }}" [disabled]="true"></dhc-card>
           </ng-container>
 
         </div>
