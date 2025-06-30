@@ -1,84 +1,99 @@
-*{
-    margin: 0;
-}
-.titulo{
-    font-family: Montserrat;
-    font-weight: 700;
-    font-size: 20px;
-    color: #000000;
-    margin:26px 0 0 28px ;
+
+* {
+  margin: 0;
 }
 
-.inserir-nome{
-    width: 350px;
-    margin:43px 0 0 0;
+
+.tudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  max-width: 900px;    
+  margin: 0 auto;      
+  padding: 20px;       
 }
-.texto-nome{
-    margin: 0 0 0 35px;
+
+.titulo {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
+  margin-top: 26px;
+
+  text-align: center;  
+  width: 100%;       
 }
+
+
+.inserir-nome {
+  width: 100%;         
+  max-width: 350px;    
+  margin-top: 43px;
+
+}
+
+.texto-nome {
+  margin-left: 0;
+  font-size: 16px;
+}
+
 .container-seletores {
   display: flex;
   gap: 2rem;
-  padding: 2rem 2rem 2rem 0;
-  margin-left: 28px;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 600px; 
+  padding: 0;
+  margin-top: 20px;
 }
+
+
 .texto-foto{
-    font-family: Montserrat;
-    font-weight: 400;
-    font-size: 14px;
-    color: #000000;
-    margin: 40px 0 0 50px;
-}
-.botao{
-    margin: 0 0 0 120px;
+  margin-top: 50px;
 }
 .foto{
-    width: 155px;
-    height: 155px;
-    cursor: pointer;
-    display: block;
-    margin: 36px 0 0 101px;
-    cursor: pointer;
+  width: 200px;
+  margin-top: 20px;
+  cursor: pointer;
 }
-.botao-wrapper {
-    margin: 30px 0px 50px 110px;
+.botao {
+  margin-top: 40px;
 }
-@media(min-width:1200px){
-    .tudo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    }
-    .titulo{
-        font-size: 40px;
-        margin: 52px 0 0 190px;
-    }
-    .inserir-nome{
-        width: 900px;
-        margin: 60px 0 0 0px;
-        //nao sei como alterar o tamanho da font e do input, por eles não estarem no meu html.
-    }
-    .texto-nome{
-        margin: 0 0 0 90px;
-    }
-    .container-seletores{
-        margin-left: 80px;
-    }
-    .texto-foto{
-        font-size: 20px;
-        margin: 50px 0 0 0px;
-    }
-    .foto{
-        width: 280px;
-        height: 280px;
-        margin:50px 0 0 0px;
-    }
-    .botao-wrapper{
-        margin: 60px 0px 100px 0px;
-    }
+@media (min-width: 1200px) {
+  .tudo {
+    max-width: 900px;
+    padding: 40px 20px;
+  }
 
-}
+  .titulo {
+    font-size: 40px;
+    margin-top: 52px;
+    text-align: center;
+  }
 
+  .inserir-nome {
+    max-width: 900px;
+    margin-top: 60px;
+  }
+
+  .texto-nome {
+    font-size: 20px;
+  }
+
+  .container-seletores {
+    max-width: 900px;
+    margin-top: 30px;
+  }
+  .texto-foto{
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .foto{
+    width: 300px;
+  }
+  .botao {
+    margin-top: 50px;
+  }
+}
