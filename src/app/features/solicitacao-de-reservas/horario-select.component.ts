@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'dhc-horario-select',
@@ -7,16 +8,15 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="horario-select">
-      
       <div class="horario-group">
         <button
-          *ngFor="let horario of horarios"
+          *ngFor="let horario of horarios()"
           type="button"
           [class.selected]="horariosSelecionados().includes(horario)"
           (click)="toggleHorario(horario)"
           class="horario-btn"
         >
-          {{ horario }}
+          {{ formatHorario(horario) }}
         </button>
       </div>
     </div>
@@ -24,9 +24,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./horario-select.component.scss']
 })
 export class HorarioSelectComponent {
-  horarios = [
-     '19:00', '20:00'
-  ];
+  horarios = input<string[]>([]);
+  formatHorario(horario: string): string {
+    const match = horario.match(/^H(\d{2})[_:](\d{2})$/);
+    return match ? `${match[1]}:${match[2]}` : horario;
+  }
 
   horariosSelecionados = signal<string[]>([]);
 
@@ -37,7 +39,7 @@ export class HorarioSelectComponent {
       const newSelection = current.includes(horario)
         ? current.filter(h => h !== horario)
         : [...current, horario];
-      
+
       this.horarioChange.emit(newSelection);
       return newSelection;
     });

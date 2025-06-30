@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, inject, signal } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
   standalone: true,
 
 })
-export class CadastrarLaboratorioComponent {
+export class CadastrarLaboratorioComponent implements AfterViewInit {
   predioSelecionado = 0;
   andarSelecionado = 0;
 

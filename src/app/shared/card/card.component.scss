@@ -12,6 +12,7 @@ div.card {
   user-select: none;
   -webkit-user-select: none;
   position: relative;
+  border-radius: 1rem;
 }
 
 div.card.card-indisponivel {
@@ -29,6 +30,7 @@ div.photo {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  border-radius: 16px 16px 0 0;
 }
 
 div.horarios {
@@ -36,7 +38,7 @@ div.horarios {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2.5px
+  gap: 2.5px;
 }
 
 div.horarios>div {
@@ -62,6 +64,7 @@ div.titulo {
   text-align: center;
   font-size: 14px;
   font-weight: 500;
+  background-color: #FFFFFF;
 }
 
 div.local {
@@ -70,6 +73,9 @@ div.local {
   font-size: 12px;
   font-weight: 300;
   padding: 0px 5px 5px 5px;
+  background-color: #FFFFFF;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 @media screen and (min-width: 768px) {

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, OnInit, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
@@ -9,6 +9,7 @@ import { ReservaService } from "./reserva.service";
 import { RepeatSelectComponent, RepeatSelection } from "./ui/repeat-select/repeat-select.component";
 import { CardFeedbackComponent } from "./card-feedback.component";
 import { ReservaDTO } from "../../shared/models/reserva.dto";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'dhc-solicitacao-de-reservas',
@@ -25,8 +26,9 @@ import { ReservaDTO } from "../../shared/models/reserva.dto";
   templateUrl: './solicitacao-de-reservas.component.html',
   styleUrls: ['./solicitacao-de-reservas.component.scss']
 })
-export class SolicitacaoDeReservasComponent {
+export class SolicitacaoDeReservasComponent implements OnInit {
   horariosSelecionados: string[] = [];
+  horariosFromUrl: string[] = [];
 
   reservaForm = new FormGroup({
     repetir: new FormControl('', Validators.required),
@@ -40,14 +42,34 @@ export class SolicitacaoDeReservasComponent {
   feedbackMessage = '';
   feedbackStatus: 'sucesso' | 'erro' = 'sucesso';
   telaAtual: 'form' | 'feedback' = 'form';
+  salaId = '';
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
-  onHorarioChange(horarios: string[]) {
-    this.horariosSelecionados = horarios;
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const salaId = params['salaId'];
+      if (salaId) {
+        this.salaId = salaId;
+        console.log('Sala ID recebida:', this.salaId);
+      }
+      const horariosFromUrl = params['horarios'];
+      if (horariosFromUrl) {
+        if (typeof horariosFromUrl === 'string') {
+          const parts = horariosFromUrl.split('H').filter(Boolean).map(h => 'H' + h);
+          this.horariosFromUrl = parts;
+        } else if (Array.isArray(horariosFromUrl)) {
+          this.horariosFromUrl = horariosFromUrl;
+        }
+      }
+    });
   }
 
-  repetirChanges(event : RepeatSelection) {
+  onHorarioChange(horariosSelecionadosForm: string[]) {
+    this.horariosSelecionados = horariosSelecionadosForm;
+  }
+
+  repetirChanges(event: RepeatSelection) {
     console.log('Repetir selecionado:', event);
   }
 
@@ -68,12 +90,12 @@ export class SolicitacaoDeReservasComponent {
           }
         ],
         status: "PENDENTE",
-        solicitanteId: "04e88769-e0fa-421a-a7b9-39e266874549", 
-        salaReservadaId: "2878abd2-d047-4773-888e-a398419820e1", 
+        solicitanteId: "04e88769-e0fa-421a-a7b9-39e266874549",
+        salaReservadaId: this.salaId,
         disciplinaRelacionada: formValues.disciplina ?? '',
         motivoReserva: formValues.descricao ?? '',
-        dataInicio: new Date().toISOString(), 
-        dataConclusao: new Date().toISOString() 
+        dataInicio: new Date().toISOString(),
+        dataConclusao: new Date().toISOString()
       };
 
       const res: ReservaDTO = await this.reservaService.solicitarReserva(reserva);

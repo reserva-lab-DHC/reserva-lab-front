@@ -7,7 +7,7 @@
       <div class="formulario">
         <div class="horas">
           <p class="horario-label">Horário</p>
-          <dhc-horario-select (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
+          <dhc-horario-select [horarios]="horariosFromUrl" (horarioChange)="onHorarioChange($event)"></dhc-horario-select>
         </div>
 
         <div class="selection">
