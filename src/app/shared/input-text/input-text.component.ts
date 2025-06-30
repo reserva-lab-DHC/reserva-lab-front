@@ -20,14 +20,10 @@ export type variant = 'textarea' | 'input';
 export class InputTextComponent implements OnInit, ControlValueAccessor {
   value: string | undefined;
 
- onInput() {
-  // método vazio
-}
-
   label = input('');
   type = input("text");
   placeholder = input('');
-  valueChange = output();
+  valueChange = output<string>();
   control: FormControl = new FormControl('');
   inputId = signal('');
   variant = input<variant>('input');
@@ -52,6 +48,10 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setDisabledState?(isDisabled: boolean): void {
     // opcional
+  }
+
+  onInput() {
+    this._onChange?.(this.control.value);
   }
 
   ngOnInit(): void {

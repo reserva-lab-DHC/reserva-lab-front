@@ -1,14 +1,15 @@
-    <div class="modal-erro-lab">
-        <button class="botao-fechar" (click)="onFechar()">
-            <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar">
-        </button>
-        <div class="center">
-            <img src="/assets/img/erro.png" alt="Icone-erro" class="icone-erro">
-            <p class="texto">Erro ao Cadastrar o <br>Laboratório</p>
-            <p class="motivo-erro">&lt;Motivo do Erro&gt;</p>
-            <button class="botao-tentar_novamente">
-                <p class="texto_botao">Tentar novamente</p>
-            </button>
-            <a href="#" class="saiba-mais">Saiba mais</a>
-        </div>
-    </div>
+<div class="modal-erro-lab">
+  <button class="botao-fechar" (click)="onFechar()">
+    <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar" />
+  </button>
+  <div class="center">
+    <img src="/assets/img/erro.png" alt="Icone-erro" class="icone-erro" />
+    <p class="texto">Erro ao Cadastrar o <br />Laboratório</p>
+    <p class="motivo-erro">&lt;Motivo do Erro&gt;</p>
+    <dhc-dynamic-button
+      color="blue"
+      label="Tentar novamente"
+    ></dhc-dynamic-button>
+    <a href="#" class="saiba-mais">Saiba mais</a>
+  </div>
+</div>

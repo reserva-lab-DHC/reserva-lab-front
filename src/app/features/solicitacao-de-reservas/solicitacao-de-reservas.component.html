@@ -11,9 +11,10 @@
         </div>
 
         <div class="selection">
-          <dhc-input-select label="Repetir" [options]="['Não repetir', 'Diário', 'Semanal']" placeholder="Repetir"
+          <!-- <dhc-input-select label="Repetir" [options]="['Não repetir', 'Diário', 'Semanal']" placeholder="Repetir"
             formControlName="repetir">
-          </dhc-input-select>
+          </dhc-input-select> -->
+          <dhc-repeat-select (selectionChange)="repetirChanges($event)"/>
         </div>
 
         <dhc-input-text *ngIf="!isAdmin()" label="Responsável" placeholder="Responsável pela reserva"

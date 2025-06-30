@@ -1,12 +1,13 @@
-    <div class="modal-confirmacao">
-        <button class="botao-fechar" (click)="onFechar()">
-            <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar">
-        </button>
-        <div class="center">
-            <img src="/assets/img/Correct.png" alt="Confirmação" class="img-correct">
-            <p class="texto">Sua solicitação <br> foi enviada!</p>
-            <button class="botao-ok" (click)="onFechar()">
-                <p class="texto_botao">OK</p>
-            </button>
-        </div>
-    </div>
+<div class="modal-confirmacao">
+  <button class="botao-fechar" (click)="onFechar()">
+    <img src="/assets/img/X.png" alt="Fechar" class="icone-fechar" />
+  </button>
+  <div class="center">
+    <img src="/assets/img/Correct.png" alt="Confirmação" class="img-correct" />
+    <p class="texto">
+      Sua solicitação <br />
+      foi enviada!
+    </p>
+    <dhc-dynamic-button label="OK" (click)="onFechar()"></dhc-dynamic-button>
+  </div>
+</div>

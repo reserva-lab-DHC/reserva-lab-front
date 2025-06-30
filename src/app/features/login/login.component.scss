@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  width: 100%;
+  margin: auto;
+  font-family: Montserrat, sans-serif;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  font-size: 1rem;
+  background-color: #f7f7f7;
+
+  &::placeholder {
+    color: #a9a9a9;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #d71940;
+    background-color: #ffffff;
+  }
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d71940;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c31539;
+  }
+}
+
+a.esqueceu-senha {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  color: #333;
+  text-decoration: underline;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+dhc-dynamic-button {
+  --button-background: none;
+  --button-border: none;
+  --button-padding: 0;
+
+  &.link-alternar button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 1.5rem auto 0 auto;
+    display: block;
+    color: #d71940;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.95rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+}

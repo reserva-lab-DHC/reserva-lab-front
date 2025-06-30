@@ -1,0 +1,48 @@
+<div class="cadastro-card">
+  <form [formGroup]="cadastroForm">
+    <h2 class="titulo">Cadastro</h2>
+
+    <div class="campo">
+      <dhc-input-text label="Nome" placeholder="Digite seu nome" formControlName="username"></dhc-input-text>
+      <span class="erro"
+        *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.get('username')?.dirty || cadastroForm.get('username')?.touched)">
+        Nome de usuário é obrigatório.
+      </span>
+    </div>
+
+    <div class="campo">
+      <dhc-input-text label="E-mail" type="email" placeholder="Digite seu e-mail"
+        formControlName="email"></dhc-input-text>
+      <span class="erro"
+        *ngIf="cadastroForm.get('email')?.invalid && (cadastroForm.get('email')?.dirty || cadastroForm.get('email')?.touched)">
+        E-mail é obrigatório e deve ser válido.
+      </span>
+    </div>
+
+    <div class="campo">
+      <dhc-input-text label="Senha" type="password" placeholder="Digite sua senha"
+        formControlName="password"></dhc-input-text>
+      <span class="erro"
+        *ngIf="cadastroForm.get('password')?.invalid && (cadastroForm.get('password')?.dirty || cadastroForm.get('password')?.touched)">
+        Senha é obrigatória.
+      </span>
+    </div>
+
+    <div class="campo">
+      <dhc-input-text label="Repetir senha" type="password" placeholder="Confirme sua senha"
+        formControlName="repassword"></dhc-input-text>
+      <span class="erro"
+        *ngIf="cadastroForm.get('repassword')?.invalid && (cadastroForm.get('repassword')?.dirty || cadastroForm.get('repassword')?.touched)">
+        Confirmação de senha é obrigatória.
+      </span>
+      <span class="erro"
+        *ngIf="cadastroForm.errors?.['mismatch'] && (cadastroForm.get('repassword')?.dirty || cadastroForm.get('repassword')?.touched)">
+        Senhas não coincidem.
+      </span>
+    </div>
+
+    <dhc-dynamic-button (clicked)="cadastrar()" label="Cadastrar" type="primary" color="red"></dhc-dynamic-button>
+
+    <button type="button" class="link-alternar" (click)="goToAcesso.emit()">Já tem cadastro? Acesse agora!</button>
+  </form>
+</div>
