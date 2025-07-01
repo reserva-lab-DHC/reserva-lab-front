@@ -1,8 +1,8 @@
-<ng-container *ngIf="isLoggedIn">
+<ng-container *ngIf="isLoggedIn()">
   <div class="profile-container" (click)="togglePopup($event)" (keydown.enter)="togglePopup($event)" tabindex="0" role="button" aria-label="Abrir opções de perfil">
     <img [src]="profileIconUrl" alt="Ícone de Perfil" class="icone__usuario">
 
-    <div class="popup" *ngIf="showPopup">
+    <div class="popup" *ngIf="showPopup()">
       <div class="popup-content">
         <div class="user-display">
           <div class="popup-profile-icon">

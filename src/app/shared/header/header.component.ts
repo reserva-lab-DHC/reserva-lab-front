@@ -13,3 +13,4 @@ import { LogoutIconComponent } from './ui/logout-icon/logout-icon.component';
 })
 export class HeaderComponent {
 }
+
