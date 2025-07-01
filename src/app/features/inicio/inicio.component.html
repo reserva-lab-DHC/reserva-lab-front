@@ -13,7 +13,10 @@
           <span class="data-selecionada">{{ dataFormatada }}</span>
           <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário">
 
-          <div class="calendario-container">
+          <div class="calendario-container" (click)="$event.stopPropagation()"
+            (keydown.enter)="$event.stopPropagation()"
+            tabindex="0" role="button"
+            >
             <dhc-calendar (dateChange)="onDateChange($event)" *ngIf="mostrarCalendario()" selectionMode="single" />
           </div>
         </div>
