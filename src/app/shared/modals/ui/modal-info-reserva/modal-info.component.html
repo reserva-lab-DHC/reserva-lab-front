@@ -1,0 +1,28 @@
+<div class="overlay-backdrop" (click)="closePopup()" (keydown)="closePopup()" tabindex="0">
+  <div class="popup" (click)="$event.stopPropagation()" (keydown)="closePopup()" tabindex="0">
+
+    <div class="options">
+       <button (click)="editReserva()" class="icon-button">
+        <img src="assets/img/edit-reserva.svg" alt="Editar Reserva">
+      </button>
+      <button (click)="apagarReserva()" class="icon-button">
+        <img src="assets/img/apagar-reserva.svg" alt="Apagar Reserva">
+      </button>
+        <button (click)="closePopup()" class="icon-button">
+            <img src="assets/img/close-popup.svg"  alt="Fechar">
+        </button>
+    </div>
+
+
+    <p class="prof" id="modal-title">{{reserva.solicitante.userName}}</p>
+    <div class="infoReserva">
+
+       <p class="lab">{{reserva.salaReservada.nomeSala}}</p>
+    <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
+    <ul>
+        <li>{{reserva.diasReservados[0].horarios}}</li>
+       <li>{{reserva.dataReserva | date:'dd/MM/yyyy'}}</li>
+    </ul>
+    </div>
+  </div>
+</div>

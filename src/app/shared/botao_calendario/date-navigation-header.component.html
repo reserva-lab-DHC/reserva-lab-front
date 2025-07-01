@@ -1,0 +1,44 @@
+<header class="date-navigation-header">
+    <button class="nav-arrow" (click)="goToPrevDay()">&leftarrow;</button>
+    <span class="current-date-display">{{ selectedMainDate | date:'dd/MM' }} ({{ selectedMainDate | date:'EEEE':'pt' | titlecase }})</span>
+    <button class="nav-arrow" (click)="goToNextDay()">&rightarrow;</button>
+
+    <div class="calendar-button-container" #calendarContainer>
+        <button class="calendar-toggle-button" (click)="toggleCalendar()">
+            <svg viewBox="0 0 24 24" fill="black" width="24px" height="24px">
+              <path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"/>
+            </svg>
+            <svg viewBox="0 0 24 24" fill="black" width="16px" height="16px" class="add-icon">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+        </button>
+        
+
+        <div *ngIf="showCalendar" class="calendar-popup" (click)="$event.stopPropagation()" onkeydown="$event.stopPropagation()" tabindex="0" aria-hidden="true">
+            <div class="calendar-header">
+                <button class="nav-button" (click)="prevMonth()">&lt;</button>
+                <span class="month-year">{{ currentCalendarDate | date:'MMMM yyyy':'pt' | titlecaseMonth }}</span>
+                <button class="nav-button" (click)="nextMonth()">&gt;</button>
+            </div>
+            <div class="calendar-days-header">
+                <span *ngFor="let day of weekDays">{{ day }}</span>
+            </div>
+            <div class="calendar-grid">
+                <span
+                    *ngFor="let day of calendarDays"
+                    [class.empty]="!day.date"
+                    [class.selected]="isSelected(day.date)"
+                    [class.current-day]="isCurrentDay(day.date)"
+                    (click)="selectDate(day.date)" onkeydown="selectDate(day.date)" tabindex="0" aria-hidden="true"
+                >
+                    {{ day.dayNumber }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <button class="nav-arrow" style="margin-left: auto;">
+        <svg viewBox="0 0 24 24" fill="black" width="20px" height="20px">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.63 5.36 6 7.93 6 11v5l-2 2v1h16v-1l-2-2z"/>
+        </svg>
+    </button>
+</header>

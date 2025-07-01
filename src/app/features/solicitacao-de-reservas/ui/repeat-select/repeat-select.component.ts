@@ -2,7 +2,7 @@ import { Component, output, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { InputTextComponent } from "../../../../shared/input-text/input-text.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { CalendarComponent } from "../../../../shared/calendar/calendar/calendar.component";
+// import { CalendarComponent } from "../../../../shared/calendar/calendar/calendar.component";
 
 
 export interface RepeatSelection {
@@ -16,7 +16,7 @@ export interface RepeatSelection {
     standalone: true,
     templateUrl: './repeat-select.component.html',
     styleUrls: ['./repeat-select.component.scss'],
-    imports: [CommonModule, InputTextComponent, ReactiveFormsModule, CalendarComponent]
+    imports: [CommonModule, InputTextComponent, ReactiveFormsModule]
 })
 export class RepeatSelectComponent {
     showOpts = signal(false);

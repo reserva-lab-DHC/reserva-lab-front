@@ -1,4 +1,19 @@
+<div class="container-for-schedule-page">
+    <h1>Quadro de Reservas</h1>
+    <dhc-header-quadro (shiftSelected)="onShiftChange($event)" (dayChanged)="onDayChange($event)"></dhc-header-quadro>
+    <dhc-schedule-table (cellSelected)="onCellSelected($event)" [shift]="selectedShift" [scheduleData]="showingTable"></dhc-schedule-table>
+     <dhc-modal-info-reserva
+        *ngIf="showPopup"
+        [reserva]="selectedCell!"
+        (closeModal)="onClosePopup()"
+        (reservaDeletada)="handleReservaDeletada($event)"   (editarReserva)="handleEditarReserva($event)"       >
+    </dhc-modal-info-reserva>
 
-<dhc-modals type="confirmacao"></dhc-modals>
-<dhc-modals type="erro"></dhc-modals>
-<dhc-modals type="cancelamento"></dhc-modals>
+    <dhc-modal-edicao-reserva
+        *ngIf="showEditModal"
+        [reserva]="reservaParaEdicao!"
+        (closeModal)="onCloseEditModal()"
+        (reservaAtualizada)="handleReservaAtualizada($event)"
+    >
+    </dhc-modal-edicao-reserva>
+</div>
