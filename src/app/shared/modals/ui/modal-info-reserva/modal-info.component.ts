@@ -47,8 +47,10 @@ export class InfoComponent {
         this.reservaDeletada.emit(this.reserva.id); 
         this.closePopup(); 
       } catch (error: unknown) {
-        console.error('Erro ao excluir a reserva:', error);
-        alert(`Erro ao excluir a reserva: ${error.message || 'Erro desconhecido ao deletar reserva.'}`);
+          if (error instanceof Error) {
+            console.error('Erro ao excluir a reserva:', error);
+            alert(`Erro ao excluir a reserva: ${error.message || 'Erro desconhecido ao deletar reserva.'}`);
+          }
       }finally {
         
         this.loading = false;
