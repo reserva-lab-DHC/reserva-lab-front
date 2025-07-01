@@ -1,0 +1,25 @@
+<ng-container *ngIf="isLoggedIn()">
+  <div class="profile-container" (click)="togglePopup($event)" (keydown.enter)="togglePopup($event)" tabindex="0" role="button" aria-label="Abrir opções de perfil">
+    <img [src]="profileIconUrl" alt="Ícone de Perfil" class="icone__usuario">
+
+    <div class="popup" *ngIf="showPopup()">
+      <div class="popup-content">
+        <div class="user-display">
+          <div class="popup-profile-icon">
+            <img src="assets/img/icone-usuario.png" alt="Perfil">
+          </div>
+
+          <div class="user-info">
+            <p class="user-name">{{ currentUser?.nomeUsuario || 'Nome de usuário' }}</p>
+            <p class="user-email">{{ currentUser?.email || 'nome.usuario@academico.domhelder.edu.br' }}</p>
+          </div>
+        </div>
+
+        <button class="logout-button" (click)="logout($event)">
+          <img src="assets/img/logout.png" alt="Sair">
+          <span>Sair</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
