@@ -1,21 +1,7 @@
+@use "../../../variables.scss" as *;
+
 .inicio-container {
-  font-family: 'Montserrat', sans-serif;
-  padding: 0 46px;
-}
-
-.label-turno {
-  margin-top: 30px;
-  font-weight: 400;
-  color: rgb(92, 92, 92);
-  display: flex;
-  align-items: center;
-}
-
-.filtro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 40px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .filtro form {
@@ -26,10 +12,9 @@
 
 .filtro-inputs-wrapper {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
-  width: auto;
-  margin-left: 0;
+  padding: 20px;
 }
 
 .data-calendario-wrapper {
@@ -38,6 +23,11 @@
   gap: 8px;
   cursor: pointer;
   position: relative;
+  flex-grow: 0.55;
+}
+
+.turno{
+  margin-left: 48px;
 }
 
 .calendario-container {
@@ -52,17 +42,6 @@
   min-width: 300px;
 }
 
-.turno {
-  width: 150px;
-  padding: 8px 12px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  margin: 0;
-}
-
 .data-selecionada {
   font-size: 25px;
   font-weight: 600;
@@ -72,36 +51,26 @@
 .calendar-icon {
   height: 50px;
   width: 50px;
-
 }
 
-
 .cards-background {
-  background: #F0F1F5;
-  border-radius: 20px;
-  padding: 5px 0;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 100px;
 }
 
 .cards-box {
-  background: #F0F1F5;
   padding: 5px 0;
-  margin-bottom: 0;
-  box-shadow: none;
 }
 
 .salas-disponiveis,
 .salas-indisponiveis {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  overflow-x: auto;
-  padding: 20px;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px 150px;
+  justify-items: center;
+  padding: 35px;
+
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
@@ -113,78 +82,10 @@
   display: none;
 }
 
-.sala-grupo {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: transform 0.2s;
-  min-width: 300px;
-  max-width: 300px;
-  flex: 0 0 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sala-grupo:hover {
-  transform: translateY(-4px);
-  cursor: pointer;
-}
-
-.sala-imagem-container {
-  height: 70%;
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.sala-imagem {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  display: block;
-}
-
-.sala-conteudo {
-  padding: 16px;
-  height: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.sala-grupo h2 {
-  font-size: 18px;
-  margin: 0 0 8px 0;
-  color: #333;
+.titulo-indisponiveis,
+.titulo-disponiveis {
   font-weight: 600;
-}
-
-.sala-info {
-  font-size: 14px;
-  color: #666;
-  margin: 2px 0;
-}
-
-
-.sala-horario {
-  font-size: 14px;
-  color: #333;
-  font-weight: bold;
-  margin: 0 0 5px 0;
-}
-
-
-.titulo-indisponiveis {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 10px 0 24px 0;
-  color: #333;
-  width: 100%;
-  text-align: center;
+  font-size: 40px;
 }
 
 .salas-indisponiveis .sala-imagem {
@@ -197,28 +98,126 @@
   color: #666;
 }
 
+.cards-carrossel {
+  position: relative;
+  display: flex;
+  background: #f0f1f5;
+  box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.2509803922);
+  padding: 30px 150px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: #c4213e;
+  color: #fff;
+  border: 0px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.seta:hover:not(:disabled) {
+  background-color: #f8ecec;
+  color: $primary-red;
+}
+
+.seta:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.seta.esquerda {
+  left: 50px;
+}
+
+.seta.direita {
+  right: 50px;
+}
+
+@media (max-width: 1220px) {
+
+  .salas-disponiveis,
+  .salas-indisponiveis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+  }
+
+  .seta {
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .seta.esquerda {
+    left: 30px;
+  }
+
+  .seta.direita {
+    right: 30px;
+  }
+}
 
 @media (max-width: 768px) {
-  .inicio-container {
-    padding: 0 24px;
+  .salas-disponiveis {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
   .filtro-inputs-wrapper {
-    flex-wrap: wrap;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 15px;
   }
 
   .turno {
-    width: 100%;
-    margin-bottom: 10px;
+    flex: 0 0 auto;
+    width: auto;
+    margin-bottom: 0;
   }
 
-  .data-selecionada,
-  .calendar-icon {
+  .data-calendario-wrapper {
+    flex: 0 0 auto;
+  }
+
+  .data-selecionada {
     font-size: 20px;
-    height: 20px;
-    width: 20px;
+  }
+
+  .salas-disponiveis,
+  .salas-indisponiveis {
+    gap: 20px;
+  }
+
+  .calendar-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .seta {
+    width: 35px;
+    height: 35px;
+  }
+
+  .seta.esquerda {
+    left: 5px;
+  }
+
+  .seta.direita {
+    right: 5px;
   }
 }

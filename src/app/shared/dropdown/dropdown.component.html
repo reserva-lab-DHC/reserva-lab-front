@@ -1,5 +1,6 @@
 <div class="custom-dropdown" [class.dropdown--open]="isOpen()" (document:click)="closeDropdown($event)"
   (keyup.enter)="toggleDropdown()" tabindex="0">
+  <p class="label-turno">Turno</p>
   <div class="dropdown-header" (click)="toggleDropdown()" (keyup.enter)="toggleDropdown()" tabindex="0">
     <span class="dropdown-header__selected">{{ selected() }}</span>
     <div class="dropdown-header__arrow">
