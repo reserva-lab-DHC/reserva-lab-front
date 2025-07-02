@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { InputSelectComponent } from "../../shared/input-select/input-select.component";
-
+import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
 
 @Component({
   selector: 'dhc-app-inicio',
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.scss',
   standalone: true,
-  imports: [InputSelectComponent]
+  imports: [InputSelectComponent, DropdownComponent]
 })
 export class InicioComponent {
-
   dataSelecionada = '06/01';
 
   salasDisponiveis = [
