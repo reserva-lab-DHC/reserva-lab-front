@@ -26,7 +26,7 @@
   flex-grow: 0.55;
 }
 
-.turno{
+.turno {
   margin-left: 48px;
 }
 
@@ -40,6 +40,11 @@
   border-radius: 8px;
   margin-top: 5px;
   min-width: 300px;
+
+  @media screen and (max-width: 480px) {
+    right: 26px;
+    left: auto;
+  }
 }
 
 .data-selecionada {
