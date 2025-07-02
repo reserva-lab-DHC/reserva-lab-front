@@ -132,10 +132,10 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
       const uniqueLabNames: string[] = [];
 
       for (const lab of labs) {
-        const normalizedName = lab.nomeSala.trim().toLowerCase();
+        const normalizedName = lab.nomeSala!.trim().toLowerCase();
         if (!seenNames.has(normalizedName)) {
           seenNames.add(normalizedName);
-          uniqueLabNames.push(lab.nomeSala); // keep original casing
+          uniqueLabNames.push(lab.nomeSala!); // keep original casing
         }
       }
 
@@ -176,7 +176,7 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
       }   */
       defineDays(reserva, this.validSchedules) // SOMENTE PARA TESTES
       const matchingDay = reserva.diasReservados.find(d => d.diaReserva === this.currentDay)
-      const labIndex = this.labsName.indexOf(reserva.salaReservada.nomeSala);
+      const labIndex = this.labsName.indexOf(reserva.salaReservada.nomeSala!);
 
       if (!matchingDay || labIndex === -1) continue;
 

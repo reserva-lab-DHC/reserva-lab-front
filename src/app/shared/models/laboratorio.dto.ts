@@ -3,4 +3,5 @@ export interface LaboratorioDTO {
   predio?: number;
   andar?: number;
   id?: string
+  image?: number
 }

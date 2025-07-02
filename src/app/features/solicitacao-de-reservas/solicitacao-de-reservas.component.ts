@@ -83,6 +83,7 @@ export class SolicitacaoDeReservasComponent implements OnInit {
 
       const reserva = {
         dataReserva: new Date().toISOString().split('T')[0],
+        dataDaSolicitacao: new Date().toISOString(),
         diasReservados: [
           {
             diaReserva: "SEG",
@@ -90,8 +91,12 @@ export class SolicitacaoDeReservasComponent implements OnInit {
           }
         ],
         status: "PENDENTE",
-        solicitanteId: "04e88769-e0fa-421a-a7b9-39e266874549",
-        salaReservadaId: this.salaId,
+        solicitante: {
+          id: "04e88769-e0fa-421a-a7b9-39e266874549"
+        },
+        salaReservada: {
+          id: this.salaId
+        },
         disciplinaRelacionada: formValues.disciplina ?? '',
         motivoReserva: formValues.descricao ?? '',
         dataInicio: new Date().toISOString(),
