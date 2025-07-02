@@ -20,16 +20,15 @@ export interface DiaReserva {
 }
 
 export interface ReservaDTO {
-  uuid: string;
-  dataReserva: string;
+  dataReserva?: string
   diasReservados: DiaReserva[];
   status: string;
   disciplinaRelacionada: string;
   motivoReserva: string;
   dataInicio: string;
   dataConclusao: string;
-  dataDaSoclitacao: string;
-  salaReservada: LaboratorioDTO;
-  solicitante: SolicitanteDTO
-  id: string;
+  dataDaSolicitacao: string;
+  salaReservada: LaboratorioDTO; // salaReservaId
+  solicitante: SolicitanteDTO // solicitanteId
+  id?: string;
 }

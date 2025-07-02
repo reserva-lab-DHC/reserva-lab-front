@@ -31,11 +31,11 @@ export class ScheduleTableComponent implements OnChanges {
     let lab = 'Sala não informada'
     for (const cell of row.values()) {
       if (cell) {
-        if (!this.labAdded.includes(cell.salaReservada.nomeSala)) {
-          this.labAdded.push(cell.salaReservada.nomeSala)
-          return cell.salaReservada.nomeSala
+        if (!this.labAdded.includes(cell.salaReservada!.nomeSala!)) {
+          this.labAdded.push(cell.salaReservada!.nomeSala!)
+          return cell.salaReservada!.nomeSala || 'Nome não identificado'
         }
-        lab = cell.salaReservada.nomeSala
+        lab = cell.salaReservada!.nomeSala || 'Nome não identificado'
       }
     }
     return lab

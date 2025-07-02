@@ -3,4 +3,5 @@ export interface UserDTO {
     email?: string;
     senha: string;
     repetirSenha?: string;
+    cargo?: string
 }

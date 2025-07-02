@@ -37,7 +37,7 @@ export class ModalEdicaoReservaComponent implements OnInit {
     try {
       // Ajuste para garantir que o UUID correto é enviado para a edição
       // O método editReserva do seu serviço espera o DTO completo e o UUID
-      const reservaAtualizadaBackend = await this.reservaService.editReserva(this.reservaEditavel, this.reservaEditavel.uuid!);
+      const reservaAtualizadaBackend = await this.reservaService.editReserva(this.reservaEditavel, this.reservaEditavel.id!);
 
       if (reservaAtualizadaBackend) {
         this.reservaAtualizada.emit(reservaAtualizadaBackend);

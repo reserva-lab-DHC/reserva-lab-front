@@ -27,8 +27,8 @@ export class HeaderQuadroComponent implements OnInit, OnDestroy {
     this.isMobile = event.matches;
   };
 
-  onCalendarDateSelected(selectedDate: Date) {
-  this.date = selectedDate; 
+  onCalendarDateSelected(selectedDate: Date | null) {
+  this.date = selectedDate || new Date(); 
   this.monthday = this.date.getDate();
   this.month = this.date.getMonth() + 1;
   this.weekday = this.date.toLocaleDateString('pt-br', { weekday: 'long' });
