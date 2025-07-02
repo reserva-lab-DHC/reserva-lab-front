@@ -1,38 +1,17 @@
 <div class="inicio-container">
-  <p class="label-turno">Turno</p>
 
   <div class="filtro">
     <form [formGroup]="filtroForm">
       <div class="filtro-inputs-wrapper">
-        <dhc-input-select
-          class="turno"
-          label="Turno"
-          [options]="['Manhã', 'Tarde', 'Noite', 'Todos']"
-          placeholder="Todos"
-          formControlName="filtroTurno"
-        >
-        </dhc-input-select>
+        <dhc-dropdown class="turno"></dhc-dropdown>
 
-        <div
-          class="data-calendario-wrapper"
-          (click)="abrirCalendario()"
-          (keydown.enter)="abrirCalendario()"
-          tabindex="0"
-          role="button"
-        >
+        <div class="data-calendario-wrapper" (click)="abrirCalendario()" (keydown.enter)="abrirCalendario()"
+          tabindex="0" role="button">
           <span class="data-selecionada">{{ dataFormatada }}</span>
-          <img
-            class="calendar-icon"
-            src="assets/img/calendario.png"
-            alt="calendário"
-          />
+          <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário" />
 
           <div class="calendario-container">
-            <dhc-calendar
-              (dateChange)="onDateChange($event)"
-              *ngIf="mostrarCalendario()"
-              selectionMode="single"
-            />
+            <dhc-calendar (dateChange)="onDateChange($event)" *ngIf="mostrarCalendario()" selectionMode="single" />
           </div>
         </div>
       </div>
@@ -43,47 +22,26 @@
     <div class="cards-box">
       <div class="scrollable-cards-wrapper">
         <div class="cards-carrossel">
-          <button
-            class="seta esquerda"
-            (click)="pagAnterior()"
-            [disabled]="pagAtual === 0"
-          >
+          <button class="seta esquerda" (click)="pagAnterior()" [disabled]="pagAtual === 0">
             &#8592;
           </button>
 
           <h2 class="titulo-disponiveis">Disponíveis</h2>
-          <div
-            class="salas-disponiveis"
-            (mousedown)="onMouseDown($event)"
-            (mouseleave)="onMouseLeave()"
-            (mouseup)="onMouseUp()"
-            (mousemove)="onMouseMove($event)"
-            (touchstart)="onTouchStart($event)"
-            (touchend)="onTouchEnd()"
-            (touchmove)="onTouchMove($event)"
-          >
+          <div class="salas-disponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
+            (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
+            (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
             <ng-container *ngFor="let sala of salasDisponiveisFiltradas">
-              <dhc-card
-                titulo="{{ sala.nome }}"
-                imgSrc="{{ sala.imagem }}"
-                andar="{{ sala.andar }}"
-                horario1="{{
+              <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''
-                }}"
-                horario2="{{
+                }}" horario2="{{
                   sala.horarios.tarde ? sala.horarios.tarde[0] : ''
-                }}"
-              ></dhc-card>
+                }}"></dhc-card>
             </ng-container>
           </div>
-          <button
-            class="seta direita"
-            (click)="proxPag()"
-            [disabled]="
-              (pagAtual + 1) * qtdCardsPag >=
+          <button class="seta direita" (click)="proxPag()" [disabled]="
+              (pagAtual + 1) * qtdCardsPag() >=
               todasSalasDisponiveisFiltradas.length
-            "
-          >
+            ">
             &#8594;
           </button>
         </div>
@@ -93,49 +51,27 @@
     <div class="cards-box">
       <div class="scrollable-cards-wrapper">
         <div class="cards-carrossel">
-          <button
-          class="seta esquerda"
-          (click)="pagAnteriorIndisponivel()"
-          [disabled]="pagAtualIndisponivel === 0"
-          >
-          &#8592;
-        </button>
-        
-        <h2 class="titulo-indisponiveis">Indisponíveis</h2>
-          <div
-            class="salas-indisponiveis"
-            (mousedown)="onMouseDown($event)"
-            (mouseleave)="onMouseLeave()"
-            (mouseup)="onMouseUp()"
-            (mousemove)="onMouseMove($event)"
-            (touchstart)="onTouchStart($event)"
-            (touchend)="onTouchEnd()"
-            (touchmove)="onTouchMove($event)"
-          >
+          <button class="seta esquerda" (click)="pagAnteriorIndisponivel()" [disabled]="pagAtualIndisponivel === 0">
+            &#8592;
+          </button>
+
+          <h2 class="titulo-indisponiveis">Indisponíveis</h2>
+          <div class="salas-indisponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
+            (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
+            (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
             <ng-container *ngFor="let sala of salasIndisponiveisFiltradas">
-              <dhc-card
-                titulo="{{ sala.nome }}"
-                imgSrc="{{ sala.imagem }}"
-                andar="{{ sala.andar }}"
-                horario1="{{
+              <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''
-                }}"
-                horario2="{{
+                }}" horario2="{{
                   sala.horarios.tarde ? sala.horarios.tarde[0] : ''
-                }}"
-                [disabled]="true"
-              ></dhc-card>
+                }}" [disabled]="true"></dhc-card>
             </ng-container>
           </div>
 
-          <button
-            class="seta direita"
-            (click)="proxPagIndisponivel()"
-            [disabled]="
-              (pagAtualIndisponivel + 1) * qtdCardsPag >=
+          <button class="seta direita" (click)="proxPagIndisponivel()" [disabled]="
+              (pagAtualIndisponivel + 1) * qtdCardsPag() >=
               todasSalasIndisponiveis.length
-            "
-          >
+            ">
             &#8594;
           </button>
         </div>

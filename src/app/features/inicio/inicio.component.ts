@@ -1,10 +1,10 @@
-import { Component, OnInit, signal, viewChild } from '@angular/core';
-import { InputSelectComponent } from '../../shared/input-select/input-select.component';
+import { Component, computed, effect, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarComponent } from '../../shared/calendar/calendar/calendar.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CardComponent } from '../../shared/card/card.component';
+import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
 
 interface SalaCard {
   nome: string;
@@ -25,7 +25,7 @@ interface SalaCard {
   styleUrl: './inicio.component.scss',
   standalone: true,
   imports: [
-    InputSelectComponent,
+    DropdownComponent,
     CalendarComponent,
     CommonModule,
     ReactiveFormsModule,
@@ -49,13 +49,24 @@ export class InicioComponent implements OnInit {
   scrollLeft = 0;
   dragElem: HTMLElement | null = null;
 
-  qtdCardsPag = 6;
   pagAtual = 0;
   pagAtualIndisponivel = 0;
 
+  qtdCardsPag = computed(() => (this.windowWidth() <= 768 ? 4 : 6));
+
+  windowWidth = signal(window.innerWidth);
+
+  constructor() {
+    effect(() => {
+      this.qtdCardsPag();
+      this.attPag();
+      this.attPagIndisponiveis();
+    });
+  }
+
   attPag() {
-    const inicio = this.pagAtual * this.qtdCardsPag;
-    const final = inicio + this.qtdCardsPag;
+    const inicio = this.pagAtual * this.qtdCardsPag();
+    const final = inicio + this.qtdCardsPag();
     this.salasDisponiveisFiltradas = this.todasSalasDisponiveisFiltradas.slice(
       inicio,
       final
@@ -64,7 +75,7 @@ export class InicioComponent implements OnInit {
 
   proxPag() {
     const totalPags = Math.ceil(
-      this.todasSalasDisponiveisFiltradas.length / this.qtdCardsPag
+      this.todasSalasDisponiveisFiltradas.length / this.qtdCardsPag()
     );
     if (this.pagAtual < totalPags - 1) {
       this.pagAtual++;
@@ -80,8 +91,8 @@ export class InicioComponent implements OnInit {
   }
 
   attPagIndisponiveis() {
-    const inicio = this.pagAtualIndisponivel * this.qtdCardsPag;
-    const final = inicio + this.qtdCardsPag;
+    const inicio = this.pagAtualIndisponivel * this.qtdCardsPag();
+    const final = inicio + this.qtdCardsPag();
     this.salasIndisponiveisFiltradas = this.todasSalasIndisponiveis.slice(
       inicio,
       final
@@ -90,7 +101,7 @@ export class InicioComponent implements OnInit {
 
   proxPagIndisponivel() {
     const totalPags = Math.ceil(
-      this.todasSalasIndisponiveis.length / this.qtdCardsPag
+      this.todasSalasIndisponiveis.length / this.qtdCardsPag()
     );
     if (this.pagAtualIndisponivel < totalPags - 1) {
       this.pagAtualIndisponivel++;
@@ -106,11 +117,10 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (window.innerWidth <= 768) {
-      this.qtdCardsPag = 4;
-    } else {
-      this.qtdCardsPag = 6;
-    }
+
+    window.addEventListener('resize', () => {
+      this.windowWidth.set(window.innerWidth);
+    });
 
     this.filtroForm = new FormGroup({
       filtroTurno: new FormControl('Todos'),
