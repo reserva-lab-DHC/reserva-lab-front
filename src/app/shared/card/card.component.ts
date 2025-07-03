@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'dhc-card',
@@ -14,5 +14,12 @@ export class CardComponent {
   andar = input<string>()
   imgSrc = input<string>()
   disabled = input(false)
+  clicked = output();
+
+  onClick() {
+    if (!this.disabled()) {
+      this.clicked.emit();
+    }
+  }
 }
 

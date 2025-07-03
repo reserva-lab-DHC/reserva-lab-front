@@ -5,6 +5,7 @@ import { InputTextComponent } from '../../../../shared/input-text/input-text.com
 import { FormGroup, FormControl, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserDTO } from '../../../../shared/models/user.dto';
 import { AuthService } from '../../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -41,28 +42,31 @@ export class CadastroComponent {
   @Output() goToAcesso = new EventEmitter<void>();
   @Output() submitCadastro = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
-  cadastrar() {
+  async cadastrar() {
     if (this.cadastroForm.valid) {
       const nomeDeUsuario = this.cadastroForm.get('username')?.value as string;
       const senhaDoUsuario = this.cadastroForm.get('password')?.value as string;
       const emailDoUsuario = this.cadastroForm.get('email')?.value as string;
 
-
-      console.log('Formulário de cadastro válido (simulação):', this.cadastroForm.value);
-      alert('Formulário de cadastro válido (simulação)!');
-
       const user: UserDTO = {
-        nomeUsuario: nomeDeUsuario,
-        senha: senhaDoUsuario,
-        email: emailDoUsuario
+        username: nomeDeUsuario,
+        rawPassword: senhaDoUsuario,
+        email: emailDoUsuario,
+        role: 'ADMIN' //so cria admin kkkkkkkkk
       };
 
-      this.auth.login(user);
+      const res = await this.auth.register(user);
+      if (res) {
+        alert('Cadastro realizado com sucesso!');
+        localStorage.setItem('currentUser', JSON.stringify(res));
+        this.router.navigate(['/inicio']);
+      } else {
+        alert('Erro ao cadastrar usuário. Tente novamente mais tarde.');
+      }
 
     } else {
-      console.log('Formulário de cadastro inválido');
       alert('Por favor, preencha todos os campos corretamente.');
       this.cadastroForm.markAllAsTouched();
     }

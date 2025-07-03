@@ -1,10 +1,11 @@
-import { Component, computed, effect, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarComponent } from '../../shared/calendar/calendar/calendar.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CardComponent } from '../../shared/card/card.component';
 import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface SalaCard {
   nome: string;
@@ -39,6 +40,9 @@ export class InicioComponent implements OnInit {
   dataSelecionada = signal<Date>(new Date());
   calendarRef = viewChild(CalendarComponent);
 
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+
   salasDisponiveisFiltradas: SalaCard[] = [];
   salasIndisponiveisFiltradas: SalaCard[] = [];
 
@@ -61,6 +65,52 @@ export class InicioComponent implements OnInit {
       this.qtdCardsPag();
       this.attPag();
       this.attPagIndisponiveis();
+    });
+  }
+
+  ngOnInit() {
+
+    window.addEventListener('resize', () => {
+      this.windowWidth.set(window.innerWidth);
+    });
+
+    this.filtroForm = new FormGroup({
+      filtroTurno: new FormControl('Todos'),
+      dataSelecionada: new FormControl(new Date()),
+    });
+
+    this.filtroForm
+      .get('filtroTurno')
+      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((turnoSelecionado: string) => {
+        this.filtrarCardsPorTurno(turnoSelecionado);
+      });
+
+    this.filtroForm.get('dataSelecionada')?.valueChanges.subscribe(() => {
+      console.log('Data selecionada mudou.');
+    });
+
+    this.filtrarCardsPorTurno(
+      this.filtroForm.get('filtroTurno')?.value as string
+    );
+
+    this.attPagIndisponiveis();
+  }
+
+  onCardClick(sala: SalaCard) {
+    const salaId = sala.nome;
+    const horarios = Object.values(sala.horarios)
+      .filter(Boolean)
+      .flat();
+
+    const dataSelecionadaFormatted = this.dataSelecionada().toISOString().split('T')[0]; // formato YYYY-MM-DD
+
+    this.router.navigate(['/solicitacao-de-reservas'], {
+      queryParams: {
+        salaId,
+        horarios: horarios.join(','),
+        data: dataSelecionadaFormatted
+      }
     });
   }
 
@@ -114,35 +164,6 @@ export class InicioComponent implements OnInit {
       this.pagAtualIndisponivel--;
       this.attPagIndisponiveis();
     }
-  }
-
-  ngOnInit() {
-
-    window.addEventListener('resize', () => {
-      this.windowWidth.set(window.innerWidth);
-    });
-
-    this.filtroForm = new FormGroup({
-      filtroTurno: new FormControl('Todos'),
-      dataSelecionada: new FormControl(new Date()),
-    });
-
-    this.filtroForm
-      .get('filtroTurno')
-      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((turnoSelecionado: string) => {
-        this.filtrarCardsPorTurno(turnoSelecionado);
-      });
-
-    this.filtroForm.get('dataSelecionada')?.valueChanges.subscribe(() => {
-      console.log('Data selecionada mudou.');
-    });
-
-    this.filtrarCardsPorTurno(
-      this.filtroForm.get('filtroTurno')?.value as string
-    );
-
-    this.attPagIndisponiveis();
   }
 
   onDateChange(date: Date | null) {
@@ -200,56 +221,6 @@ export class InicioComponent implements OnInit {
     this.mostrarCalendario.set(!this.mostrarCalendario());
   }
 
-  onMouseDown(e: MouseEvent) {
-    const elem = e.currentTarget as HTMLElement;
-    this.isDown = true;
-    this.dragElem = elem;
-    this.startX = e.pageX - elem.offsetLeft;
-    this.scrollLeft = elem.scrollLeft;
-  }
-
-  onMouseLeave() {
-    this.isDown = false;
-    this.dragElem = null;
-  }
-
-  onMouseUp() {
-    this.isDown = false;
-    this.dragElem = null;
-  }
-
-  onMouseMove(e: MouseEvent) {
-    if (!this.isDown) return;
-    const elem = e.currentTarget as HTMLElement;
-    if (this.dragElem !== elem) return;
-    e.preventDefault();
-    const x = e.pageX - elem.offsetLeft;
-    const walk = (x - this.startX) * 1.5;
-    elem.scrollLeft = this.scrollLeft - walk;
-  }
-
-  onTouchStart(e: TouchEvent) {
-    const elem = e.currentTarget as HTMLElement;
-    this.isDown = true;
-    this.dragElem = elem;
-    this.startX = e.touches[0].pageX - elem.offsetLeft;
-    this.scrollLeft = elem.scrollLeft;
-  }
-
-  onTouchEnd() {
-    this.isDown = false;
-    this.dragElem = null;
-  }
-
-  onTouchMove(e: TouchEvent) {
-    if (!this.isDown) return;
-    const elem = e.currentTarget as HTMLElement;
-    if (this.dragElem !== elem) return;
-    const x = e.touches[0].pageX - elem.offsetLeft;
-    const walk = (x - this.startX) * 1.5;
-    elem.scrollLeft = this.scrollLeft - walk;
-  }
-
   todasSalasDisponiveis: SalaCard[] = [
     {
       nome: 'Laboratório Tecnológico I',
@@ -257,9 +228,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S2 [subsolo]',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['07:40', '09:40'],
+        tarde: ['13:00', '15:00'],
+        noite: ['18:20', '20:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -269,9 +240,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S3 [subsolo]',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['08:00'],
+        tarde: ['14:40', '16:40'],
+        noite: ['20:00'],
       },
       andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
     },
@@ -281,9 +252,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'Andar',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['10:00'],
+        tarde: ['13:00'],
+        noite: ['18:20'],
       },
       andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
     },
@@ -293,9 +264,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S2 [subsolo]',
       imagem: 'assets/img/lab_especializado.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['07:40'],
+        tarde: ['15:00'],
+        noite: ['20:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -305,8 +276,8 @@ export class InicioComponent implements OnInit {
       sublocal: 'S2 [subsolo]',
       imagem: 'assets/img/lab_metodologias.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
+        manha: ['08:00', '10:00'],
+        tarde: ['14:40'],
         noite: ['18:20', '20:00'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
@@ -317,9 +288,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S2 [subsolo]',
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['09:40'],
+        tarde: ['13:00', '15:00'],
+        noite: ['20:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -329,9 +300,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S2 [subsolo]',
       imagem: 'assets/img/lab_especializado.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['07:40'],
+        tarde: ['14:40'],
+        noite: ['18:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -341,9 +312,9 @@ export class InicioComponent implements OnInit {
       sublocal: '1º Andar',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['08:00'],
+        tarde: ['16:40'],
+        noite: ['20:00'],
       },
       andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
     },
@@ -353,9 +324,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'S1 [subsolo]',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['10:00'],
+        tarde: ['13:00'],
+        noite: ['18:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -365,9 +336,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'Térreo',
       imagem: 'assets/img/lab_metodologias.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['09:40'],
+        tarde: ['15:00'],
+        noite: ['20:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -377,9 +348,9 @@ export class InicioComponent implements OnInit {
       sublocal: '2º Andar',
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['07:40'],
+        tarde: ['14:40'],
+        noite: ['18:20'],
       },
       andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
     },
@@ -389,9 +360,9 @@ export class InicioComponent implements OnInit {
       sublocal: '1º Andar',
       imagem: 'assets/img/lab_especializado.webp',
       horarios: {
-        manha: ['10:00', '11:40'],
-        tarde: ['15:00', '16:40'],
-        noite: ['20:20', '22:00'],
+        manha: ['08:00'],
+        tarde: ['16:40'],
+        noite: ['20:00'],
       },
       andar: Math.floor(Math.random() * 4) + 1, // 1-4 para Prédio IV
     },
@@ -401,9 +372,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'Subsolo',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        manha: ['08:00', '09:40'],
-        tarde: ['13:00', '14:40'],
-        noite: ['18:20', '20:00'],
+        manha: ['10:00'],
+        tarde: ['13:00'],
+        noite: ['18:20'],
       },
       andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
     },
@@ -411,14 +382,16 @@ export class InicioComponent implements OnInit {
 
   todasSalasIndisponiveis: SalaCard[] = [
     {
-      nome: 'Laboratório Exemplo ',
+      nome: 'Laboratório Exemplo',
       local: 'Prédio I',
       sublocal: 'Metodologias Ativas II',
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        manha: ['07:40'],
+        tarde: ['13:00'],
+        noite: ['20:00'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
     {
       nome: 'Laboratório Tecnológico III',
@@ -426,9 +399,11 @@ export class InicioComponent implements OnInit {
       sublocal: 'Biblioteca',
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        manha: ['10:00'],
+        tarde: ['15:00'],
+        noite: ['18:20'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -436,9 +411,10 @@ export class InicioComponent implements OnInit {
       sublocal: '1º Andar',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        tarde: ['16:40'],
+        noite: ['20:20'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -446,9 +422,10 @@ export class InicioComponent implements OnInit {
       sublocal: '[subsolo]',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        manha: ['08:00'],
+        noite: ['22:00'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
     {
       nome: 'Laboratório de Física',
@@ -456,9 +433,10 @@ export class InicioComponent implements OnInit {
       sublocal: '2º Andar',
       imagem: 'assets/img/lab_inovacao.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        tarde: ['14:40'],
+        noite: ['20:00'],
       },
-      andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
+      andar: Math.floor(Math.random() * 6) + 1,
     },
     {
       nome: 'Laboratório Exemplo II',
@@ -466,9 +444,10 @@ export class InicioComponent implements OnInit {
       sublocal: 'Térreo',
       imagem: 'assets/img/lab_tecnologico.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        manha: ['09:40'],
+        tarde: ['13:00'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
     {
       nome: 'Laboratório Exemplo III',
@@ -476,9 +455,9 @@ export class InicioComponent implements OnInit {
       sublocal: 'Subsolo',
       imagem: 'assets/img/lab_metodologias.webp',
       horarios: {
-        noite: ['20:00', '22:00'],
+        noite: ['18:20'],
       },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
+      andar: Math.floor(Math.random() * 11) + 1,
     },
   ];
 }

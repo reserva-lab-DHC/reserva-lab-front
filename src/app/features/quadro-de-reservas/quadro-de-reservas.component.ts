@@ -20,12 +20,12 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
   reservaService = inject(ReservaService)
   labService = inject(SalaService)
   showPopup = false;
-  selectedCell: ReservaDTO | undefined; 
+  selectedCell: ReservaDTO | undefined;
   showEditModal = false; // NOVO: Controla a visibilidade do modal de edição
   reservaParaEdicao: ReservaDTO | undefined;
   selectedShift = 'todos';
- 
-  
+
+
   reservaList: ReservaDTO[] = []
   labsName: string[] = []
   currentDay = ""
@@ -33,7 +33,7 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
   validSchedules = ["H07_40", "H09_40", "H13_00", "H15_00", "H18_20", "H20_20"]
   currentTable: Map<string, ReservaDTO | undefined>[] = []
   showingTable: Map<string, ReservaDTO | undefined>[] = []
- filledTables: Map<string, Map<string, ReservaDTO | undefined>[]> = new Map<string, Map<string, ReservaDTO | undefined>[]>()
+  filledTables: Map<string, Map<string, ReservaDTO | undefined>[]> = new Map<string, Map<string, ReservaDTO | undefined>[]>()
 
   async ngOnInit() {
     try {
@@ -107,14 +107,14 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
   }
   onDayChange(day: string) {
     this.currentDay = filterWeekDay(day)
-     this.reservaService.listAllReservas("ALL").then(allRes => {
-        this.reservaList = filterOngoingReservas(allRes, this.headerQuadro.date);
-        this.loadTable(); // Recarrega a tabela para o novo dia
+    this.reservaService.listAllReservas("ALL").then(allRes => {
+      this.reservaList = filterOngoingReservas(allRes, this.headerQuadro.date);
+      this.loadTable(); // Recarrega a tabela para o novo dia
     }).catch(err => {
-        console.error("Erro ao recarregar reservas no dia:", err);
+      console.error("Erro ao recarregar reservas no dia:", err);
     });
   }
-  
+
 
   onShiftChange(shift: string) {
     this.selectedShift = shift;
@@ -124,7 +124,7 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
   async loadAllLabs() {
 
     // Step 1: Get unique lab IDs to minimize backend calls
-    const uniqueLabIds = [...new Set(this.reservaList.map(r => r.salaReservada.id!))];
+    const uniqueLabIds = [...new Set(this.reservaList.map(r => r.salaReservada?.id).filter(id => id !== undefined))];
 
     try {
       const labs = await Promise.all(uniqueLabIds.map(id => this.labService.getSalaById(id)));
@@ -165,18 +165,20 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
 
     // se não estiver em cache, uma nova tabela será criada
     this.currentTable = new Array(this.labsName.length)
-    
+
     this.currentTable = this.labsName.map(() => new Map<string, ReservaDTO | undefined>(this.validSchedules.map(key => [key, undefined])))
-    
+
     for (const reserva of this.reservaList) {
       // DESCOMENTAR CASO NÃO ESTEJA FAZENDO TESTES
-/*       if (reserva.diasReservados == null) {
-        console.log(reserva.id + ": datas reservadas não informadas, a reserva não será carregada na tabela!")
-        continue;
-      }   */
+      /*       if (reserva.diasReservados == null) {
+              console.log(reserva.id + ": datas reservadas não informadas, a reserva não será carregada na tabela!")
+              continue;
+            }   */
       defineDays(reserva, this.validSchedules) // SOMENTE PARA TESTES
       const matchingDay = reserva.diasReservados.find(d => d.diaReserva === this.currentDay)
-      const labIndex = this.labsName.indexOf(reserva.salaReservada.nomeSala!);
+
+      if (!reserva.salaReservada?.nomeSala) continue;
+      const labIndex = this.labsName.indexOf(reserva.salaReservada.nomeSala);
 
       if (!matchingDay || labIndex === -1) continue;
 
@@ -192,14 +194,14 @@ export class QuadroDeReservasComponent implements OnInit, AfterViewInit {
   divideByCurrentShift() {
 
     // cópia da tabela atual para divisão dos dados
-   const shiftMap: Map<string, ReservaDTO | undefined>[] = this.currentTable.map(map => new Map<string, ReservaDTO | undefined>(map))
-    if (this.selectedShift !== 'todos') 
-    for (let i=0; i<this.currentTable.length; i++) {
-      const row = [...this.currentTable[i]];
-      if      (this.selectedShift === 'matutino'  ) shiftMap[i] = new Map(row.slice(0, 2))
-      else if (this.selectedShift === 'vespertino') shiftMap[i] = new Map(row.slice(2, 4))
-      else if (this.selectedShift === 'noturno'   ) shiftMap[i] = new Map(row.slice(4, 6))
-    }
+    const shiftMap: Map<string, ReservaDTO | undefined>[] = this.currentTable.map(map => new Map<string, ReservaDTO | undefined>(map))
+    if (this.selectedShift !== 'todos')
+      for (let i = 0; i < this.currentTable.length; i++) {
+        const row = [...this.currentTable[i]];
+        if (this.selectedShift === 'matutino') shiftMap[i] = new Map(row.slice(0, 2))
+        else if (this.selectedShift === 'vespertino') shiftMap[i] = new Map(row.slice(2, 4))
+        else if (this.selectedShift === 'noturno') shiftMap[i] = new Map(row.slice(4, 6))
+      }
     this.showingTable = shiftMap.map(row => new Map(row));
   }
 

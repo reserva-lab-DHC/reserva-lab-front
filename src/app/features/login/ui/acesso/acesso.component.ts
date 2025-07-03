@@ -1,10 +1,9 @@
-import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Output, EventEmitter, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DynamicButtonComponent } from '../../../../shared/dynamic-button/dynamic-button.component';
 import { InputTextComponent } from '../../../../shared/input-text/input-text.component';
-import { UserDTO } from '../../../../shared/models/user.dto';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AuthDTO, AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'dhc-acesso',
@@ -18,7 +17,7 @@ import { AuthService } from '../../../../core/services/auth.service';
   templateUrl: './acesso.component.html',
   styleUrl: './acesso.component.scss'
 })
-export class AcessoComponent {
+export class AcessoComponent implements OnInit {
 
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -30,18 +29,31 @@ export class AcessoComponent {
 
   constructor() { }
 
-  login() {
+  ngOnInit() {
+    if (this.auth.isLoggedIn()) {
+      window.location.href = '/inicio';
+    }
+  }
+
+  async login() {
     if (this.loginForm.valid) {
       const username = this.loginForm.get('username')?.value;
       const password = this.loginForm.get('password')?.value;
       if (!username || !password) {
         return;
       }
-      const user: UserDTO = {
-        nomeUsuario: username,
-        senha: password
+      const user: AuthDTO = {
+        username: username,
+        rawPassword: password
       }
-      this.auth.login(user);
+
+      try {
+        await this.auth.login(user);
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login. Tente novamente mais tarde.');
+      }
+
     } else {
       alert('Por favor, preencha todos os campos corretamente.');
       this.loginForm.markAllAsTouched();

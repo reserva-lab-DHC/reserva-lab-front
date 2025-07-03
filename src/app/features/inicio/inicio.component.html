@@ -11,9 +11,7 @@
           <img class="calendar-icon" src="assets/img/calendario.png" alt="calendário" />
 
           <div class="calendario-container" (click)="$event.stopPropagation()"
-            (keydown.enter)="$event.stopPropagation()"
-            tabindex="0" role="button"
-            >
+            (keydown.enter)="$event.stopPropagation()" tabindex="0" role="button">
             <dhc-calendar (dateChange)="onDateChange($event)" *ngIf="mostrarCalendario()" selectionMode="single" />
           </div>
         </div>
@@ -30,11 +28,9 @@
           </button>
 
           <h2 class="titulo-disponiveis">Disponíveis</h2>
-          <div class="salas-disponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
-            (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
-            (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
+          <div class="salas-disponiveis">
             <ng-container *ngFor="let sala of salasDisponiveisFiltradas">
-              <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
+              <dhc-card (clicked)="onCardClick(sala)" titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''
                 }}" horario2="{{
                   sala.horarios.tarde ? sala.horarios.tarde[0] : ''
@@ -59,9 +55,7 @@
           </button>
 
           <h2 class="titulo-indisponiveis">Indisponíveis</h2>
-          <div class="salas-indisponiveis" (mousedown)="onMouseDown($event)" (mouseleave)="onMouseLeave()"
-            (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" (touchstart)="onTouchStart($event)"
-            (touchend)="onTouchEnd()" (touchmove)="onTouchMove($event)">
+          <div class="salas-indisponiveis">
             <ng-container *ngFor="let sala of salasIndisponiveisFiltradas">
               <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''

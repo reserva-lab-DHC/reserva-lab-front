@@ -2,8 +2,7 @@ import { Component, output, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { InputTextComponent } from "../../../../shared/input-text/input-text.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-// import { CalendarComponent } from "../../../../shared/calendar/calendar/calendar.component";
-
+import { CalendarComponent } from "../../../../shared/calendar/calendar/calendar.component";
 
 export interface RepeatSelection {
     category: 'none' | 'day' | 'week' | 'month';
@@ -16,12 +15,12 @@ export interface RepeatSelection {
     standalone: true,
     templateUrl: './repeat-select.component.html',
     styleUrls: ['./repeat-select.component.scss'],
-    imports: [CommonModule, InputTextComponent, ReactiveFormsModule]
+    imports: [CommonModule, InputTextComponent, ReactiveFormsModule, CalendarComponent]
 })
 export class RepeatSelectComponent {
     showOpts = signal(false);
     selectedOption = signal<'none' | 'day' | 'week' | 'month' | null>(null);
-    dateSelected = signal<Date | null>(null);
+    dateSelected = signal<Date>(new Date()); // Inicializa com data atual ao invés de null
 
     selectionChange = output<RepeatSelection>();
 
@@ -60,31 +59,45 @@ export class RepeatSelectComponent {
         const value = this.form.get(option)?.value ?? '';
         if (option === 'none') {
             this.emitSelection(option, value, new Date());
+        } else {
+            // Inicializa com data atual quando seleciona uma opção que precisa de data
+            this.dateSelected.set(new Date());
         }
     }
 
-    onCalendarDateChanges(date: Date | null) {
-        this.dateSelected.set(date);
-        const option = this.selectedOption();
-        if (!option) return;
-        const value = this.form.get(option)?.value ?? '';
+    onCalendarDateChanges(date: Date | null, event?: Event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        
         if (date) {
-            this.selectionChange.emit({ category: option, value, finalDate: date });
+            this.dateSelected.set(date);
+            const option = this.selectedOption();
+            if (option && option !== 'none') {
+                const value = this.form.get(option)?.value ?? '';
+                this.selectionChange.emit({ category: option, value, finalDate: date });
+            }
         }
     }
 
     formatDateToLongString(date: Date | null): string {
-        if (!date) return '';
-        const dias = ['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'];
-        const meses = [
-            'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-            'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-        ];
-        const diaSemana = dias[date.getDay()];
-        const dia = date.getDate();
-        const mes = meses[date.getMonth()];
-        const ano = date.getFullYear();
-        return `Até ${diaSemana}, ${dia} de ${mes} de ${ano}`;
+        if (!date) return 'Selecione uma data';
+        
+        try {
+            const dias = ['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'];
+            const meses = [
+                'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+                'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+            ];
+            const diaSemana = dias[date.getDay()];
+            const dia = date.getDate();
+            const mes = meses[date.getMonth()];
+            const ano = date.getFullYear();
+            return `Até ${diaSemana}, ${dia} de ${mes} de ${ano}`;
+        } catch (error) {
+            console.error('Erro ao formatar data:', error);
+            return 'Data inválida';
+        }
     }
 
     private emitSelection(
@@ -92,14 +105,16 @@ export class RepeatSelectComponent {
         value: string,
         finalDate: Date | null
     ) {
-        if (category === 'none') {
-            this.selectionChange.emit({ category, value, finalDate: new Date() });
-            return;
-        }
-        if (
-            (['day', 'week', 'month'].includes(category) && finalDate)
-        ) {
-            this.selectionChange.emit({ category, value, finalDate });
+        try {
+            if (category === 'none') {
+                this.selectionChange.emit({ category, value, finalDate: new Date() });
+                return;
+            }
+            if (['day', 'week', 'month'].includes(category) && finalDate) {
+                this.selectionChange.emit({ category, value, finalDate });
+            }
+        } catch (error) {
+            console.error('Erro ao emitir seleção:', error);
         }
     }
 }

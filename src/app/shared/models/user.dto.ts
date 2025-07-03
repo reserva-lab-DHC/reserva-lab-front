@@ -1,7 +1,7 @@
 export interface UserDTO {
-    nomeUsuario: string;
+    username: string;
     email?: string;
-    senha: string;
-    repetirSenha?: string;
-    cargo?: string
+    role?: string;
+    rawPassword: string;
+    id?: string;
 }
