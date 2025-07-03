@@ -1,7 +1,7 @@
 export interface LaboratorioDTO {
-  nomeSala?: string;
-  predio?: number;
-  andar?: number;
-  id?: string
-  image?: number
+  id?: number;
+  nomeSala: string;
+  predio: number;
+  andar: number;
+  imagem: number;
 }
