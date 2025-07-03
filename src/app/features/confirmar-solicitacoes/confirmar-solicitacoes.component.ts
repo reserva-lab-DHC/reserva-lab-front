@@ -10,45 +10,71 @@ import { ReservaDTO } from '../../shared/models/reserva.dto';
   templateUrl: './confirmar-solicitacoes.component.html',
   styleUrl: './confirmar-solicitacoes.component.scss'
 })
-
 export class ConfirmarSolicitacoesComponent implements OnInit{
   reservaService = inject(ReservaService)
   reservasPending: ReservaDTO[] = []
 
   async ngOnInit() {
-    this.reservasPending = await this.reservaService.listAllReservas("PENDENTE")
+    try {
+      this.reservasPending = await this.reservaService.listAllReservas("PENDENTE")
+    } catch (error) {
+      console.error('Erro ao carregar reservas pendentes:', error)
+      this.reservasPending = []
+    }
   }
 
-  onRequestClose(solicitacaoId: string, requestAccepted: boolean) {
+  async onRequestClose(solicitacaoId: string, requestAccepted: boolean) {
+    if (!solicitacaoId) {
+      console.error('ID da solicitação não fornecido')
+      return
+    }
+
     const currentReserva = this.reservasPending.find(reserva => reserva.id === solicitacaoId)
-    if (!currentReserva) return;
-    if (requestAccepted) {
-      currentReserva.status = "APROVADA"
-      currentReserva.dataInicio = new Date().toISOString()
-      this.reservaService.editReserva(currentReserva, currentReserva.id!)
-      console.log(`> reserva ${solicitacaoId} aceita!`) // test
+    if (!currentReserva) {
+      console.error(`Reserva com ID ${solicitacaoId} não encontrada`)
+      return
     }
-    else {
-      currentReserva.status = "REJEITADA"
-      this.reservaService.editReserva(currentReserva, currentReserva.id!)
-      // this.reservaService.deleteReserva(currentReserva.id!) // não sei, deletar solicitação se rejeitada?
-      console.log(`> reserva ${solicitacaoId} negada!`) // test
+
+    try {
+      if (requestAccepted) {
+        currentReserva.status = "APROVADA"
+        currentReserva.dataInicio = new Date().toISOString()
+        await this.reservaService.editReserva(currentReserva, currentReserva.id!)
+        console.log(`> Reserva ${solicitacaoId} aceita!`)
+      } else {
+        currentReserva.status = "REJEITADA"
+        await this.reservaService.editReserva(currentReserva, currentReserva.id!)
+        // Opcional: deletar se rejeitada
+        await this.reservaService.deleteReserva(currentReserva.id!)
+        console.log(`> Reserva ${solicitacaoId} rejeitada e removida!`)
+      }
+      
+      // Remove da lista local após sucesso
+      this.reservasPending = this.reservasPending.filter(reserva => reserva.id !== solicitacaoId)
+      
+    } catch (error) {
+      console.error(`Erro ao processar reserva ${solicitacaoId}:`, error)
     }
-    this.reservasPending = this.reservasPending.filter(reserva => reserva.id !== solicitacaoId)
   }
 
-  formatDiasReservados(solicitacao: ReservaDTO) {
-    let formatted = ""
-    if (solicitacao.diasReservados == null) {
-      return "Horario não especificado"
+  formatDiasReservados(solicitacao: ReservaDTO): string {
+    if (!solicitacao?.diasReservados || solicitacao.diasReservados.length === 0) {
+      return "Horário não especificado"
     }
+
+    let formatted = ""
     for (const dia of solicitacao.diasReservados) {
-      formatted += `${dia.diaReserva}, `
-      for (const horario of dia.horarios) {
-        formatted += `${horario} `
+      if (dia.diaReserva) {
+        formatted += `${dia.diaReserva}`
+        
+        if (dia.horarios && dia.horarios.length > 0) {
+          formatted += `: ${dia.horarios.join(', ')}`
+        }
+        formatted += " | "
       }
     }
-    return formatted
+    
+    // Remove o último " | "
+    return formatted.slice(0, -3) || "Horário não especificado"
   }
-
 }
