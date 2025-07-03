@@ -1,14 +1,14 @@
 <div class="solicit">
     <div class="content">
-      <p class="lab">{{lab}} - {{horario}}</p>
+      <p class="lab">{{lab}} - {{diasReservados}}</p>
       <p class="prof">{{professor}}</p>
       <p class="discip">{{disciplina}}</p>
       <p class="solicit">Pedido feito em {{horario_solicitacao}}</p>
     </div>
     <div class="options">
-      <div id="v" (click)="destroyMyself()" (keydown)="destroyMyself()" tabindex="0">
+      <div id="v" (click)="requestClose(true)" (keydown)="requestClose(true)" tabindex="0">
       </div>
-        <div id="x" (click)="destroyMyself()" (keydown)="destroyMyself()" tabindex="0">
+        <div id="x" (click)="requestClose(false)" (keydown)="requestClose(false)" tabindex="0">
       </div>
     </div>
   </div>
