@@ -1,4 +1,6 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, inject } from '@angular/core';
+import { ReservaService } from '../../features/quadro-de-reservas/reserva.service';
+import { ReservaDTO } from '../models/reserva.dto';
 
 @Component({
   selector: 'dhc-confirm-request',
@@ -7,15 +9,17 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrl: './confirm-request.component.scss'
 })
 export class ConfirmRequestComponent {
-  @Output() requestDestroy = new EventEmitter<void>();
-  
+  @Output() requestDestroy = new EventEmitter<{id: string, accepted: boolean}>();
+  @Input() solicitacao: ReservaDTO | undefined
   @Input() lab = ""
-  @Input() horario = ""
+  @Input() diasReservados = ""
   @Input() professor = ""
   @Input() disciplina = ""
   @Input() horario_solicitacao = ""
 
-  destroyMyself() {
-    this.requestDestroy.emit();
+  reservaService = inject(ReservaService)
+
+  requestClose(requestAccepted: boolean) {
+    this.requestDestroy.emit({id: this.solicitacao!.id!, accepted: requestAccepted});
   }
 }
