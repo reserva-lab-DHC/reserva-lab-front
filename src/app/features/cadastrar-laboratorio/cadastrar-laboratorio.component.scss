@@ -53,13 +53,29 @@
 .texto-foto{
   margin-top: 50px;
 }
-.foto{
-  width: 200px;
-  margin-top: 20px;
-  cursor: pointer;
-}
 .botao {
   margin-top: 40px;
+  display: flex;
+  justify-content: center; 
+}
+.imagens-mockadas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.imagens-mockadas img {
+  width: 110px;
+  height: auto;
+  border: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: border 0.2s;
+}
+
+.imagens-mockadas img.selecionada {
+  border-color: #007BFF; 
 }
 @media (min-width: 1200px) {
   .tudo {
@@ -90,8 +106,8 @@
     font-size: 18px;
     margin-bottom: 20px;
   }
-  .foto{
-    width: 300px;
+  .imagens-mockadas img{
+    width: 200px;
   }
   .botao {
     margin-top: 50px;

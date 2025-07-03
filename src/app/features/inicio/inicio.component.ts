@@ -2,7 +2,7 @@ import { Component, computed, effect, inject, OnInit, signal, viewChild } from '
 import { CommonModule } from '@angular/common';
 import { CalendarComponent } from '../../shared/calendar/calendar/calendar.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, find } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CardComponent } from '../../shared/card/card.component';
 import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -129,7 +129,7 @@ export class InicioComponent implements OnInit {
 
 
   formatarHorarios() {
-    let horariosFormatados = []
+    const horariosFormatados = []
     for (const horario of this.horariosValidos) {
       horariosFormatados.push(horario.replace("H", "").replace("_", ":"))
     }
@@ -145,12 +145,9 @@ export class InicioComponent implements OnInit {
   }
 
 
-  abcd() {
-    this.salasDisponiveisFiltradas
-  }
   filtrarSalas(reservaList: ReservaDTO[]): SalaCard[] { // vou mudar bastante isso aq
 
-    let salasFiltradas: SalaCard[] = []
+    const salasFiltradas: SalaCard[] = []
     for (const reserva of reservaList) {
       const sala = this.listSalas.find(sala => sala.id == reserva.salaReservada!.id)
 
