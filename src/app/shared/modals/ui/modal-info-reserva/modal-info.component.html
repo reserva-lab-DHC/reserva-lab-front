@@ -14,10 +14,10 @@
     </div>
 
 
-    <p class="prof" id="modal-title">{{reserva.solicitante.userName}}</p>
+    <p class="prof" id="modal-title">{{reserva.solicitante!.userName}}</p>
     <div class="infoReserva">
 
-       <p class="lab">{{reserva.salaReservada.nomeSala}}</p>
+       <p class="lab">{{reserva.salaReservada!.nomeSala}}</p>
     <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
     <ul>
         <li>{{reserva.diasReservados[0].horarios}}</li>
