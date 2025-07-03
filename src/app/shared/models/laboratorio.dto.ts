@@ -3,6 +3,6 @@ export interface LaboratorioDTO {
   predio?: number;
   andar?: number;
   id?: string
-  imagem?: number
+  image?: number
   isAvailable?: boolean
 }

@@ -30,7 +30,7 @@
           <h2 class="titulo-disponiveis">Disponíveis</h2>
           <div class="salas-disponiveis">
             <ng-container *ngFor="let sala of salasDisponiveisFiltradas">
-              <dhc-card (clicked)="onCardClick(sala)" titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
+              <dhc-card (clicked)="onCardClick(sala)" titulo="{{ sala.nome }}" fotoTipo="{{ sala.image }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''
                 }}" horario2="{{
                   sala.horarios.tarde ? sala.horarios.tarde[0] : ''
@@ -57,7 +57,7 @@
           <h2 class="titulo-indisponiveis">Indisponíveis</h2>
           <div class="salas-indisponiveis">
             <ng-container *ngFor="let sala of salasIndisponiveisFiltradas">
-              <dhc-card titulo="{{ sala.nome }}" imgSrc="{{ sala.imagem }}" andar="{{ sala.andar }}" horario1="{{
+              <dhc-card titulo="{{ sala.nome }}" fotoTipo="{{ sala.image }}" andar="{{ sala.andar }}" horario1="{{
                   sala.horarios.manha ? sala.horarios.manha[0] : ''
                 }}" horario2="{{
                   sala.horarios.tarde ? sala.horarios.tarde[0] : ''

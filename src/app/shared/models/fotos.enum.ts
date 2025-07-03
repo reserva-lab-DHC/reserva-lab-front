@@ -3,3 +3,9 @@ export enum Fotos {
     LabMetodologias = '/assets/img/lab_metodologias.jpg',
     Sala = '/assets/img/sala.jpg'
 }
+
+export const FotosPorNumero: Record<number, Fotos> = {
+  1: Fotos.Sala,
+  2: Fotos.LabEspecializado,
+  3: Fotos.LabMetodologias
+};

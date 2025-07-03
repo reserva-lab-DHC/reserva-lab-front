@@ -16,7 +16,7 @@ interface SalaCard {
   nome: string;
   local: number;
   sublocal: number;
-  imagem: string;
+  image: number;
   horarios: horarioReserva;
   andar: number;
 }
@@ -176,7 +176,7 @@ export class InicioComponent implements OnInit {
         nome: sala.nomeSala!,
         local: sala.predio!,
         sublocal: sala.andar!,
-        imagem: 'assets/img/lab_inovacao.webp',
+        image: sala.image!,
         horarios: horariosReserva,
         andar: sala.andar!
       }
