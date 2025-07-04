@@ -1,13 +1,15 @@
 <h1>Confirmar Solicitações</h1>
 
-<div class="requests" *ngFor="let solicitacao of reservasPending">
-  <dhc-confirm-request 
-    (requestDestroy)="onRequestClose($event.id, $event.accepted)"
-    [disciplina]="solicitacao.disciplinaRelacionada"
-    [diasReservados]="formatDiasReservados(solicitacao)"
-    [horario_solicitacao]="solicitacao.dataReserva!"
-    [lab]="solicitacao.salaReservada?.nomeSala || 'Sala não especificada'"
-    [professor]="solicitacao.solicitante?.userName || 'Professor não especificado'"
-    [solicitacao]="solicitacao">
-  </dhc-confirm-request>
+<div class="totalRequests">
+  <div class="requests" *ngFor="let solicitacao of reservasPending">
+    <dhc-confirm-request 
+      (requestDestroy)="onRequestClose($event.id, $event.accepted)"
+      [disciplina]="solicitacao.disciplinaRelacionada"
+      [diasReservados]="formatDiasReservados(solicitacao)"
+      [horario_solicitacao]="solicitacao.dataReserva!"
+      [lab]="solicitacao.salaReservada?.nomeSala || 'Sala não especificada'"
+      [professor]="solicitacao.solicitante?.userName || 'Professor não especificado'"
+      [solicitacao]="solicitacao">
+    </dhc-confirm-request>
+  </div>
 </div>
