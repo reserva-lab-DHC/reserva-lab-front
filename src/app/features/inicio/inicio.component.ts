@@ -80,6 +80,8 @@ export class InicioComponent implements OnInit {
   todasSalasDisponiveis: SalaCard[] = []
   todasSalasIndisponiveis: SalaCard[] = []
 
+  salasComReservasIds = new Set<string>()
+
   constructor() {
     effect(() => {
       this.qtdCardsPag();
@@ -146,11 +148,16 @@ export class InicioComponent implements OnInit {
   }
 
   filtrarSalas(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos' = 'todos') {
+    this.salasDisponiveisFiltradas = []
+    this.salasIndisponiveisFiltradas = []
+    this.todasSalasDisponiveis = []
+    this.todasSalasDisponiveisFiltradas = []
     const reservasAtivas = filterOngoingReservas(this.listaReservas, this.dataSelecionada()); // reservas no dia selecionado
     const salasDisponiveis: SalaCard[] = [];
     const salasIndisponiveis: SalaCard[] = [];
     for (const reserva of reservasAtivas) {
       const sala = reserva.salaReservada!;
+      this.salasComReservasIds.add(sala.id!)
       const horariosBase = new Set(this.filtrarPorTurno(turno));
       defineDays(reserva, [...horariosBase]) // para teste, já que os valores são null
       for (const dia of reserva.diasReservados) {
@@ -189,10 +196,30 @@ export class InicioComponent implements OnInit {
     console.log(salasIndisponiveis)
     this.salasDisponiveisFiltradas = salasDisponiveis;
     this.salasIndisponiveisFiltradas = salasIndisponiveis;
-    return [salasDisponiveis, salasIndisponiveis]
+    this.filtrarSalasLivres()
+    return [this.salasDisponiveisFiltradas, this.salasIndisponiveisFiltradas]
   }
   getTurno(index: number): 'manha' | 'tarde' | 'noite' {
     return index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
+  }
+  filtrarSalasLivres() {
+    const salasLivres: LaboratorioDTO[] = this.listSalas.filter(sala => !this.salasComReservasIds.has(sala.id!))
+    const horariosReserva: horarioReserva = {
+      manha: this.horariosFormatados.slice(0, 2),
+      tarde: this.horariosFormatados.slice(2, 4),
+      noite: this.horariosFormatados.slice(4, 6),
+    }
+    for (const sala of salasLivres) {
+      const salaCard: SalaCard = {
+        nome: sala.nomeSala!,
+        local: sala.predio!,
+        sublocal: sala.andar!,
+        image: FotosPorNumero[sala.image!],
+        andar: sala.andar!,
+        horarios: horariosReserva,
+      };
+      this.todasSalasDisponiveisFiltradas.push(salaCard)
+    }
   }
 
 
