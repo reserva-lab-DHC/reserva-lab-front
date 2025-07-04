@@ -29,7 +29,7 @@
   <div class="imagens-mockadas">
     <img 
       *ngFor="let id of imagensMock"
-      [src]="'/assets/img/foto-lab.png'"
+      [src]="fotosPorNumero[id]"
       [class.selecionada]="formulario.get('imagem')?.value === id"
       (click)="selecionarImagem(id)"
       (keydown.enter)="selecionarImagem(id)"
