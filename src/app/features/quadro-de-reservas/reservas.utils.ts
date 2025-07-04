@@ -1,6 +1,6 @@
 import { ReservaDTO } from "../../shared/models/reserva.dto";
 
-	function isReservaOngoing(start: string, end: string, selected: string): boolean {
+	export function isReservaOngoing(start: string, end: string, selected: string): boolean {
     const startDate = new Date(start);
     const endDate = new Date(end);
     const selectedDate = new Date(selected);

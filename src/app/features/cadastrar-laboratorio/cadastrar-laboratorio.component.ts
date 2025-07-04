@@ -71,7 +71,7 @@ selecionarImagem(id: number) {
       nomeSala: nomeSala,
       predio: predio,
       andar: andar,
-      imagem: imagem,
+      image: imagem,
     };
 
     this.isLoading.set(true);

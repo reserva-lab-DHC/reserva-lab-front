@@ -10,7 +10,7 @@ import { ReservaService } from '../quadro-de-reservas/reserva.service';
 import { ReservaDTO } from '../../shared/models/reserva.dto';
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
-import { defineDays, filterWeekDay } from '../quadro-de-reservas/reservas.utils';
+import { defineDays, filterOngoingReservas, filterWeekDay, isReservaOngoing } from '../quadro-de-reservas/reservas.utils';
 
 interface SalaCard {
   nome: string;
@@ -74,10 +74,8 @@ export class InicioComponent implements OnInit {
 
   horariosValidos: string[] = ["H07_40", "H09_40", "H13_00", "H15_00", "H18_20", "H20_20"]
   horariosFormatados = this.formatarHorarios()
-  diaSemana = filterWeekDay(this.dataSelecionada().toLocaleDateString('pt-BR', {weekday: 'long'}))
+  diaSemanaHoje = filterWeekDay(this.dataSelecionada().toLocaleDateString('pt-BR', {weekday: 'long'}))
 
-  reservasDisponiveisFiltradas: ReservaDTO[] = []
-  reservasOcupadasFiltradas: ReservaDTO[] = []
   todasSalasDisponiveis: SalaCard[] = []
   todasSalasIndisponiveis: SalaCard[] = []
 
@@ -101,13 +99,8 @@ export class InicioComponent implements OnInit {
     });
 
     this.listaReservas = await this.reservaService.listAllReservas("ALL")
-    this.listSalas = (await this.salaService.listAllLaboratorios()).filter(sala => sala.isAvailable === true)
-
-    this.reservasDisponiveisFiltradas = this.listaReservas.filter(reserva => reserva.status !== "APROVADA")
-    this.reservasOcupadasFiltradas = this.listaReservas.filter(reserva => reserva.status == "APROVADA")
-    this.todasSalasDisponiveis = this.filtrarSalas(this.reservasDisponiveisFiltradas);
-    this.todasSalasIndisponiveis = this.filtrarSalas(this.reservasOcupadasFiltradas)
-
+    this.listSalas = (await this.salaService.listAllLaboratorios())
+    this.filtrarSalas()
     this.filtroForm
       .get('filtroTurno')
       ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
@@ -127,7 +120,6 @@ export class InicioComponent implements OnInit {
 
   }
 
-
   formatarHorarios() {
     const horariosFormatados = []
     for (const horario of this.horariosValidos) {
@@ -139,52 +131,73 @@ export class InicioComponent implements OnInit {
     return hr.replace("H", "").replace("_", ":")
   }
 
-  onMudancaTurno(turno: string) {
-    this.diaSemana = turno
+  onMudancaTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
+    this.diaSemanaHoje = turno
+    this.filtrarSalas(turno)
     this.filtrarCardsPorTurno(turno)
   }
 
+  filtrarSalas(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos' = 'todos') {
+    const reservasAtivas = filterOngoingReservas(this.listaReservas, this.dataSelecionada()); // reservas no dia selecionado
 
-  filtrarSalas(reservaList: ReservaDTO[]): SalaCard[] { // vou mudar bastante isso aq
+    const salasDisponiveis: SalaCard[] = [];
+    const salasIndisponiveis: SalaCard[] = [];
 
-    const salasFiltradas: SalaCard[] = []
-    for (const reserva of reservaList) {
-      const sala = this.listSalas.find(sala => sala.id == reserva.salaReservada!.id)
-
-      if (!sala) continue 
-      if (!reserva.diasReservados) {
-        defineDays(reserva, this.horariosValidos)
-      }
-
-      const horariosReserva: horarioReserva = {}
+    for (const reserva of reservasAtivas) {
+      const sala = reserva.salaReservada!;
+      const horariosBase = new Set(this.filtrarPorTurno(turno));
+      defineDays(reserva, [...horariosBase]) // para teste, já que os valores são null
       for (const dia of reserva.diasReservados) {
-        for (const hr of dia.horarios) {
-          const hrFormatado = this.formatarHorario(hr)
-          const index = this.horariosFormatados.indexOf(hrFormatado)
-          const slot =
-            index < 2 ? 'manha' :
-            index < 4 ? 'tarde' :
-            'noite';
-          horariosReserva[slot] = [
-            ...(horariosReserva[slot] || []),
-            hrFormatado
-          ];
+        if (dia.diaReserva !== this.diaSemanaHoje) {
+          console.log("não é o dia atual")
+          continue
         }
-      }
 
-      const salaCard: SalaCard = {
-        nome: sala.nomeSala!,
-        local: sala.predio!,
-        sublocal: sala.andar!,
-        image: sala.image!,
-        horarios: horariosReserva,
-        andar: sala.andar!
+        // se um dos horarios estiver reservado, exclui dos horariosDisponiveis
+        const horariosDisponiveis = new Set(horariosBase);
+        dia.horarios.forEach(hr => horariosDisponiveis.delete(hr)); 
+
+        const horariosReserva: horarioReserva = {}; // horarios para manha, tarde, noite
+        for (const hr of horariosBase) {
+          const hrFormatado = this.formatarHorario(hr);
+          const index = this.horariosFormatados.indexOf(hrFormatado);
+          const slot = index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
+          horariosReserva[slot] = [...(horariosReserva[slot] || []), hrFormatado];
+        }
+        const salaCard: SalaCard = {
+          nome: sala.nomeSala!,
+          local: sala.predio!,
+          sublocal: sala.andar!,
+          image: sala.image!,
+          andar: sala.andar!,
+          horarios: horariosReserva,
+        };
+
+        (horariosDisponiveis.size > 0 ? salasDisponiveis : salasIndisponiveis).push(salaCard);
       }
-      console.log(salaCard.horarios)
-      salasFiltradas.push(salaCard)
     }
-    return salasFiltradas
 
+    // TODO: tem q fazer uma lógica para todas as salas que estejam livre de reservas
+    
+    this.salasDisponiveisFiltradas = salasDisponiveis;
+    this.salasIndisponiveisFiltradas = salasIndisponiveis;
+    console.log(this.salasDisponiveisFiltradas)
+    console.log(this.salasIndisponiveisFiltradas)
+  }
+  getTurno(index: number): 'manha' | 'tarde' | 'noite' {
+    return index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
+  }
+
+
+  turnos = {
+    matutino: [0, 2],
+    vespertino: [2, 4],
+    noturno: [4, 6],
+    todos: [0, 6]
+  };
+  filtrarPorTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
+    const [start, end] = this.turnos[turno];
+    return this.horariosValidos.slice(start, end);
   }
 
   onCardClick(sala: SalaCard) {

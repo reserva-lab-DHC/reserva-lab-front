@@ -2,7 +2,7 @@
 
   <div class="filtro">
     <form [formGroup]="filtroForm">
-      <div class="filtro-inputs-wrapper">
+      <div class="filtro-inputs-wrapper"><!---->
         <dhc-dropdown class="turno" (shiftSelected)="onMudancaTurno($event)"></dhc-dropdown>
 
         <div class="data-calendario-wrapper" (click)="abrirCalendario()" (keydown.enter)="abrirCalendario()"
