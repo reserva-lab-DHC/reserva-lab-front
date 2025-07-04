@@ -13,6 +13,7 @@ div.card {
   -webkit-user-select: none;
   position: relative;
   border-radius: 1rem;
+  cursor: pointer;
 }
 
 div.card.card-indisponivel {
@@ -76,6 +77,37 @@ div.local {
   background-color: #FFFFFF;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
+}
+
+div.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+}
+
+div.card:hover img {
+  opacity: 0.5;
+}
+
+div.card .hover-icon {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+div.card:hover .hover-icon {
+  opacity: 1;
 }
 
 @media screen and (min-width: 768px) {
