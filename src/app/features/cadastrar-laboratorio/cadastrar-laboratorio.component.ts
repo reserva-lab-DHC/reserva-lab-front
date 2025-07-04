@@ -6,6 +6,7 @@ import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
 import { NgForOf, NgIf } from '@angular/common';
+import { FotosPorNumero } from '../../shared/models/fotos.enum';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
   imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, NgIf,NgForOf],
@@ -31,7 +32,8 @@ export class CadastrarLaboratorioComponent {
   isLoading = signal(false);
   andaresDisponiveis = signal<number[]>([]);
 
-  imagensMock = [1, 2, 3]; 
+  imagensMock = Object.keys(FotosPorNumero).map(Number);
+  fotosPorNumero = FotosPorNumero;
 
   constructor() {
     this.andaresDisponiveis.set(this.calcularAndares(1));
