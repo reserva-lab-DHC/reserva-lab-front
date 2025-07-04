@@ -10,7 +10,7 @@ import { ReservaService } from '../quadro-de-reservas/reserva.service';
 import { ReservaDTO } from '../../shared/models/reserva.dto';
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
-import { defineDays, filterOngoingReservas, filterWeekDay, isReservaOngoing } from '../quadro-de-reservas/reservas.utils';
+import { defineDays, filterOngoingReservas, filterWeekDay, /* isReservaOngoing */ } from '../quadro-de-reservas/reservas.utils';
 
 interface SalaCard {
   nome: string;
