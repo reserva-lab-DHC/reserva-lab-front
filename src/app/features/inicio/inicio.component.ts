@@ -10,13 +10,14 @@ import { ReservaService } from '../quadro-de-reservas/reserva.service';
 import { ReservaDTO } from '../../shared/models/reserva.dto';
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
-import { defineDays, filterOngoingReservas, filterWeekDay, isReservaOngoing } from '../quadro-de-reservas/reservas.utils';
+import { defineDays, filterOngoingReservas, filterWeekDay } from '../quadro-de-reservas/reservas.utils';
+import { FotosPorNumero } from '../../shared/models/fotos.enum';
 
 interface SalaCard {
   nome: string;
   local: number;
   sublocal: number;
-  image: number;
+  image: string;
   horarios: horarioReserva;
   andar: number;
 }
@@ -98,9 +99,7 @@ export class InicioComponent implements OnInit {
       dataSelecionada: new FormControl(new Date()),
     });
 
-    this.listaReservas = await this.reservaService.listAllReservas("ALL")
-    this.listSalas = (await this.salaService.listAllLaboratorios())
-    this.filtrarSalas()
+
     this.filtroForm
       .get('filtroTurno')
       ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
@@ -116,7 +115,15 @@ export class InicioComponent implements OnInit {
       this.filtroForm.get('filtroTurno')?.value as string
     );
 
+
+    this.listaReservas = await this.reservaService.listAllReservas("ALL")
+    this.listSalas = (await this.salaService.listAllLaboratorios())
+    const filtr = this.filtrarSalas()
+    this.todasSalasDisponiveis = filtr[0]
+    this.todasSalasIndisponiveis = filtr[1]
     this.attPagIndisponiveis();
+
+
 
   }
 
@@ -132,17 +139,16 @@ export class InicioComponent implements OnInit {
   }
 
   onMudancaTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
-    this.diaSemanaHoje = turno
-    this.filtrarSalas(turno)
+    const filtr = this.filtrarSalas(turno)
+    this.todasSalasDisponiveis = filtr[0]
+    this.todasSalasIndisponiveis = filtr[1]
     this.filtrarCardsPorTurno(turno)
   }
 
   filtrarSalas(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos' = 'todos') {
     const reservasAtivas = filterOngoingReservas(this.listaReservas, this.dataSelecionada()); // reservas no dia selecionado
-
     const salasDisponiveis: SalaCard[] = [];
     const salasIndisponiveis: SalaCard[] = [];
-
     for (const reserva of reservasAtivas) {
       const sala = reserva.salaReservada!;
       const horariosBase = new Set(this.filtrarPorTurno(turno));
@@ -158,17 +164,18 @@ export class InicioComponent implements OnInit {
         dia.horarios.forEach(hr => horariosDisponiveis.delete(hr)); 
 
         const horariosReserva: horarioReserva = {}; // horarios para manha, tarde, noite
-        for (const hr of horariosBase) {
+        for (const hr of horariosDisponiveis) {
           const hrFormatado = this.formatarHorario(hr);
           const index = this.horariosFormatados.indexOf(hrFormatado);
           const slot = index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
           horariosReserva[slot] = [...(horariosReserva[slot] || []), hrFormatado];
         }
+
         const salaCard: SalaCard = {
           nome: sala.nomeSala!,
           local: sala.predio!,
           sublocal: sala.andar!,
-          image: sala.image!,
+          image: FotosPorNumero[sala.image!],
           andar: sala.andar!,
           horarios: horariosReserva,
         };
@@ -178,11 +185,11 @@ export class InicioComponent implements OnInit {
     }
 
     // TODO: tem q fazer uma lógica para todas as salas que estejam livre de reservas
-    
+    console.log(salasDisponiveis)
+    console.log(salasIndisponiveis)
     this.salasDisponiveisFiltradas = salasDisponiveis;
     this.salasIndisponiveisFiltradas = salasIndisponiveis;
-    console.log(this.salasDisponiveisFiltradas)
-    console.log(this.salasIndisponiveisFiltradas)
+    return [salasDisponiveis, salasIndisponiveis]
   }
   getTurno(index: number): 'manha' | 'tarde' | 'noite' {
     return index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
