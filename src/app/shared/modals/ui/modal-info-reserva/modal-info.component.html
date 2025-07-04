@@ -13,15 +13,16 @@
         </button>
     </div>
 
-    <p class="prof" id="modal-title" *ngIf="temSolicitante">{{solicitanteName}}</p>
-    
+
+    <p class="prof" id="modal-title">{{reserva.solicitante!.userName}}</p>
     <div class="infoReserva">
-       <p class="lab" *ngIf="temSalaReservada">{{nomeSala}}</p>
-       <p class="discipl">{{disciplinaRelacionada}}</p>
-       <ul>
-           <li *ngIf="temDiasReservados">{{primeiroHorario}}</li>
-           <li *ngIf="temDataReserva">{{dataReserva | date:'dd/MM/yyyy'}}</li>
-       </ul>
+
+       <p class="lab">{{reserva.salaReservada!.nomeSala}}</p>
+    <p class="discipl">{{reserva.disciplinaRelacionada}}</p>
+    <ul>
+        <li>{{reserva.diasReservados[0].horarios}}</li>
+       <li>{{reserva.dataReserva | date:'dd/MM/yyyy'}}</li>
+    </ul>
     </div>
   </div>
 </div>

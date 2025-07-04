@@ -6,18 +6,25 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CardComponent } from '../../shared/card/card.component';
 import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReservaService } from '../quadro-de-reservas/reserva.service';
+import { ReservaDTO } from '../../shared/models/reserva.dto';
+import { LaboratorioService } from './laboratorio.service';
+import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
+import { defineDays, filterOngoingReservas, filterWeekDay, /* isReservaOngoing */ } from '../quadro-de-reservas/reservas.utils';
 
 interface SalaCard {
   nome: string;
-  local: string;
-  sublocal: string;
-  imagem: string;
-  horarios: {
-    manha?: string[];
-    tarde?: string[];
-    noite?: string[];
-  };
+  local: number;
+  sublocal: number;
+  image: number;
+  horarios: horarioReserva;
   andar: number;
+}
+
+interface horarioReserva {
+  manha?: string[]
+  tarde?: string[]
+  noite?: string[]
 }
 
 @Component({
@@ -60,6 +67,18 @@ export class InicioComponent implements OnInit {
 
   windowWidth = signal(window.innerWidth);
 
+  reservaService = inject(ReservaService)
+  salaService = inject(LaboratorioService)
+  listaReservas: ReservaDTO[] = []
+  listSalas: LaboratorioDTO[] = []
+
+  horariosValidos: string[] = ["H07_40", "H09_40", "H13_00", "H15_00", "H18_20", "H20_20"]
+  horariosFormatados = this.formatarHorarios()
+  diaSemanaHoje = filterWeekDay(this.dataSelecionada().toLocaleDateString('pt-BR', {weekday: 'long'}))
+
+  todasSalasDisponiveis: SalaCard[] = []
+  todasSalasIndisponiveis: SalaCard[] = []
+
   constructor() {
     effect(() => {
       this.qtdCardsPag();
@@ -68,7 +87,7 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     window.addEventListener('resize', () => {
       this.windowWidth.set(window.innerWidth);
@@ -79,6 +98,9 @@ export class InicioComponent implements OnInit {
       dataSelecionada: new FormControl(new Date()),
     });
 
+    this.listaReservas = await this.reservaService.listAllReservas("ALL")
+    this.listSalas = (await this.salaService.listAllLaboratorios())
+    this.filtrarSalas()
     this.filtroForm
       .get('filtroTurno')
       ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
@@ -95,6 +117,87 @@ export class InicioComponent implements OnInit {
     );
 
     this.attPagIndisponiveis();
+
+  }
+
+  formatarHorarios() {
+    const horariosFormatados = []
+    for (const horario of this.horariosValidos) {
+      horariosFormatados.push(horario.replace("H", "").replace("_", ":"))
+    }
+    return horariosFormatados
+  }
+  formatarHorario(hr: string) {
+    return hr.replace("H", "").replace("_", ":")
+  }
+
+  onMudancaTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
+    this.diaSemanaHoje = turno
+    this.filtrarSalas(turno)
+    this.filtrarCardsPorTurno(turno)
+  }
+
+  filtrarSalas(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos' = 'todos') {
+    const reservasAtivas = filterOngoingReservas(this.listaReservas, this.dataSelecionada()); // reservas no dia selecionado
+
+    const salasDisponiveis: SalaCard[] = [];
+    const salasIndisponiveis: SalaCard[] = [];
+
+    for (const reserva of reservasAtivas) {
+      const sala = reserva.salaReservada!;
+      const horariosBase = new Set(this.filtrarPorTurno(turno));
+      defineDays(reserva, [...horariosBase]) // para teste, já que os valores são null
+      for (const dia of reserva.diasReservados) {
+        if (dia.diaReserva !== this.diaSemanaHoje) {
+          console.log("não é o dia atual")
+          continue
+        }
+
+        // se um dos horarios estiver reservado, exclui dos horariosDisponiveis
+        const horariosDisponiveis = new Set(horariosBase);
+        dia.horarios.forEach(hr => horariosDisponiveis.delete(hr)); 
+
+        const horariosReserva: horarioReserva = {}; // horarios para manha, tarde, noite
+        for (const hr of horariosBase) {
+          const hrFormatado = this.formatarHorario(hr);
+          const index = this.horariosFormatados.indexOf(hrFormatado);
+          const slot = index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
+          horariosReserva[slot] = [...(horariosReserva[slot] || []), hrFormatado];
+        }
+        const salaCard: SalaCard = {
+          nome: sala.nomeSala!,
+          local: sala.predio!,
+          sublocal: sala.andar!,
+          image: sala.image!,
+          andar: sala.andar!,
+          horarios: horariosReserva,
+        };
+
+        (horariosDisponiveis.size > 0 ? salasDisponiveis : salasIndisponiveis).push(salaCard);
+      }
+    }
+
+    // TODO: tem q fazer uma lógica para todas as salas que estejam livre de reservas
+    
+    this.salasDisponiveisFiltradas = salasDisponiveis;
+    this.salasIndisponiveisFiltradas = salasIndisponiveis;
+    console.log(this.salasDisponiveisFiltradas)
+    console.log(this.salasIndisponiveisFiltradas)
+  }
+  getTurno(index: number): 'manha' | 'tarde' | 'noite' {
+    return index < 2 ? 'manha' : index < 4 ? 'tarde' : 'noite';
+  }
+
+
+  turnos = {
+    matutino: [0, 2],
+    vespertino: [2, 4],
+    noturno: [4, 6],
+    todos: [0, 6]
+  };
+  filtrarPorTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
+    const [start, end] = this.turnos[turno];
+    return this.horariosValidos.slice(start, end);
   }
 
   onCardClick(sala: SalaCard) {
@@ -177,9 +280,9 @@ export class InicioComponent implements OnInit {
 
   filtrarCardsPorTurno(turno: string) {
     if (turno === 'Todos') {
-      this.todasSalasDisponiveisFiltradas = this.todasSalasDisponiveis.map(
+      this.salasDisponiveisFiltradas = this.todasSalasDisponiveis.map(
         (sala) => ({
-          ...sala,
+          ...sala,  
           horarios: { manha: sala.horarios.manha || ['N/A', 'N/A'] },
         })
       );
@@ -190,7 +293,7 @@ export class InicioComponent implements OnInit {
         })
       );
     } else {
-      this.todasSalasDisponiveisFiltradas = this.todasSalasDisponiveis.map(
+      this.salasDisponiveisFiltradas = this.todasSalasDisponiveis.map(
         (sala) => {
           const horarioDoTurno =
             sala.horarios[turno.toLowerCase() as keyof SalaCard['horarios']];
@@ -203,10 +306,14 @@ export class InicioComponent implements OnInit {
         }
       );
       this.salasIndisponiveisFiltradas = this.todasSalasIndisponiveis.map(
-        (sala) => ({
-          ...sala,
-          horarios: { noite: sala.horarios.noite || ['N/A', 'N/A'] },
-        })
+        (sala) => {
+          const horarioDoTurno =
+            sala.horarios[turno.toLowerCase() as keyof SalaCard['horarios']];
+          return {
+            ...sala,
+            horarios: { [turno.toLowerCase()]: horarioDoTurno || ['N/A', 'N/A'], },
+          }
+        }
       );
     }
 
@@ -221,243 +328,4 @@ export class InicioComponent implements OnInit {
     this.mostrarCalendario.set(!this.mostrarCalendario());
   }
 
-  todasSalasDisponiveis: SalaCard[] = [
-    {
-      nome: 'Laboratório Tecnológico I',
-      local: 'Prédio I',
-      sublocal: 'S2 [subsolo]',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['07:40', '09:40'],
-        tarde: ['13:00', '15:00'],
-        noite: ['18:20', '20:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Laboratório de Exemplo I',
-      local: 'Prédio II',
-      sublocal: 'S3 [subsolo]',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['08:00'],
-        tarde: ['14:40', '16:40'],
-        noite: ['20:00'],
-      },
-      andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
-    },
-    {
-      nome: 'Laboratório Exemplo II',
-      local: 'Prédio II',
-      sublocal: 'Andar',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['10:00'],
-        tarde: ['13:00'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
-    },
-    {
-      nome: 'Laboratório de Química',
-      local: 'Prédio I',
-      sublocal: 'S2 [subsolo]',
-      imagem: 'assets/img/lab_especializado.webp',
-      horarios: {
-        manha: ['07:40'],
-        tarde: ['15:00'],
-        noite: ['20:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Metodologias Ativas II',
-      local: 'Prédio I',
-      sublocal: 'S2 [subsolo]',
-      imagem: 'assets/img/lab_metodologias.webp',
-      horarios: {
-        manha: ['08:00', '10:00'],
-        tarde: ['14:40'],
-        noite: ['18:20', '20:00'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Laboratório de Inovação',
-      local: 'Prédio I',
-      sublocal: 'S2 [subsolo]',
-      imagem: 'assets/img/lab_inovacao.webp',
-      horarios: {
-        manha: ['09:40'],
-        tarde: ['13:00', '15:00'],
-        noite: ['20:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Maquetaria',
-      local: 'Prédio I',
-      sublocal: 'S2 [subsolo]',
-      imagem: 'assets/img/lab_especializado.webp',
-      horarios: {
-        manha: ['07:40'],
-        tarde: ['14:40'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Laboratório de Robótica',
-      local: 'Prédio II',
-      sublocal: '1º Andar',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['08:00'],
-        tarde: ['16:40'],
-        noite: ['20:00'],
-      },
-      andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
-    },
-    {
-      nome: 'Laboratório Exemplo III',
-      local: 'Prédio I',
-      sublocal: 'S1 [subsolo]',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['10:00'],
-        tarde: ['13:00'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Laboratório Exemplo IV',
-      local: 'Prédio I',
-      sublocal: 'Térreo',
-      imagem: 'assets/img/lab_metodologias.webp',
-      horarios: {
-        manha: ['09:40'],
-        tarde: ['15:00'],
-        noite: ['20:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-    {
-      nome: 'Laboratório Exemplo V',
-      local: 'Prédio II',
-      sublocal: '2º Andar',
-      imagem: 'assets/img/lab_inovacao.webp',
-      horarios: {
-        manha: ['07:40'],
-        tarde: ['14:40'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 6) + 1, // 1-6 para Prédio II
-    },
-    {
-      nome: 'Laboratório Exemplo VI',
-      local: 'Prédio IV',
-      sublocal: '1º Andar',
-      imagem: 'assets/img/lab_especializado.webp',
-      horarios: {
-        manha: ['08:00'],
-        tarde: ['16:40'],
-        noite: ['20:00'],
-      },
-      andar: Math.floor(Math.random() * 4) + 1, // 1-4 para Prédio IV
-    },
-    {
-      nome: 'Laboratório Exemplo VII',
-      local: 'Prédio I',
-      sublocal: 'Subsolo',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['10:00'],
-        tarde: ['13:00'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1, // 1-11 para Prédio I
-    },
-  ];
-
-  todasSalasIndisponiveis: SalaCard[] = [
-    {
-      nome: 'Laboratório Exemplo',
-      local: 'Prédio I',
-      sublocal: 'Metodologias Ativas II',
-      imagem: 'assets/img/lab_inovacao.webp',
-      horarios: {
-        manha: ['07:40'],
-        tarde: ['13:00'],
-        noite: ['20:00'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-    {
-      nome: 'Laboratório Tecnológico III',
-      local: 'Prédio I',
-      sublocal: 'Biblioteca',
-      imagem: 'assets/img/lab_inovacao.webp',
-      horarios: {
-        manha: ['10:00'],
-        tarde: ['15:00'],
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-    {
-      nome: 'Laboratório Exemplo II',
-      local: 'Prédio I',
-      sublocal: '1º Andar',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        tarde: ['16:40'],
-        noite: ['20:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-    {
-      nome: 'Laboratório Exemplo II',
-      local: 'Prédio I',
-      sublocal: '[subsolo]',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['08:00'],
-        noite: ['22:00'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-    {
-      nome: 'Laboratório de Física',
-      local: 'Prédio II',
-      sublocal: '2º Andar',
-      imagem: 'assets/img/lab_inovacao.webp',
-      horarios: {
-        tarde: ['14:40'],
-        noite: ['20:00'],
-      },
-      andar: Math.floor(Math.random() * 6) + 1,
-    },
-    {
-      nome: 'Laboratório Exemplo II',
-      local: 'Prédio I',
-      sublocal: 'Térreo',
-      imagem: 'assets/img/lab_tecnologico.webp',
-      horarios: {
-        manha: ['09:40'],
-        tarde: ['13:00'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-    {
-      nome: 'Laboratório Exemplo III',
-      local: 'Prédio I',
-      sublocal: 'Subsolo',
-      imagem: 'assets/img/lab_metodologias.webp',
-      horarios: {
-        noite: ['18:20'],
-      },
-      andar: Math.floor(Math.random() * 11) + 1,
-    },
-  ];
 }

@@ -4,4 +4,5 @@ export interface LaboratorioDTO {
   andar?: number;
   id?: string
   image?: number
+  isAvailable?: boolean
 }

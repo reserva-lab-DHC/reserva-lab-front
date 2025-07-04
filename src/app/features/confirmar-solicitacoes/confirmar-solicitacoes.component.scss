@@ -1,20 +1,29 @@
 * {
-  font-family: 'montserrat', sans-serif;
+  font-family: "montserrat", sans-serif;
 }
 h1 {
   padding: 20px;
 }
-div.requests {
+
+.totalRequests {
   display: grid;
-  grid-template-columns: auto auto;
   gap: 20px;
-  margin: 0px 10px 0 10px;
+  margin: 0px 25px 22px 25px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.requests dhc-confirm-request {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   div.requests {
-
     display: flex;
     flex-direction: column;
+  }
+
+  .totalRequests {
+    grid-template-columns: auto;
   }
 }
