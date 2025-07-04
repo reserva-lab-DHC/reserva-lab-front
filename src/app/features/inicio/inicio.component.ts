@@ -100,7 +100,7 @@ export class InicioComponent implements OnInit {
       filtroTurno: new FormControl('Todos'),
       dataSelecionada: new FormControl(new Date()),
     });
-
+    
 
     this.filtroForm
       .get('filtroTurno')
@@ -117,15 +117,10 @@ export class InicioComponent implements OnInit {
       this.filtroForm.get('filtroTurno')?.value as string
     );
 
-
     this.listaReservas = await this.reservaService.listAllReservas("ALL")
     this.listSalas = (await this.salaService.listAllLaboratorios())
-    const filtr = this.filtrarSalas()
-    this.todasSalasDisponiveis = filtr[0]
-    this.todasSalasIndisponiveis = filtr[1]
+    this.filtrarGeral()
     this.attPagIndisponiveis();
-
-
 
   }
 
@@ -141,9 +136,7 @@ export class InicioComponent implements OnInit {
   }
 
   onMudancaTurno(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos') {
-    const filtr = this.filtrarSalas(turno)
-    this.todasSalasDisponiveis = filtr[0]
-    this.todasSalasIndisponiveis = filtr[1]
+    this.filtrarGeral()
     this.filtrarCardsPorTurno(turno)
   }
 
@@ -191,9 +184,6 @@ export class InicioComponent implements OnInit {
       }
     }
 
-    // TODO: tem q fazer uma lógica para todas as salas que estejam livre de reservas
-    console.log(salasDisponiveis)
-    console.log(salasIndisponiveis)
     this.salasDisponiveisFiltradas = salasDisponiveis;
     this.salasIndisponiveisFiltradas = salasIndisponiveis;
     this.filtrarSalasLivres()
@@ -222,6 +212,11 @@ export class InicioComponent implements OnInit {
     }
   }
 
+  filtrarGeral(turno: 'matutino' | 'vespertino' | 'noturno' | 'todos' = 'todos') {
+    const filtr = this.filtrarSalas(turno)
+    this.todasSalasDisponiveis = filtr[0]
+    this.todasSalasIndisponiveis = filtr[1]
+  }
 
   turnos = {
     matutino: [0, 2],
@@ -307,6 +302,8 @@ export class InicioComponent implements OnInit {
     const dataFinal = date || new Date();
     this.dataSelecionada.set(dataFinal);
     this.filtroForm.get('dataSelecionada')?.setValue(dataFinal);
+    this.filtrarGeral()
+    
   }
   get dataFormatada(): string {
     return this.dataSelecionada().toLocaleDateString('pt-BR');
