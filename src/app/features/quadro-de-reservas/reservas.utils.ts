@@ -1,6 +1,6 @@
 import { ReservaDTO } from "../../shared/models/reserva.dto";
 
-	function isReservaOngoing(start: string, end: string, selected: string): boolean {
+	export function isReservaOngoing(start: string, end: string, selected: string): boolean {
     const startDate = new Date(start);
     const endDate = new Date(end);
     const selectedDate = new Date(selected);
@@ -26,7 +26,7 @@ import { ReservaDTO } from "../../shared/models/reserva.dto";
   export function defineDays(reserva: ReservaDTO, schedulesList: string[]) {
     if (reserva.diasReservados == null) {
       reserva.diasReservados = [{
-        diaReserva: "QUA",
+        diaReserva: "QUI",
         horarios: generateRandomSchedules(schedulesList) // ["H07_40", "H13_00"]
       }]
     }

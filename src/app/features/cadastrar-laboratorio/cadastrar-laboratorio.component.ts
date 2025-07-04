@@ -1,20 +1,21 @@
-import { AfterViewInit, Component, inject, signal } from '@angular/core';
+import {  Component, inject, signal } from '@angular/core';
 import { SelecaoComponent } from '../../shared/componente-selecao/selecao.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { LaboratorioService } from './laboratorio.service';
 import { LaboratorioDTO } from '../../shared/models/laboratorio.dto';
 import { DynamicButtonComponent } from "../../shared/dynamic-button/dynamic-button.component";
 import { InputTextComponent } from "../../shared/input-text/input-text.component";
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
+import { FotosPorNumero } from '../../shared/models/fotos.enum';
 @Component({
   selector: 'dhc-cadastrar-laboratorio',
-  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, NgIf],
+  imports: [SelecaoComponent, ReactiveFormsModule, DynamicButtonComponent, InputTextComponent, NgIf,NgForOf],
   templateUrl: './cadastrar-laboratorio.component.html',
   styleUrls: ['./cadastrar-laboratorio.component.scss'],
   standalone: true,
 
 })
-export class CadastrarLaboratorioComponent implements AfterViewInit {
+export class CadastrarLaboratorioComponent {
   predioSelecionado = 0;
   andarSelecionado = 0;
 
@@ -24,13 +25,15 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
     andarSelecionado: new FormControl<number | null>(null, [Validators.required]),
     predioSelecionado: new FormControl<number | null>(null, [Validators.required]),
     nomeSala: new FormControl('', [Validators.required]),
+    imagem: new FormControl<number | null>(null, [Validators.required]),
+  
   });
 
   isLoading = signal(false);
   andaresDisponiveis = signal<number[]>([]);
 
-  imagemSelecionada: File | null = null;
-  erroImagem = signal<string>('');
+  imagensMock = Object.keys(FotosPorNumero).map(Number);
+  fotosPorNumero = FotosPorNumero;
 
   constructor() {
     this.andaresDisponiveis.set(this.calcularAndares(1));
@@ -40,73 +43,37 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
         const andares = this.calcularAndares(predio);
         this.andaresDisponiveis.set(andares);
 
-        const campoAndar = this.formulario.get('andarSelecionado');
-        campoAndar?.setValue(null);
-        campoAndar?.markAsUntouched();
-      }
-    });
-  }
-  calcularAndares(predio: number): number[] {
-    return predio === 1 ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] : [1, 2, 3, 4, 5, 6];
-  }
-
-  ngAfterViewInit(): void {
-    const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
-    const uploadInput = document.getElementById('upload') as HTMLInputElement;
-
-    imagemLab?.addEventListener('click', () => {
-      uploadInput?.click();
-    });
-
-    uploadInput?.addEventListener('change', (event: Event) => {
-      const file = (event.target as HTMLInputElement).files?.[0];
-      if (!file) return;
-
-      if (!file.type.startsWith('image/')) {
-        this.erroImagem.set('O arquivo selecionado não é uma imagem.');
-        this.imagemSelecionada = null;
-        return;
-      }
-
-      if (file.size > 2 * 1024 * 1024) {
-        this.erroImagem.set('A imagem deve ter no máximo 2MB.');
-        this.imagemSelecionada = null;
-        return;
-      }
-
-      this.erroImagem.set('');
-      this.imagemSelecionada = file;
-
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const result = e.target?.result as string;
-        imagemLab.src = result;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
+      const campoAndar = this.formulario.get('andarSelecionado');
+      campoAndar?.setValue(null);
+      campoAndar?.markAsUntouched(); 
+    }
+  });
+}
+calcularAndares(predio: number): number[] {
+  return predio === 1 ? [1,2,3,4,5,6,7,8,9,10,11] : [1,2,3,4,5,6];
+}
+selecionarImagem(id: number) {
+    this.formulario.get('imagem')?.setValue(id);
+}
+  
   registrar() {
     if (this.formulario.invalid) {
       // Marcar todos os campos como tocados para ativar mensagens de erro
       this.formulario.markAllAsTouched();
-
       alert('Por favor, preencha todos os campos obrigatórios.');
-      return;
-    }
-
-    if (!this.imagemSelecionada) {
-      alert('Por favor, selecione uma imagem válida.');
       return;
     }
 
     const nomeSala = this.formulario.get('nomeSala')?.value ?? '';
     const predio = this.formulario.get('predioSelecionado')?.value ?? 0;
     const andar = this.formulario.get('andarSelecionado')?.value ?? 0;
+    const imagem = this.formulario.get('imagem')?.value ?? 1;
 
     const novoLab: LaboratorioDTO = {
       nomeSala: nomeSala,
       predio: predio,
       andar: andar,
+      image: imagem,
     };
 
     this.isLoading.set(true);
@@ -118,12 +85,9 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
         this.formulario.reset({
           nomeSala: '',
           predioSelecionado: null,
-          andarSelecionado: null
+          andarSelecionado: null,
+          imagem: null,
         });
-        this.imagemSelecionada = null;
-        const imagemLab = document.getElementById('imagemLab') as HTMLImageElement;
-        if (imagemLab) imagemLab.src = '/assets/img/foto-lab.png';
-
       })
       .catch((err: Error) => {
         console.error('Erro ao cadastrar laboratório:', err);
@@ -133,7 +97,6 @@ export class CadastrarLaboratorioComponent implements AfterViewInit {
         // Sempre desliga loading, sucesso ou erro
         this.isLoading.set(false);
       });
-
-
+      
   }
 }

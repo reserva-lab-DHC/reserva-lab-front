@@ -5,7 +5,7 @@ export interface Option {
   label: string;
   value: string;
 };
-
+type Turno = 'matutino' | 'vespertino' | 'noturno' | 'todos';
 @Component({
   selector: 'dhc-dropdown',
   templateUrl: './dropdown.component.html',
@@ -14,7 +14,8 @@ export interface Option {
 })
 export class DropdownComponent {
 
-  @Output() shiftSelected = new EventEmitter<string>();
+
+  @Output() shiftSelected = new EventEmitter<Turno>();
   isOpen = signal(false);
   selected = signal('Todos');
   options = input<{ label: string, value: string }[]>([
@@ -31,7 +32,7 @@ export class DropdownComponent {
   selectOption(option: Option) {
     this.selected.set(option.label);
     this.isOpen.set(false);
-    this.shiftSelected.emit(option.value);
+    this.shiftSelected.emit(option.value as Turno);
     console.log('Selecionado:', option.label, option.value);
   }
 
